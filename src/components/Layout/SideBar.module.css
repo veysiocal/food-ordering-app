@@ -1,0 +1,25 @@
+.h3 {
+    color: white;
+    text-align: center;
+    margin: 10px;
+}
+
+.listButton {
+    width: 150px;
+    text-align: center;
+}
+
+.closeButton {
+    margin-right: 1em;
+    margin-bottom: 8px;
+}
+
+.boxCustom span {
+    font-size: 20px;
+    font-weight: bold;
+}
+.labelCustom {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}

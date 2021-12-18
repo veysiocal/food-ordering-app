@@ -1,0 +1,25 @@
+.itemCustom label {
+    color: white;
+    margin-right: 10px;
+    font-size: 1.5em;
+    letter-spacing: 2px;
+}
+
+.itemCustom ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.itemCustom input {
+    height: 40px;
+    width: 360px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.filterButton {
+    margin-left: 1em;
+    width: 100px;
+  }
+

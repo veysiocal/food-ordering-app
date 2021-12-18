@@ -1,0 +1,58 @@
+.itemCustom {
+    margin: 1rem 0;
+    background-color: #575757;
+    padding: 1rem;
+  }
+  
+  .itemCustom h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.75rem;
+  }
+  
+  .itemCustom header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  
+  .detailsCustom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .quantityCustom span {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .priceCustom {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .itempriceCustom {
+    font-weight: normal;
+    font-size: 1rem;
+    font-style: italic;
+  }
+  
+  .actionsCustom {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0.5rem 0;
+  }
+  
+  .actionsCustom button {
+    background-color: transparent;
+    border: 1px solid white;
+    margin-left: 0.5rem;
+    padding: 0.15rem 1rem;
+    color: white;
+  }
+  
+  .actionsCustom button:hover,
+  .actionsCustom button:active {
+    background-color: #4b4b4b;
+    color: white;
+  }

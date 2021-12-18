@@ -1,0 +1,23 @@
+.containerCustom {
+  margin: 1.5rem 0;
+  padding: 1.3rem 2rem;
+  background-color:navajowhite;
+}
+.productsCustom label {
+color: white;
+}
+.productsCustom h2 {
+    /* color: white; */
+    /* margin: 2rem auto; */
+    text-align: center;
+    text-transform: uppercase;
+  }
+  
+  .productsCustom ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+
+

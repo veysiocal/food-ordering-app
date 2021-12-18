@@ -1,0 +1,36 @@
+.itemCustom h3 {
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+  }
+  
+  .itemCustom header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  
+  .priceCustom {
+    border-radius: 30px;
+    padding: 0.15rem 1.5rem;
+    background-color: #3a3a3a;
+    color: white;
+    font-size: 1.5rem;
+  }
+
+  .priceCustom span{
+    text-decoration: line-through;
+    border-radius: 30px;
+    padding: 0.15rem 1.5rem;
+    background-color: #3a3a3a;
+    color: white;
+    font-size: 1.5rem;
+  }
+  
+  .itemCustom p {
+    color: #3a3a3a;
+  }
+  
+  .actionsCustom {
+    display: flex;
+    justify-content: flex-end;
+  }
