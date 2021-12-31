@@ -7,9 +7,16 @@ import Restaurants from './components/Shop/Restaurants';
 import Notification from './components/UI/Notification';
 import { sendDataToFirebase, fetchCartData } from './store/cart-actions';
 
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import FavRestaurants from './components/Shop/FavRestaurants';
+import Admin from './pages/Admin';
+import AdminLayout from './components/Layout/AdminLayout';
+import AddProduct from './pages/AddProduct';
+import ActiveProducts from './pages/ActiveProducts';
+import Orders from './pages/Orders';
 
+import Login from './pages/Auth/Login';
+import MainHeader from './components/Layout/MainHeader';
 
 let isInitial = true;
 
@@ -44,23 +51,51 @@ function App() {
   return (
     <Fragment>
       {notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} />}
-      <Layout>
-        {cartIsVisible && <Cart />}
-        {/* {!isSelected && < Restaurants />} */}
-        <Route path='/'>
-          <Redirect to='/restaurants'/>
+      <Switch>
+
+        <Route path='/auth'>
+          <MainHeader />
+          <Login />
         </Route>
-        <Route path='/restaurants'>
-          <Restaurants />
+        <Route path='/admin'>
+          < AdminLayout >
+            <Switch>
+              <Route path='/admin/active-products'>
+                <ActiveProducts />
+              </Route>
+              <Route path='/admin/add-product'>
+                <AddProduct />
+              </Route>
+              <Route path='/admin/orders'>
+                <Orders />
+              </Route>
+              <Route path='/admin' >
+                < Admin />
+              </Route>
+            </Switch>
+          </AdminLayout>
         </Route>
-        <Route path='/products/:restaurantId'>
-          <Products/>
+        <Route path='/' >
+          <Layout>
+            {cartIsVisible && <Cart />}
+            <Switch>
+              <Route path='/' exact>
+                <Redirect to='/restaurants' />
+              </Route>
+
+              <Route path='/restaurants'>
+                <Restaurants />
+              </Route>
+              <Route path='/products/:restaurantId'>
+                <Products />
+              </Route>
+              <Route path='/favorite-restaurants'>
+                <FavRestaurants />
+              </Route>
+            </Switch>
+          </Layout>
         </Route>
-        <Route path='/favorite-restaurants'>
-          <FavRestaurants />
-        </Route>
-        {/* {isSelected && < Products selected={selectedRestaurant.id} />} */}
-      </Layout>
+      </Switch>
     </Fragment>
 
   );

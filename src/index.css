@@ -3,7 +3,13 @@
 * {
   box-sizing: border-box;
 }
-
+body {
+  background: url("images/pexels-jonathan-borba-2878741.jpg") center center no-repeat fixed;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  /* min-height: 100%;x */
+}
 .htmlCustom {
   font-family: 'Noto Sans JP', sans-serif;
 }

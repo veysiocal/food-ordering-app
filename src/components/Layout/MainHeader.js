@@ -12,6 +12,9 @@ const MainHeader = (props) => {
       <nav className={classes.navCustom}>
         <ul>
           <li>
+            <NavLink to='/admin' activeClassName={classes.active} >Admin</NavLink>
+          </li>
+          <li>
             <NavLink to='/restaurants' activeClassName={classes.active} >Ana Sayfa</NavLink>
           </li>
           <li>
@@ -20,6 +23,9 @@ const MainHeader = (props) => {
           <li>
             <CartButton />
           </li>
+            <li>
+              <NavLink to='/auth' activeClassName={classes.active}>Login</NavLink>
+            </li>
         </ul>
       </nav>
     </header>

@@ -35,11 +35,15 @@ const uiSlice = createSlice({
             };
         },
         addToFavorite(state, action) {
-            state.favoriteRestaurants.push({
-                id: action.payload.id,
-                title: action.payload.title,
-                description: action.payload.description,
-            });
+            const restaurantIsFavorited = state.favoriteRestaurants.find(restaurant => restaurant.id === action.payload.id);
+            if (!restaurantIsFavorited) {
+                state.favoriteRestaurants.push({
+                    id: action.payload.id,
+                    title: action.payload.title,
+                    description: action.payload.description,
+                });
+            }
+
         },
         removeFromFavorite(state, action) {
             state.favoriteRestaurants = state.favoriteRestaurants.filter(item => item.id !== action.payload.id);
@@ -61,7 +65,7 @@ const uiSlice = createSlice({
         },
         removeSelectedCategory(state, action) {
             state.selectedCategories = state.selectedCategories.filter(category => category.id !== action.payload)
-        }
+        },
     },
 });
 

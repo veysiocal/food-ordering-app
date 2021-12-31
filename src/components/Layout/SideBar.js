@@ -14,6 +14,8 @@ let categories = [
 ];
 
 const Sidebar = () => {
+    const checkSelectedCategories = useSelector(state => state.ui.selectedCategories);
+    console.log(checkSelectedCategories)
     const dispatch = useDispatch();
 
     const categoryHandler = (e) => {
@@ -28,27 +30,35 @@ const Sidebar = () => {
         dispatch(uiActions.removeSelectedCategory(id))
     };
 
+    const cleanAllHandler = () => {
+        dispatch(uiActions.cleanSelectedCategories())
+    };
+
     return (
         <React.Fragment>
-            <h3 className={classes.h3}>CATEGORIES</h3>
+            <h3 className={classes.h3}>Categories</h3>
             <ListGroup>
                 {categories.map(category => <ListGroupItem key={category.id}>
                     <Button onClick={categoryHandler} id={category.id} className={classes.listButton}>
                         {category.categoryName}
                     </Button>
                 </ListGroupItem>)}
+
             </ListGroup>
             <ListGroupItem>
-                    {selectedCategories.length !== 0 && <div>
-                        <label className={classes.labelCustom}>Selected Categories:</label>
-                        {selectedCategories.map(category =>
-                            <div key={category.id} className={classes.boxCustom}>
-                                <Button close onClick={removeCategoryHandler} id={category.id} className={classes.closeButton}/>
-                                <span> {category.categoryName} </span>
-                            </div>
-                        )}
-                    </div>}
-                </ListGroupItem>
+                {selectedCategories.length !== 0 && <div>
+                    <label className={classes.labelCustom}>Selected Categories:</label>
+                    {selectedCategories.map(category =>
+                        <div key={category.id} className={classes.boxCustom}>
+                            <Button close onClick={removeCategoryHandler} id={category.id} className={classes.closeButton} />
+                            <span> {category.categoryName} </span>
+                        </div>
+                    )}
+                </div>}
+            </ListGroupItem>
+            {checkSelectedCategories.length !== 0 && <ListGroupItem>
+                <button onClick={cleanAllHandler}>Hepsini Temizle</button>
+            </ListGroupItem>}
         </React.Fragment >
     )
 };

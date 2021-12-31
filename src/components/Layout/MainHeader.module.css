@@ -44,10 +44,16 @@
   font-size: 1.25rem;
 }
 
-
-
 .navCustom a:hover,
 .navCustom a:active,
 .navCustom a.active {
   color: #e6fcfc;
+  font-size: 1.5rem;
 }
+
+.login {
+  margin-left: 10px;
+  padding-right: 10px;
+  border: 1px red solid;
+}
+

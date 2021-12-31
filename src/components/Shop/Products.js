@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle, Container, Row } from 'reactstrap';
 import ProductItem from './ProductItem';
@@ -106,10 +107,11 @@ const DUMMY_RESTAURANTS = [
 const Products = () => {
   const params = useParams();
 
-  const restaurant = DUMMY_RESTAURANTS.find(restaurant => restaurant.id === params.restaurantId)
-  const selectedRestaurant = DUMMY_PRODUCTS.filter(restaurant => restaurant.restaurantId === params.restaurantId);
+  const restaurants = useSelector(state => state.admin.restaurants)
+  const activeProducts = useSelector(state => state.admin.activeProducts);
 
-  const resProducts = (Object.values(selectedRestaurant[0])[1]);
+  const restaurant = restaurants.find(restaurant => restaurant.id === params.restaurantId)
+  const products = activeProducts.filter(restaurant => restaurant.restaurantId === params.restaurantId);
 
   return (
     <section className={classes.productsCustom}>
@@ -135,8 +137,8 @@ const Products = () => {
         </Row>
         <Row>
           <ul>
-            {resProducts.map(product => (
-              <ProductItem key={product.id} id={product.id} title={product.title} price={product.price} description={product.description} />)
+            {products.map(product => (
+              <ProductItem key={product.id} id={product.id} name={product.name} price={product.price} description={product.description} />)
             )}
           </ul>
         </Row>

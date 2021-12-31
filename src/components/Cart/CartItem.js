@@ -23,8 +23,12 @@ const CartItem = (props) => {
       <header>
         <h3>{title}</h3>
         <div className={classes.priceCustom} >
-          ${total.toFixed(2)}{' '}
-          <span className={classes.itempriceCustom}>(${price.toFixed(2)}/item)</span>
+          {/* ${total.toFixed(2)}{' '} */}
+          ${total}{' '}
+
+          {/* <span className={classes.itempriceCustom}>(${price.toFixed(2)}/item)</span> */}
+          <span className={classes.itempriceCustom}>(${price}/item)</span>
+
         </div>
       </header>
       <div

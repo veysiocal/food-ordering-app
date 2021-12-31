@@ -57,11 +57,14 @@ const Restaurants = (props) => {
   const queryParams = new URLSearchParams(location.search);
   const filteredRestaurant = queryParams.get('filt');
 
-  let restaurants = [];
+
+  let restaurants = useSelector(state => state.admin.restaurants);
+
+  let showRestaurants = [];
   if (filteredRestaurant) {
-    restaurants = DUMMY_RESTAURANTS.filter(restaurant => restaurant.title.includes(filteredRestaurant));
+    showRestaurants = restaurants.filter(restaurant => restaurant.title.includes(filteredRestaurant));
   } else {
-    restaurants = DUMMY_RESTAURANTS;
+    showRestaurants = restaurants;
   }
 
   const [enteredRestaurant, setEnteredRestaurant] = useState('');
@@ -83,27 +86,29 @@ const Restaurants = (props) => {
     setEnteredRestaurant('');
   };
 
+
   const selectedCategories = useSelector(state => state.ui.selectedCategories);
-  const categorized = selectedCategories.map(category => restaurants.filter(restaurant => restaurant.category.includes(category.categoryName)));
+  const categorized = selectedCategories.map(category => showRestaurants.filter(restaurant => restaurant.category.includes(category.categoryName)));
 
   let result = [];
   categorized.map(category => category.map(category => result.push(category)));
 
   if (selectedCategories.length !== 0) {
-    restaurants = result
+    showRestaurants = result
   };
+
   return (
     <section className={classes.itemCustom}>
       <div className='centeredCustom' >
         <label>Filter</label>
-        <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Search restaurant...'></input>
+        <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Search restaurant...'></input> 
         <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
         </button>
         <button onClick={cleanHandler} className={classes.filterButton}>Clean</button>
       </div>
 
       <ul>
-        {restaurants.map(restaurant => (
+        {showRestaurants.map(restaurant => (
           <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={false} title={restaurant.title} description={restaurant.description} district={restaurant.district} />)
         )}
       </ul>
