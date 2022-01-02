@@ -19,3 +19,12 @@
     padding: 0.15rem 1.25rem;
     color: #1d1d1d;
   }
+
+  @media(max-width:500px) {
+    .buttonCustom {
+      width: auto;
+      font-size: 0.5rem;
+    margin-left: 0.5rem;
+
+    }
+  }

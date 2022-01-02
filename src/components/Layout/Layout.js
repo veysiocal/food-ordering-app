@@ -8,17 +8,11 @@ import classes from './Layout.module.css';
 const Layout = (props) => {
   return (
     <Fragment >
-      <MainHeader/>
-      <Container className={classes.containerCustom}>
-        <Row>
-          <Col xs="3">
-            <Sidebar />
-          </Col>
-          <Col xs="9">
-            <main>{props.children}</main>
-          </Col>
-        </Row>
-      </Container>
+      <MainHeader />
+      <div className={classes.containerLayout}>
+        <Sidebar />
+        <main>{props.children}</main>
+      </div>
     </Fragment>
   );
 };

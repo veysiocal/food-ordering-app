@@ -1,8 +1,30 @@
-.itemCustom label {
+.filtering label {
     color: white;
     margin-right: 10px;
     font-size: 1.5em;
     letter-spacing: 2px;
+}
+
+.filterButton {
+    margin-left: 1em;
+    width: 100px;
+    border-radius: 1em;
+  }
+  
+.filtering {
+    background-color: #008080;
+    border-radius: 2rem;
+    width: 80%;
+    height: 4rem;
+    display: flex;
+    margin: 1.5rem auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.filterButtons {
+    display: flex;
 }
 
 .itemCustom ul {
@@ -11,15 +33,30 @@
     padding: 0;
 }
 
-.itemCustom input {
+.filtering input {
     height: 40px;
-    width: 360px;
+    width: 50%;
     border-radius: 10px;
     border: 1px solid black;
 }
 
-.filterButton {
-    margin-left: 1em;
-    width: 100px;
-  }
+
+@media(max-width:500px) {
+    .filtering {
+        width: auto;
+        height: 10rem;
+        flex-direction: column;
+        justify-content: space-between;
+    }  
+    .filterButtons {
+        flex-direction: colomn;
+    }
+    .itemCustom input {
+        height: 40px;
+        width: 80%;
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+}  
+
 

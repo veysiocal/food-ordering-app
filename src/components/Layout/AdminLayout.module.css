@@ -1,13 +1,10 @@
 .containerLayout {
     margin-top: 6rem;
     padding: 0 1%;
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .containerLayout main {
-    width: 75%;
-    margin: 0 auto;
+    width: 100%;
 }
 /* @media(max-width:500px) {
     .container {

@@ -1,25 +1,98 @@
-.h3 {
-    color: white;
+.categories {
+    width: 20%;
+    height: 100vh;
+    position: relative;
+    padding-bottom: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border-right: 1px solid black;
+}
+.categories h3 {
+    color: black;
+    font-weight: 1000;
     text-align: center;
-    margin: 10px;
+    font-style: italic;
 }
 
-.listButton {
-    width: 90%;
+.categoriesList li {
     text-align: center;
+}
+
+.categoriesList li button {
+    width: 70%;
+    text-align: center;
+    background:lightblue;
+    border-radius: 1rem;
+}
+
+.selectCategoriesList label {
+    color: black;
+    font-weight: 1000;
+    font-style: italic;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.closeButtonDiv {
+  border: 1px solid #1a8ed1;
+    margin: 0 auto;
+    position: relative;
+    background:lightblue;
+    padding-top: 1%;
+    border-radius: 1rem;
 }
 
 .closeButton {
-    margin-right: 1em;
-    margin-bottom: 8px;
+  border: 2px solid #a7a7a7;
+    padding-top: 8%;
+    width: 40%;
+    height: 5%;
+    text-align: center;
+    border-radius: 1rem;
+    position: absolute;
+    right: 0px;
 }
 
-.boxCustom span {
-    font-size: 20px;
-    font-weight: bold;
+.selectCategoriesList span {
+    font-size: 1.25rem;
+    margin-left: 4rem;
 }
-.labelCustom {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 10px;
+
+.cleanButton {
+    background-color: blue;
+    border-radius: 15px;
+    position: absolute ;
+    left: 15%;
+    bottom: 2px;
+}
+
+.cleanButton button {
+    border-radius: 15px;
+    color: white;
+}
+@media(max-width: 500px) {
+    .categories {
+        width: 100%;
+        flex-direction: row;
+        border: 2px solid black;
+    }
+    .categoriesList {
+        display: flex;
+        width: 100%;
+    }
+    .categoriesList li button {
+        width: 100%;
+        text-align: center;
+        background:lightblue;
+        border-radius: 1rem;
+    }
+    .categories h3 {
+        color: white;
+        font-size: 3rem;
+    }
+    .listButton {
+        font-size: 0.5rem;
+    }
 }

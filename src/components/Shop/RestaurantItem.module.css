@@ -1,3 +1,7 @@
+.itemCustom {
+  background: url(../../images/pexels-ella-olsson-1640777.jpg);
+  background-size: cover;
+}
 .itemCustom h3 {
     margin: 0.5rem 0;
     font-size: 1.25rem;

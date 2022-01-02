@@ -99,12 +99,16 @@ const Restaurants = (props) => {
 
   return (
     <section className={classes.itemCustom}>
-      <div className='centeredCustom' >
+      <div className={classes.filtering} >
         <label>Filter</label>
-        <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Search restaurant...'></input> 
-        <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
-        </button>
-        <button onClick={cleanHandler} className={classes.filterButton}>Clean</button>
+        <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Search restaurant...'></input>
+        <div className={classes.filterButtons}>
+
+          <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
+          </button>
+          <button onClick={cleanHandler} className={classes.filterButton}>Clean</button>
+        </div>
+
       </div>
 
       <ul>

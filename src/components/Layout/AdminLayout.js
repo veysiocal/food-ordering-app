@@ -3,14 +3,14 @@ import { Container, Row, Col } from 'reactstrap';
 import MainHeader from './MainHeader';
 import Sidebar from './SideBar';
 
-import classes from './Layout.module.css';
+import classes from './AdminLayout.module.css';
 import AdminMainHeader from './AdminMainHeader';
 
 const AdminLayout = (props) => {
   return (
     <Fragment >
       <AdminMainHeader />
-      <Container className={classes.containerCustom}>
+      <div className={classes.containerLayout}>
         <Row>
           {/* <Col xs="3"> */}
             {/* <Sidebar /> */}
@@ -19,7 +19,7 @@ const AdminLayout = (props) => {
             <main>{props.children}</main>
           </Col>
         </Row>
-      </Container>
+      </div>
     </Fragment>
   );
 };
