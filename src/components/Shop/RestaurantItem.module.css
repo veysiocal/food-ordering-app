@@ -1,10 +1,39 @@
 .itemCustom {
-  background: url(../../images/pexels-ella-olsson-1640777.jpg);
-  background-size: cover;
+  color: white;
+  border: 1px solid black;
+  font-size: large;
+  display: flex;
+  padding: 0;
+  background-color:gray;
 }
+.headerPart {
+  flex-grow: 1;
+  margin: 0 1rem;
+}
+.otherPart {
+  flex-grow: 15;
+  position: relative;
+  margin: 0;
+}
+.Kebap {
+  background: url(../../images/kebap.jpeg);
+  background-size: 35%;
+}
+
+.Pizza {
+  background: url(../../images/pizza.jpeg);
+  background-size: 35%;
+}
+
+.Lahmacun {
+  background: url(../../images/lahmacun.jpg);
+  background-size: 35%;
+}
+
 .itemCustom h3 {
     margin: 0.5rem 0;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    color: black;
   }
   
   .itemCustom header {
@@ -14,10 +43,38 @@
   }
 
   .itemCustom p {
-    color: #3a3a3a;
+    color: black;
+    font-size: 1.25rem;
+    opacity: 0.8;
   }
 
   .actionsCustom {
     display: flex;
     justify-content: flex-end;
+    position: absolute;
+    bottom: 0px;
+    left: 10.3rem;
   }
+
+  .actionsCustom button {
+    text-decoration: none;
+    background-color: teal;
+    color: white;
+    border-radius: 4px;
+    padding: 0.25rem 0.25rem;
+    border: 1px solid teal;
+    cursor: pointer;
+    margin: 0 0.06rem;
+    font-size: 1rem;
+  }
+  .actionsCustom button a {
+    text-decoration: none;
+    color: white;
+  }
+
+.actionsCustom button:hover,
+.actionsCustom button:active {
+  background-color: #1ac5d1;
+  border-color: #1ac5d1;
+  color: white;
+}

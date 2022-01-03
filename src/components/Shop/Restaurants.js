@@ -100,10 +100,8 @@ const Restaurants = (props) => {
   return (
     <section className={classes.itemCustom}>
       <div className={classes.filtering} >
-        <label>Filter</label>
         <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Search restaurant...'></input>
-        <div className={classes.filterButtons}>
-
+        <div>
           <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
           </button>
           <button onClick={cleanHandler} className={classes.filterButton}>Clean</button>
@@ -113,7 +111,7 @@ const Restaurants = (props) => {
 
       <ul>
         {showRestaurants.map(restaurant => (
-          <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={false} title={restaurant.title} description={restaurant.description} district={restaurant.district} />)
+          <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={false} category={restaurant.category} title={restaurant.title} description={restaurant.description} district={restaurant.district} />)
         )}
       </ul>
     </section>

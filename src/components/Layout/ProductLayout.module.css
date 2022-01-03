@@ -1,0 +1,16 @@
+.containerLayout {
+    margin-top: 6rem;
+    padding: 0 1%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.containerLayout main {
+    width: 90%;
+    margin: 0 auto;
+}
+/* @media(max-width:500px) {
+    .container {
+        flex-direction: column;
+    }
+} */

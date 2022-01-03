@@ -36,7 +36,7 @@ const Sidebar = () => {
 
     return (
         <div className={classes.categories}>
-            <h3 >Categories</h3>
+            <h3 >Kategoriler</h3>
             <ul className={classes.categoriesList}>
                 {categories.map(category => <li key={category.id}>
                     <button onClick={categoryHandler} id={category.id} >
@@ -47,7 +47,7 @@ const Sidebar = () => {
             </ul>
             <ul className={classes.selectCategoriesList}>
                 {selectedCategories.length !== 0 && <div>
-                    <label>Selected Categories</label>
+                    <label>Seçilen Kategoriler</label>
                     {selectedCategories.map(category => <li key={category.id}>
                         <div className={classes.closeButtonDiv}>
                             <span for='closeButton'> {category.categoryName} </span>
@@ -60,7 +60,7 @@ const Sidebar = () => {
             </ul>
             <div className={classes.cleanButton}>
                 {checkSelectedCategories.length !== 0 &&
-                    <button onClick={cleanAllHandler}>Hepsini Temizle</button>
+                    <button onClick={cleanAllHandler}>Seçilenleri Sıfırla</button>
                 }
             </div>
         </div>

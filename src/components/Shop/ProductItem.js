@@ -10,27 +10,34 @@ const ProductItem = (props) => {
 
   const discount = fee - fee * 0.2;
 
-  // const addToCartHandler = () => {
-  //   dispatch(cartActions.addItemToCart({
-  //     id,
-  //     title,
-  //     price,
-  //   }));
-  // };
+  const addToCartHandler = () => {
+    dispatch(cartActions.addItemToCart({
+      id,
+      name,
+      fee,
+    }));
+  };
 
   return (
-    <li className={classes.itemCustom}>
-      <Card>
-        <header>
-          <h3>{name}</h3>
-          <div className={classes.priceCustom}><span>  ${fee}  </span> ${discount}</div>
-        </header>
-        <p>{description}</p>
-        <div className={classes.actionsCustom}>
-          <button /*onClick={addToCartHandler}*/ >Add to Cart</button>
-        </div>
-      </Card>
-    </li>
+    <div className={classes.itemCustom}>
+      <li>
+        <Card className={classes.productItemCard}>
+          <header>
+            <h3>{name}</h3>
+            <div className={classes.priceCustom}><span>  ${fee}  </span> ${discount}</div>
+          </header>
+          <div>
+            <p>{description}</p>
+          </div>
+
+          <div className={classes.actionsCustom}>
+            <button onClick={addToCartHandler} >Sepete Ekle</button>
+          </div>
+        </Card>
+      </li>
+      <div className={`${classes[name]} ${classes.photo} `} >
+      </div>
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 import { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cart from './components/Cart/Cart';
-import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Restaurants from './components/Shop/Restaurants';
 import Notification from './components/UI/Notification';
@@ -10,13 +9,15 @@ import { sendDataToFirebase, fetchCartData } from './store/cart-actions';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import FavRestaurants from './components/Shop/FavRestaurants';
 import Admin from './pages/Admin';
-import AdminLayout from './components/Layout/AdminLayout';
 import AddProduct from './pages/AddProduct';
 import ActiveProducts from './pages/ActiveProducts';
 import Orders from './pages/Orders';
-
 import Login from './pages/Auth/Login';
-import MainHeader from './components/Layout/MainHeader';
+
+import Layout from './components/Layout/Layout';
+import AuthLayout from './components/Layout/AuthLayout';
+import AdminLayout from './components/Layout/AdminLayout';
+import ProductLayout from './components/Layout/ProductLayout';
 
 let isInitial = true;
 
@@ -54,8 +55,9 @@ function App() {
       <Switch>
 
         <Route path='/auth'>
-          <MainHeader />
-          <Login />
+          <AuthLayout>
+            <Login />
+          </AuthLayout>
         </Route>
         <Route path='/admin'>
           < AdminLayout >
@@ -75,6 +77,11 @@ function App() {
             </Switch>
           </AdminLayout>
         </Route>
+        <Route path='/products/:restaurantId'>
+          <ProductLayout>
+            <Products />
+          </ProductLayout>
+        </Route>
         <Route path='/' >
           <Layout>
             {cartIsVisible && <Cart />}
@@ -82,12 +89,10 @@ function App() {
               <Route path='/' exact>
                 <Redirect to='/restaurants' />
               </Route>
-
               <Route path='/restaurants'>
                 <Restaurants />
               </Route>
               <Route path='/products/:restaurantId'>
-                <Products />
               </Route>
               <Route path='/favorite-restaurants'>
                 <FavRestaurants />
@@ -95,9 +100,9 @@ function App() {
             </Switch>
           </Layout>
         </Route>
+
       </Switch>
     </Fragment>
-
   );
 }
 

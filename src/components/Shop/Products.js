@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle, Container, Row } from 'reactstrap';
+import Card from '../UI/Card';
 import ProductItem from './ProductItem';
 import classes from './Products.module.css';
 
@@ -115,36 +115,26 @@ const Products = () => {
 
   return (
     <section className={classes.productsCustom}>
-      <Container >
-        <Row>
-          <Card className={classes.containerCustom}>
-            <CardBody>
-              <CardTitle tag="h5">
-                {`${restaurant.title} (${restaurant.district})`}
-              </CardTitle>
-              <CardSubtitle
-                className="mb-2 text-muted"
-                tag="h6"
-              >
-                {restaurant.description}
-              </CardSubtitle>
+      <div className={classes.container} >
+      <div className={classes.onlyLogo} />
 
-              <Button>
-                Button
-              </Button>
-            </CardBody>
-          </Card>
-        </Row>
-        <Row>
-          <ul>
-            {products.map(product => (
-              <ProductItem key={product.id} id={product.id} name={product.name} price={product.price} description={product.description} />)
-            )}
-          </ul>
-        </Row>
-
-      </Container>
-
+        <Card className={classes.containerCustom}>
+          <header>
+            <h4>{restaurant.title}</h4>
+            <h5>{restaurant.district}</h5>
+          </header>
+          <p>
+            {restaurant.description}
+          </p>
+        </Card>
+      </div>
+      <div >
+        <ul className={classes.productItemsList}>
+          {products.map(product => (
+            <ProductItem key={product.id} id={product.id} name={product.name} fee={product.price} description={product.description} />)
+          )}
+        </ul>
+      </div>
     </section>
   );
 };

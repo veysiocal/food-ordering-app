@@ -1,20 +1,51 @@
-.itemCustom h3 {
-    margin: 0.5rem 0;
+.itemCustom {
+  margin: 1rem 0.5rem;
+  width: 23%;
+  position: relative;
+  height: 17rem;
+}
+
+.Kebap {
+  background-image: url(../../images/kebap.jpeg);
+}
+.Lahmacun {
+  background-image: url(../../images/lahmacun.jpg);
+}
+.photo {
+  width: 99%;
+  height: 49.5%;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0px;
+  right: 2px;
+  left: 2px;
+  background-size: 10rem;
+}
+.productItemCard {
+  background-size: cover;
+  color: black;
+  margin: 0px;
+  width: 100%;
+}
+
+.itemCustom header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.itemCustom header h3 {
+    margin: 0.5rem 0.5rem;
     font-size: 1.25rem;
-  }
-  
-  .itemCustom header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
   }
   
   .priceCustom {
     border-radius: 30px;
-    padding: 0.15rem 1.5rem;
+    padding: 0.15rem 1rem;
     background-color: #3a3a3a;
     color: white;
-    font-size: 1.5rem;
+    font-size: 0.75rem;
+    width: 50%;
   }
 
   .priceCustom span{
@@ -23,14 +54,24 @@
     padding: 0.15rem 1.5rem;
     background-color: #3a3a3a;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
   
   .itemCustom p {
     color: #3a3a3a;
+    font-size: 0.75rem;
   }
   
-  .actionsCustom {
-    display: flex;
-    justify-content: flex-end;
+  .actionsCustom button {
+    margin-left: 5.5rem;
+    font-size: 0.65rem;
+    background: #008080;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.25rem;
+  }
+
+  .actionsCustom button:hover{
+    background: white;
+    color: black;
   }
