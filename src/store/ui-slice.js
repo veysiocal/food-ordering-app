@@ -10,6 +10,7 @@ const uiSlice = createSlice({
         favoriteRestaurants: [],
         notificationIsVisible: { show: false },
         selectedCategories: [],
+        selectedDistrict: null,
     },
     reducers: {
         toggle(state) {
@@ -41,6 +42,8 @@ const uiSlice = createSlice({
                     id: action.payload.id,
                     title: action.payload.title,
                     description: action.payload.description,
+                    district: action.payload.district,
+                    category: action.payload.category,
                 });
             }
 
@@ -66,6 +69,9 @@ const uiSlice = createSlice({
         removeSelectedCategory(state, action) {
             state.selectedCategories = state.selectedCategories.filter(category => category.id !== action.payload)
         },
+        takeSelectedDistrict(state, action) {
+            state.selectedDistrict = action.payload;
+        }
     },
 });
 

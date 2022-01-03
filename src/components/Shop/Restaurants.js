@@ -97,10 +97,35 @@ const Restaurants = (props) => {
     showRestaurants = result
   };
 
+  const selectDistrictHandler = (e) => {
+    const district = e.target.value;
+    dispatch(uiActions.takeSelectedDistrict(district));
+  };
+
+  const selectedDistrict = useSelector(state => state.ui.selectedDistrict);
+  if (selectedDistrict !== null) {
+    if (selectedDistrict === 'Tümü') {
+      showRestaurants = showRestaurants;
+    } else {
+      showRestaurants = showRestaurants.filter(restaurant => restaurant.district === selectedDistrict)
+    }
+  }
+
   return (
     <section className={classes.itemCustom}>
+      <div className={classes.selectorDiv}>
+        <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={selectDistrictHandler}>
+          <option value='Tümü' >Bölge Seçiniz</option>
+          <option value='Kadıköy' >Kadıköy</option>
+          <option value='Kartal' >Kartal</option>
+          <option value='Maltepe' >Maltepe</option>
+          <option value='Pendik' >Pendik</option>
+          <option value='Üsküdar' >Üsküdar</option>
+          <option value='Ümraniye' >Ümraniye</option>
+        </select>
+      </div>
       <div className={classes.filtering} >
-        <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Search restaurant...'></input>
+        <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Restoran ara...'></input>
         <div>
           <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
           </button>
@@ -108,12 +133,15 @@ const Restaurants = (props) => {
         </div>
 
       </div>
+      {
+        showRestaurants.length !== 0 && <ul>
+          {showRestaurants.map(restaurant => (
+            <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={false} category={restaurant.category} title={restaurant.title} description={restaurant.description} district={restaurant.district} />)
+          )}
+        </ul>
+      }
+      {showRestaurants.length === 0 && <div className={classes.cautionDiv}>Uygun restoran bulunamadı...</div>}
 
-      <ul>
-        {showRestaurants.map(restaurant => (
-          <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={false} category={restaurant.category} title={restaurant.title} description={restaurant.description} district={restaurant.district} />)
-        )}
-      </ul>
     </section>
   );
 };

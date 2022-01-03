@@ -1,3 +1,13 @@
+.itemCustom .selector {
+    border-radius: 2rem;
+    width: 70%;
+    height: 2.5rem;
+    display: flex;
+    margin: 1rem auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
 .filtering {
     border-radius: 2rem;
     width: 70%;
@@ -10,6 +20,7 @@
 }
 
 .filterButton {
+    background-color: white;
     margin-left: 1em;
     width: 7rem;
     border-radius: 1em;
@@ -25,7 +36,8 @@
     width: 50%;
     border-radius: 10px;
     border: 1px solid black;
-    padding: 1%;
+    padding: 1.5%;
+    font-style: italic;
 }
 
 .itemCustom ul {
@@ -34,6 +46,14 @@
     padding: 0;
 }
 
+.cautionDiv {
+    width: 100%;
+    font-size: 2rem;
+    text-align: center;
+    padding: 10%;
+    color: aqua;
+    font-weight: bold;
+}
 @media(max-width:500px) {
     .filtering {
         width: auto;

@@ -14,6 +14,8 @@ const RestaurantItem = (props) => {
       id,
       title,
       description,
+      district,
+      category,
     }));
 
     dispatch(uiActions.showNotification({
@@ -30,8 +32,6 @@ const RestaurantItem = (props) => {
   const cancelFavoriteHandler = () => {
     dispatch(uiActions.removeFromFavorite({
       id,
-      title,
-      description,
     }));
 
   };

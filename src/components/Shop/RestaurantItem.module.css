@@ -5,15 +5,17 @@
   display: flex;
   padding: 0;
   background-color:gray;
+  border-radius: 1rem;
 }
 .headerPart {
-  flex-grow: 1;
+  width: 29%;
   margin: 0 1rem;
 }
 .otherPart {
-  flex-grow: 15;
+  width: 71%;
   position: relative;
   margin: 0;
+  border-radius: 1rem;
 }
 .Kebap {
   background: url(../../images/kebap.jpeg);
@@ -53,14 +55,14 @@
     justify-content: flex-end;
     position: absolute;
     bottom: 0px;
-    left: 10.3rem;
+    left: 11rem;
   }
 
   .actionsCustom button {
     text-decoration: none;
     background-color: teal;
     color: white;
-    border-radius: 4px;
+    border-radius: 0.5rem;
     padding: 0.25rem 0.25rem;
     border: 1px solid teal;
     cursor: pointer;
