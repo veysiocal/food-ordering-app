@@ -19,6 +19,10 @@ const Cart = (props) => {
     dispatch(uiActions.toggleNotification({
       show: true,
     }));
+
+    dispatch(uiActions.activateOrderPage({
+      show: true,
+    }))
   }
   return (
     <Card className={classes.cartCustom}>

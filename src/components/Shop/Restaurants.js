@@ -136,7 +136,9 @@ const Restaurants = (props) => {
       {
         showRestaurants.length !== 0 && <ul>
           {showRestaurants.map(restaurant => (
-            <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={false} category={restaurant.category} title={restaurant.title} description={restaurant.description} district={restaurant.district} />)
+            <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={false} category={restaurant.category}
+             title={restaurant.title} description={restaurant.description} district={restaurant.district}
+             start={restaurant.start} end={restaurant.end} />)
           )}
         </ul>
       }

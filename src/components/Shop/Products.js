@@ -125,13 +125,14 @@ const Products = () => {
           </header>
           <p>
             {restaurant.description}
+            {restaurant.start} - {restaurant.end}
           </p>
         </Card>
       </div>
       <div >
         <ul className={classes.productItemsList}>
           {products.map(product => (
-            <ProductItem key={product.id} id={product.id} name={product.name} fee={product.price} description={product.description} />)
+            <ProductItem key={product.id} id={product.id} name={product.name} fee={product.price} description={product.description} start={product.start} end={product.end} />)
           )}
         </ul>
       </div>

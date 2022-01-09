@@ -1,3 +1,9 @@
+.notfoundline {
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  margin-top: 5rem;
+}
 .itemCustom {
     margin: 1rem 0;
     background-color: #575757;

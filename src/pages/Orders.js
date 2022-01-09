@@ -5,7 +5,13 @@ import classes from './Orders.module.css';
 
 const Orders = () => {
     const items = useSelector(state => state.cart.items);
-
+    const orderPageIsVisible = useSelector(state => state.ui.orderPageIsVisible)
+    
+    if(!orderPageIsVisible) {
+        return (
+            <p className={classes.notfoundline}>Not found any order...</p>
+        )
+    }
     return (
         <Card>
             <ul>

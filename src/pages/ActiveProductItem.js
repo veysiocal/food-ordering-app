@@ -4,7 +4,7 @@ import { adminActions } from '../store/admin-slice';
 import classes from './ActiveProductItem.module.css';
 
 const ProductItem = (props) => {
-  const { name, type, date, time, fee, amount, description, id, restaurantId } = props;
+  const { name, type, date, start, end, fee, amount, description, id, restaurantId } = props;
 
   const discount = fee - fee * 0.2;
 
@@ -22,6 +22,7 @@ const ProductItem = (props) => {
           <div className={classes.priceCustom}><span> <small> ${fee}</small>  </span> <strong>${discount}</strong></div>
         </header>
         <p>{description}</p>
+        <p>{start} - {end}</p>
         <div className={classes.actionsCustom}>
           <button onClick={removeProductHandler}>Ürünü Kaldır</button>
         </div>

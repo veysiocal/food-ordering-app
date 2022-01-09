@@ -7,10 +7,14 @@
 
 .Kebap {
   background-image: url(../../images/kebap.jpeg);
-}
+} 
 .Lahmacun {
   background-image: url(../../images/lahmacun.jpg);
 }
+.Pizza {
+  background-image: url(../../images/pizza.jpeg);
+}
+
 .photo {
   width: 99%;
   height: 49.5%;
@@ -28,17 +32,26 @@
   width: 100%;
 }
 
-.itemCustom header {
+.itemCustom .infos {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-}
+   align-items: baseline;
+ } 
 
-.itemCustom header h3 {
-    margin: 0.5rem 0.5rem;
+.itemCustom header img {
+  width: 100%;
+}
+.infos h3 {
+    margin: 0.5rem 0;
     font-size: 1.25rem;
   }
   
+.details {
+  padding: 0.5rem;
+  font-weight: bold;
+  text-align: left;
+} 
+
   .priceCustom {
     border-radius: 30px;
     padding: 0.15rem 1rem;
@@ -61,14 +74,28 @@
     color: #3a3a3a;
     font-size: 0.75rem;
   }
+
+  .actionsCustom {
+    height: 2rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+  }
+  .actionsCustom p {
+    font-size: 0.85rem;
+  }
   
   .actionsCustom button {
     margin-left: 5.5rem;
-    font-size: 0.65rem;
+    font-size: 0.78rem;
     background: #008080;
     color: white;
     font-weight: bold;
     border-radius: 0.25rem;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
   }
 
   .actionsCustom button:hover{

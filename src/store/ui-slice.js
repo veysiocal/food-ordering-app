@@ -9,6 +9,7 @@ const uiSlice = createSlice({
         selectedRestaurant: null,
         favoriteRestaurants: [],
         notificationIsVisible: { show: false },
+        orderPageIsVisible: false,
         selectedCategories: [],
         selectedDistrict: null,
     },
@@ -27,6 +28,9 @@ const uiSlice = createSlice({
             state.notificationIsVisible = {
                 show: action.payload.show,
             };
+        },
+        activateOrderPage(state, action) {
+            state.orderPageIsVisible = action.payload;
         },
         selected(state, action) {
             // state.isSelected = true;

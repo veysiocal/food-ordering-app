@@ -24,6 +24,8 @@ const adminSlice = createSlice({
                     description: action.payload.enteredDescription,
                     category: action.payload.enteredCategory,
                     district: action.payload.enteredDistrict,
+                    start: action.payload.startTime,
+                    end: action.payload.endTime,
                 })
             }
 
@@ -35,7 +37,8 @@ const adminSlice = createSlice({
                 name: action.payload.nameInput,
                 type: action.payload.typeInput,
                 date: action.payload.dateInput,
-                time: action.payload.timeInput,
+                start: action.payload.timeInput,
+                end: action.payload.endTime,
                 price: action.payload.fee,
                 amount: action.payload.amountInput,
                 description: action.payload.descriptionInput,

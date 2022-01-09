@@ -13,6 +13,7 @@ const AddProduct = () => {
     const [typeInput, setTypeInput] = useState('');
     const [dateInput, setDateInput] = useState();
     const [timeInput, setTimeInput] = useState();
+    const [endTime, setEndTime] = useState();
     const [feeInput, setFeeInput] = useState('');
     const [amountInput, setAmountInput] = useState('');
     const [descriptionInput, setDescriptionInput] = useState('');
@@ -29,6 +30,10 @@ const AddProduct = () => {
 
     const dateInputHandler = event => {
         setDateInput(event.target.value);
+    };
+
+    const endTimeHandler = event => {
+        setEndTime(event.target.value);
     };
 
     const timeInputHandler = event => {
@@ -69,6 +74,7 @@ const AddProduct = () => {
             typeInput,
             dateInput,
             timeInput,
+            endTime,
             fee,
             amountInput,
             descriptionInput,
@@ -79,6 +85,7 @@ const AddProduct = () => {
         setTypeInput('');
         setDateInput('');
         setTimeInput('');
+        setEndTime('');
         setFeeInput('');
         setAmountInput('');
         setDescriptionInput('');
@@ -93,32 +100,24 @@ const AddProduct = () => {
                     </Label>
                     <Input onChange={restaurantIdInputHandler} value={restaurantIdInput} id='restaurantId' name='restaurantId'/>
                 </FormGroup>
-            </Card>
-            <Card>
                 <FormGroup>
                     <Label for='productId'>
                         Product ID
                     </Label>
                     <Input onChange={idInputHandler} value={idInput} id='productId' name='productId'/>
                 </FormGroup>
-            </Card>
-            <Card>
                 <FormGroup>
                     <Label for='productName'>
                         Ürün Adı
                     </Label>
                     <Input onChange={nameInputHandler} value={nameInput} id='productName' name='productName' />
                 </FormGroup>
-            </Card>
-            <Card>
                 <FormGroup>
                     <Label for='productType'>
                         Ürün Türü
                     </Label>
                     <Input onChange={typeInputHandler} value={typeInput} id='productType' name='productType' />
                 </FormGroup>
-            </Card>
-            <Card>
                 <FormGroup>
                     <Label for="exampleDate">
                         Tarih
@@ -132,14 +131,12 @@ const AddProduct = () => {
                         value={dateInput}
                     />
                 </FormGroup>
-            </Card>
-            <Card>
                 <FormGroup>
-                    <Label for="exampleTime">
-                        Saat
+                    <Label for="startTime">
+                        Başlangıç Saati
                     </Label>
                     <Input
-                        id="exampleTime"
+                        id="startTime"
                         name="time"
                         placeholder="time placeholder"
                         type="time"
@@ -147,16 +144,25 @@ const AddProduct = () => {
                         value={timeInput}
                     />
                 </FormGroup>
-            </Card>
-            <Card>
+                <FormGroup>
+                    <Label for="endTime">
+                        Bitiş Saati
+                    </Label>
+                    <Input
+                        id="endTime"
+                        name="time"
+                        placeholder="time placeholder"
+                        type="time"
+                        onChange={endTimeHandler}
+                        value={endTime}
+                    />
+                </FormGroup>                
                 <FormGroup>
                     <Label for='price'>
                         Fiyat
                     </Label>
                     <Input onChange={feeInputHandler} value={feeInput} type='number' id='price'/>
                 </FormGroup>
-            </Card>
-            <Card>
                 <FormGroup>
                     <Label for="exampleSelect">
                         Miktar
@@ -185,8 +191,6 @@ const AddProduct = () => {
                         </option>
                     </Input>
                 </FormGroup>
-            </Card>
-            <Card>
                 <FormGroup>
                     <Label for="exampleText">
                         Açıklama
@@ -199,7 +203,6 @@ const AddProduct = () => {
                         value={descriptionInput}
                     />
                 </FormGroup>
-            </Card>
             {/* <Card>
                 <FormGroup>
                     <Label for="exampleFile">
@@ -245,6 +248,8 @@ const AddProduct = () => {
                 </FormGroup>
             </Card> */}
             <Button>Ekle</Button>
+            </Card>
+
         </Form>
     )
 };

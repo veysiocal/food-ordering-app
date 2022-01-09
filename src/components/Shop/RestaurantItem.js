@@ -5,7 +5,7 @@ import { uiActions } from '../../store/ui-slice';
 import { Link } from 'react-router-dom';
 
 const RestaurantItem = (props) => {
-  const { title, id, description, district, category } = props;
+  const { title, id, description, district, category, start, end} = props;
 
   const dispatch = useDispatch();
 
@@ -45,6 +45,7 @@ const RestaurantItem = (props) => {
           </header>
           <p>{category}</p>
           <p>{district}</p>
+          <p>{start} - {end}  </p>
         </div>
         <div className={`${classes.otherPart} ${classes[category]}`}>
           <div className={classes.actionsCustom}>

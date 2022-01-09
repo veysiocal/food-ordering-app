@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux';
 import { Form, FormGroup, Label, Input, Row, Col, Button } from 'reactstrap';
 import Card from '../components/UI/Card';
 import { adminActions } from '../store/admin-slice';
+
+import classes from './AboutRestaurant.module.css';
+
 const AboutRestaurant = () => {
 
     const dispatch = useDispatch();
@@ -15,6 +18,8 @@ const AboutRestaurant = () => {
     const [enteredDescription, setEnteredDescription] = useState('');
     const [enteredCategory, setEnteredCategory] = useState('');
     const [enteredDistrict, setEnteredDistrict] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
 
     const enteredIdHandler = event => {
         setEnteredId(event.target.value);
@@ -44,13 +49,23 @@ const AboutRestaurant = () => {
         setEnteredCategory(event.target.value);
     };
 
+    const startTimeHandler = event => {
+        setStartTime(event.target.value);
+    };
+
+    const endTimeHandler = event => {
+        setEndTime(event.target.value);
+    };
+
     const enteredDistrictHandler = event => {
         setEnteredDistrict(event.target.value);
     };
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
-        console.log("Açıkama: ",enteredDescription)
+        console.log("Açıkama: ", enteredDescription)
+        console.log("event: ", event.target['exampleFile'].value);
+
         dispatch(adminActions.addRestaurant({
             enteredId,
             enteredName,
@@ -60,6 +75,8 @@ const AboutRestaurant = () => {
             enteredDescription,
             enteredCategory,
             enteredDistrict,
+            startTime,
+            endTime,
         }));
     }
     return (
@@ -88,11 +105,42 @@ const AboutRestaurant = () => {
                     <Input onChange={enteredNameHandler} value={enteredName} />
                 </FormGroup>
                 <FormGroup>
-                    <Label >
-                        Kategori
-                    </Label>
-                    <Input onChange={enteredCategoryHandler} value={enteredCategory} />
+                    <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={enteredCategoryHandler}>
+                        <option value='' >Kategori Seçiniz</option>
+                        <option value='Kebap' >Kebap</option>
+                        <option value='Lahmacun' >Lahmacun</option>
+                        <option value='Pizza' >Pizza</option>
+                        <option value='Çiğ Köfte' >Çiğ Köfte</option>
+                        <option value='Döner' >Döner</option>
+                        <option value='Burger' >Burger</option>
+                    </select>
                 </FormGroup>
+                <FormGroup>
+                    <Label for="startTime">
+                        Başlangıç Saati
+                    </Label>
+                    <Input
+                        id="startTime"
+                        name="time"
+                        placeholder="time placeholder"
+                        type="time"
+                        onChange={startTimeHandler}
+                        value={startTime}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="endTime">
+                        Bitiş Saati
+                    </Label>
+                    <Input
+                        id="endTime"
+                        name="time"
+                        placeholder="time placeholder"
+                        type="time"
+                        onChange={endTimeHandler}
+                        value={endTime}
+                    />
+                </FormGroup>             
                 <FormGroup>
                     <Label >
                         Telefon Numarası

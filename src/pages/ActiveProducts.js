@@ -12,7 +12,7 @@ const ActiveProducts = () => {
                 <ul>
                     {products.map(product => (
                         <ActiveProductItem id={product.id} name={product.name} restaurantId={product.restaurantId}
-                            type={product.type} date={product.date} time={product.time}
+                            type={product.type} date={product.date} start={product.start} end={product.end}
                             fee={product.price} amount={product.amount} description={product.description}
                         />
                     ))}
