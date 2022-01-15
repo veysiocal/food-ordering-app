@@ -2,6 +2,7 @@
     max-width: 30rem;
     background-color: #313131;
     color: white;
+    position: relative;
   }
   
   .cartCustom h2 {
@@ -13,4 +14,12 @@
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+
+  .closeButton {
+    width: 20%;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 1rem;
+    padding: 0;
   }

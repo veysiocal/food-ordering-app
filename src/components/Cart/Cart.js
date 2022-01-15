@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { adminActions } from '../../store/admin-slice';
+import { cartActions } from '../../store/cart-slice';
 import { uiActions } from '../../store/ui-slice';
 import Card from '../UI/Card';
 import classes from './Cart.module.css';
 import CartItem from './CartItem';
 
 const Cart = (props) => {
-  const items = useSelector(state => state.cart.items);
+  const [orderIsSuccess, setOrderIsSuccess] = useState(false);
 
+  let items = useSelector(state => state.cart.items);
+  console.log(items.length)
   const dispatch = useDispatch();
 
   const compeletedHandler = () => {
@@ -23,19 +28,30 @@ const Cart = (props) => {
     dispatch(uiActions.activateOrderPage({
       show: true,
     }))
+
+    items.forEach(item => (dispatch(adminActions.removeProductsForOrder(item))));
+    dispatch(cartActions.takeOrder());
+    dispatch(cartActions.cleanCart());
+  }
+
+  const closeHandler = () => {
+    dispatch(uiActions.toggle());
   }
   return (
     <Card className={classes.cartCustom}>
 
-      <ul>
+      {items.length !== 0 && <ul>
         {items.map(
           item => (<CartItem
             key={item.id}
             item={{ id: item.id, title: item.name, quantity: item.quantity, total: item.totalPrice, price: item.price }}
           />
           ))}
-      </ul>
-      <button onClick={compeletedHandler}>Öde ve Ürünleri Ayırt</button>
+        <button onClick={compeletedHandler}>Öde ve Ürünleri Ayırt</button>
+
+      </ul>}
+      {items.length === 0 && <div><p>Sepetinde ürün bulunmamaktadır...</p></div>}
+      <button onClick={closeHandler} className={classes.closeButton}>Kapat</button>
     </Card>
   );
 };

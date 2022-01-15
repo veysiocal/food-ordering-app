@@ -45,7 +45,7 @@ const RestaurantItem = (props) => {
           </header>
           <p>{category}</p>
           <p>{district}</p>
-          <p>{start} - {end}  </p>
+          <p> <i class="fas fa-clock"></i> {start} - {end} </p>
         </div>
         <div className={`${classes.otherPart} ${classes[category]}`}>
           <div className={classes.actionsCustom}>

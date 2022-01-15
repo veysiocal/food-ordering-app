@@ -64,7 +64,7 @@ const AboutRestaurant = () => {
     const formSubmitHandler = (event) => {
         event.preventDefault();
         console.log("Açıkama: ", enteredDescription)
-        console.log("event: ", event.target['exampleFile'].value);
+        // console.log("event: ", event.target['exampleFile'].value);
 
         dispatch(adminActions.addRestaurant({
             enteredId,
@@ -78,11 +78,22 @@ const AboutRestaurant = () => {
             startTime,
             endTime,
         }));
+
+        setEnteredId('');
+        setEnteredName('');
+        setEnteredPhone('');
+        setEnteredEmail('');
+        setEnteredAddress('');
+        setEnteredDescription('');
+        setEnteredCategory('');
+        setEnteredDistrict('');
+        setStartTime('');
+        setEndTime('');
     }
     return (
         <Form onSubmit={formSubmitHandler}>
-            <Card>
-                <FormGroup>
+            <Card >
+                {/* <FormGroup>
                     <Label for="exampleFile">
                         Logo Seç
                     </Label>
@@ -91,7 +102,7 @@ const AboutRestaurant = () => {
                         name="file"
                         type="file"
                     />
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                     <Label >
                         Restoran Id
@@ -105,14 +116,13 @@ const AboutRestaurant = () => {
                     <Input onChange={enteredNameHandler} value={enteredName} />
                 </FormGroup>
                 <FormGroup>
-                    <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={enteredCategoryHandler}>
-                        <option value='' >Kategori Seçiniz</option>
-                        <option value='Kebap' >Kebap</option>
-                        <option value='Lahmacun' >Lahmacun</option>
-                        <option value='Pizza' >Pizza</option>
-                        <option value='Çiğ Köfte' >Çiğ Köfte</option>
-                        <option value='Döner' >Döner</option>
-                        <option value='Burger' >Burger</option>
+                    <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={enteredCategoryHandler} value={enteredCategory}>
+                        <option value=''>Kategori Seçiniz</option>
+                        <option value='Restoran' >Restoran</option>
+                        <option value='Pastane' >Pastane</option>
+                        <option value='Fırın' >Fırın</option>
+                        <option value='Kafe' >Kafe</option>
+                        <option value='Manav' >Manav</option>
                     </select>
                 </FormGroup>
                 <FormGroup>
@@ -140,21 +150,17 @@ const AboutRestaurant = () => {
                         onChange={endTimeHandler}
                         value={endTime}
                     />
-                </FormGroup>             
-                <FormGroup>
-                    <Label >
-                        Telefon Numarası
-                    </Label>
-                    <Input onChange={enteredPhoneHandler} value={enteredPhone} />
                 </FormGroup>
                 <FormGroup>
-                    <Label >
-                        Bölge
-                    </Label>
-                    <Input
-                        onChange={enteredDistrictHandler}
-                        value={enteredDistrict}
-                    />
+                <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={enteredDistrictHandler} value={enteredDistrict}>
+                        <option value=''>Bölge Seçiniz</option>
+                        <option value='Kadıköy'>Kadıköy</option>
+                        <option value='Kartal' >Kartal</option>
+                        <option value='Maltepe' >Maltepe</option>
+                        <option value='Pendik' >Pendik</option>
+                        <option value='Üsküdar' >Üsküdar</option>
+                        <option value='Ümraniye' >Ümraniye</option>
+                    </select>
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleAddress">
@@ -168,36 +174,25 @@ const AboutRestaurant = () => {
                         value={enteredAddress}
                     />
                 </FormGroup>
-                <Row form>
-                    <Col md={6}>
-                        <FormGroup>
-                            <Label for="exampleEmail">
-                                Email
-                            </Label>
-                            <Input
-                                id="exampleEmail"
-                                name="email"
-                                placeholder="with a placeholder"
-                                type="email"
-                                onChange={enteredEmailHandler}
-                                value={enteredEmail}
-                            />
-                        </FormGroup>
-                    </Col>
-                    {/* <Col md={6}>
-                        <FormGroup>
-                            <Label for="examplePassword">
-                                Password
-                            </Label>
-                            <Input
-                                id="examplePassword"
-                                name="password"
-                                placeholder="password placeholder"
-                                type="password"
-                            />
-                        </FormGroup>
-                    </Col> */}
-                </Row>
+                <FormGroup>
+                    <Label >
+                        Telefon Numarası
+                    </Label>
+                    <Input onChange={enteredPhoneHandler} value={enteredPhone} />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="exampleEmail">
+                        Email
+                    </Label>
+                    <Input
+                        id="exampleEmail"
+                        name="email"
+                        placeholder="with a placeholder"
+                        type="email"
+                        onChange={enteredEmailHandler}
+                        value={enteredEmail}
+                    />
+                </FormGroup>
 
                 <FormGroup>
                     <Label >
@@ -205,71 +200,12 @@ const AboutRestaurant = () => {
                     </Label> <br />
                     <textarea rows='2' cols='79' onChange={enteredDescriptionHandler} value={enteredDescription}> dasdasdasdadsadsa </textarea>
                 </FormGroup>
-                <FormGroup>
-                    <Label for="exampleAddress2">
-                        Address 2
-                    </Label>
-                    <Input
-                        id="exampleAddress2"
-                        name="address2"
-                        placeholder="Apartment, studio, or floor"
 
-                    />
-                </FormGroup>
-                <Row form>
-                    <Col md={6}>
-                        <FormGroup>
-                            <Label for="exampleCity">
-                                City
-                            </Label>
-                            <Input
-                                id="exampleCity"
-                                name="city"
-                            />
-                        </FormGroup>
-                    </Col>
-                    <Col md={4}>
-                        <FormGroup>
-                            <Label for="exampleState">
-                                State
-                            </Label>
-                            <Input
-                                id="exampleState"
-                                name="state"
-                            />
-                        </FormGroup>
-                    </Col>
-                    <Col md={2}>
-                        <FormGroup>
-                            <Label for="exampleZip">
-                                Zip
-                            </Label>
-                            <Input
-                                id="exampleZip"
-                                name="zip"
-                            />
-                        </FormGroup>
-                    </Col>
-                </Row>
-                <FormGroup check>
-                    <Input
-                        id="exampleCheck"
-                        name="check"
-                        type="checkbox"
-                    />
-                    <Label
-                        check
-                        for="exampleCheck"
-                    >
-                        Check me out
-                    </Label>
-                </FormGroup>
+                <button className={classes.abtRstBtn}>
+                    Sign in
+                </button>
             </Card>
-            <Button>
-                Sign in
-            </Button>
         </Form>
-
     )
 };
 

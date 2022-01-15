@@ -8,6 +8,7 @@ const cartSlice = createSlice({
         items: [],
         totalQuantity: 0,
         changed: false,
+        orders: [],
     },
     reducers: {
         replaceCart(state, action) {
@@ -22,16 +23,16 @@ const cartSlice = createSlice({
             if (!existingItem) {
                 state.items.push({
                     id: newItem.id,
-                    price: newItem.price,
+                    price: newItem.discount,
                     quantity: 1,
-                    totalPrice: newItem.price,
-                    name: newItem.title,
+                    totalPrice: newItem.discount,
+                    name: newItem.name,
                 }); // push method that is a must not do, but with react toolkit as emphasized before, we dont have 
                 // problem because their redux toolkit internally ensures that this will not manipulate
                 // the existhing state
             } else {
                 existingItem.quantity++;
-                existingItem.totalPrice += newItem.price;
+                existingItem.totalPrice += newItem.discount;
             }
         },
         removeItemFromCart(state, action) {
@@ -46,6 +47,14 @@ const cartSlice = createSlice({
                 existingItem.totalPrice = existingItem.totalPrice - existingItem.price;
             }
         },
+        takeOrder(state) {
+            state.orders = state.items;
+        },
+        cleanCart(state) {
+            state.items = []
+            state.totalQuantity = 0
+        },
+
     }
 });
 

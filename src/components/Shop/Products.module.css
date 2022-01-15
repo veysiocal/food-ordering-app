@@ -4,11 +4,36 @@
   padding-bottom: 2rem;
   border-bottom: 3px solid black;
 }
-.container .onlyLogo {
-  width: 18%;
-  background: url(../../images/kebap.jpeg);
+
+.Restoran {
+  width: 26%;
+  background: url(../../images/Restoran.jpg);
   background-size: cover;
+  border-radius: 1rem;
 }
+
+.Kafe {
+  width: 25%;
+  background: url(../../images/Kafe.jpg);
+  background-size: cover;
+  border-radius: 1rem;
+}
+
+.Fırın {
+  width: 25%;
+  background: url(../../images/Fırın.jpg);
+  background-size: cover;
+  border-radius: 1rem;
+}
+
+.Pastane {
+  width: 25%;
+  background: url(../../images/Pastane.jpg);
+  background-size: cover;
+  border-radius: 1rem;
+}
+
+
 .containerCustom {
   width: 100rem;
   height: 5rem;

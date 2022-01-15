@@ -1,11 +1,16 @@
 .itemCustom {
-  color: white;
   border: 1px solid black;
-  font-size: large;
   display: flex;
   padding: 0;
   background-color:gray;
   border-radius: 1rem;
+  height: 15%;
+}
+
+.itemCustom h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: black;
 }
 .headerPart {
   width: 29%;
@@ -17,26 +22,32 @@
   margin: 0;
   border-radius: 1rem;
 }
-.Kebap {
-  background: url(../../images/kebap.jpeg);
+.Restoran {
+  background: url(../../images/Restoran.jpg);
+  background-size: 50%;
+}
+
+.Kafe {
+  background: url(../../images/Kafe.jpg);
+  background-size: 50%;
+}
+
+.Fırın {
+  background: url(../../images/Fırın.jpg);
+  background-size: 50%;
+}
+
+.Pastane {
+  background: url(../../images/Pastane.jpg);
   background-size: 35%;
 }
 
-.Pizza {
-  background: url(../../images/pizza.jpeg);
-  background-size: 35%;
-}
+.Manav {
+  background: url(../../images/Manav.jpg);
+  background-size: 25%;
+};
 
-.Lahmacun {
-  background: url(../../images/lahmacun.jpg);
-  background-size: 35%;
-}
 
-.itemCustom h3 {
-    margin: 0.5rem 0;
-    font-size: 1.5rem;
-    color: black;
-  }
   
   .itemCustom header {
     display: flex;

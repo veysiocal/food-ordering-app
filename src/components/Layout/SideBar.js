@@ -6,11 +6,11 @@ import { uiActions } from '../../store/ui-slice';
 import classes from './SideBar.module.css';
 
 let categories = [
-    { id: '1', categoryName: 'Kebap' },
-    { id: '2', categoryName: 'Pizza' },
-    { id: '3', categoryName: 'Döner' },
-    { id: '4', categoryName: 'Sulu' },
-    { id: '5', categoryName: 'Burger' },
+    { id: '1', categoryName: 'Restoran' },
+    { id: '2', categoryName: 'Pastane' },
+    { id: '3', categoryName: 'Fırın' },
+    { id: '4', categoryName: 'Kafe' },
+    { id: '5', categoryName: 'Manav' },
 ];
 
 const Sidebar = () => {

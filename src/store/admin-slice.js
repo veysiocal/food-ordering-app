@@ -6,6 +6,7 @@ const adminSlice = createSlice({
         restaurants: [],
         activeProducts: [],
         restaurantExist: false,
+        activeProductsRestaurantId: null,
     },
     reducers: {
         addRestaurant(state, action) {
@@ -44,9 +45,29 @@ const adminSlice = createSlice({
                 description: action.payload.descriptionInput,
             })
         },
-        removeProduct(state, action) {
-            state.activeProducts = state.activeProducts.filter(product => product.id !== action.payload)
+        removeItemFromActiveProducts(state, action) {
+            const id = action.payload;
+            const existingItem = state.activeProducts.find(item => item.id === id);
+            if (existingItem.amount === 1) {
+                state.activeProducts = state.activeProducts.filter(item => item.id !== id);
+            } else {
+                existingItem.amount--;
+            }
         },
+        removeProductsForOrder(state, action) {
+            const id = action.payload.id;
+            const quantity = +action.payload.quantity
+
+            const existingItem = state.activeProducts.find(item => item.id === id);
+            if (existingItem.amount === 1) {
+                state.activeProducts = state.activeProducts.filter(item => item.id !== id);
+            } else {
+                existingItem.amount = existingItem.amount - quantity
+            }
+        },
+        activeProductsSelection(state, action) {
+            state.activeProductsRestaurantId = action.payload
+        }
     }
 });
 

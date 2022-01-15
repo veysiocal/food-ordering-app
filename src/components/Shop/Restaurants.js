@@ -6,57 +6,11 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
 
-const DUMMY_RESTAURANTS = [
-  {
-    id: 'restaurant1',
-    title: 'Veysi Restaurant',
-    description: 'Kebap & Lahmacun',
-    district: 'Maltepe',
-    category: 'Kebap',
-  },
-  {
-    id: 'restaurant2',
-    title: 'Salih Restaurant',
-    description: 'Kebap & Patates',
-    district: 'Üsküdar',
-    category: 'Kebap',
-  },
-  {
-    id: 'restaurant3',
-    title: 'Ömer Restaurant',
-    description: 'Döner & Litle Litle in the Middle',
-    district: 'Ümraniye',
-    category: 'Döner',
-  },
-  {
-    id: 'restaurant4',
-    title: 'Ömrestaurant4',
-    description: 'Sulu &Litle Litle in the Middle',
-    district: 'Ataşehir',
-    category: 'Sulu',
-  },
-  {
-    id: 'restaurant5',
-    title: 'Restaurant5',
-    description: 'Burger & Litle Litle in the Middle',
-    district: 'Bostancı',
-    category: 'Burger',
-  },
-  {
-    id: 'restaurant6',
-    title: 'Restaurant6',
-    description: 'Pizza & Litle Litle in the Middle',
-    district: 'Kadıköy',
-    category: 'Pizza',
-  },
-];
-
 
 const Restaurants = (props) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const filteredRestaurant = queryParams.get('filt');
-
 
   let restaurants = useSelector(state => state.admin.restaurants);
 
@@ -85,7 +39,6 @@ const Restaurants = (props) => {
     history.push('/restaurants');
     setEnteredRestaurant('');
   };
-
 
   const selectedCategories = useSelector(state => state.ui.selectedCategories);
   const categorized = selectedCategories.map(category => showRestaurants.filter(restaurant => restaurant.category.includes(category.categoryName)));

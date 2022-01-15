@@ -9,8 +9,8 @@ const ProductItem = (props) => {
   const discount = fee - fee * 0.2;
 
   const dispatch = useDispatch();
-  const removeProductHandler = () => {
-    dispatch(adminActions.removeProduct(id));
+  const decrementHandler = () => {
+    dispatch(adminActions.removeItemFromActiveProducts(id));
   };
 
   return (
@@ -23,8 +23,9 @@ const ProductItem = (props) => {
         </header>
         <p>{description}</p>
         <p>{start} - {end}</p>
+        <p>{amount} Adet</p>
         <div className={classes.actionsCustom}>
-          <button onClick={removeProductHandler}>Ürünü Kaldır</button>
+          <button onClick={decrementHandler}>-</button>
         </div>
       </Card>
     </li>

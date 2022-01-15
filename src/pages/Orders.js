@@ -4,14 +4,15 @@ import Card from '../components/UI/Card';
 import classes from './Orders.module.css';
 
 const Orders = () => {
-    const items = useSelector(state => state.cart.items);
+    const items = useSelector(state => state.cart.orders);
     const orderPageIsVisible = useSelector(state => state.ui.orderPageIsVisible)
-    
-    if(!orderPageIsVisible) {
+
+    if (!orderPageIsVisible) {
         return (
             <p className={classes.notfoundline}>Not found any order...</p>
         )
     }
+
     return (
         <Card>
             <ul>
@@ -34,10 +35,6 @@ const Orders = () => {
                             >
                                 <div className={classes.quantityCustom} >
                                     x <span>{item.quantity}</span>
-                                </div>
-                                <div className={classes.actionsCustom}>
-                                    <button>Onayla</button>
-                                    <button>Reddet</button>
                                 </div>
                             </div>
                         </li>

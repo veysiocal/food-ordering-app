@@ -4,7 +4,7 @@ import classes from './ProductItem.module.css';
 import { cartActions } from '../../store/cart-slice';
 
 const ProductItem = (props) => {
-  const { name, fee, description, id, start, end } = props;
+  const { name, fee, description, id, start, end, amount } = props;
 
   const dispatch = useDispatch();
 
@@ -14,7 +14,7 @@ const ProductItem = (props) => {
     dispatch(cartActions.addItemToCart({
       id,
       name,
-      fee,
+      discount,
     }));
   };
 
@@ -28,6 +28,7 @@ const ProductItem = (props) => {
           </header>
           <div className={classes.infos}>
             <h3>{name}</h3>
+            <span>{amount} Adet</span>
             <div className={classes.priceCustom}><span>  ${fee}  </span> ${discount}</div>
           </div>
           <div className={classes.details}>
