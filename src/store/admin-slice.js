@@ -19,7 +19,7 @@ const adminSlice = createSlice({
                 state.restaurants.push({
                     id: action.payload.enteredId,
                     title: action.payload.enteredName,
-                    enteredPhone: action.payload.enteredPhone,
+                    phone: action.payload.enteredPhone,
                     email: action.payload.enteredEmail,
                     address: action.payload.enteredAddress,
                     description: action.payload.enteredDescription,

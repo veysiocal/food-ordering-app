@@ -19,8 +19,7 @@ const Products = () => {
   return (
     <section className={classes.productsCustom}>
       <div className={classes.container} >
-      <div className={classes[restaurant.category]} />
-
+        <div className={classes[restaurant.category]} />
         <Card className={classes.containerCustom}>
           <header>
             <h4>{restaurant.title}</h4>
@@ -31,12 +30,17 @@ const Products = () => {
             {restaurant.start} - {restaurant.end}
           </p>
         </Card>
+        <div className={classes.detailsInfo}>
+          <p>{restaurant.address}</p>
+          <span>({restaurant.phone}) </span>
+          <p>{restaurant.email}</p>
+        </div>
       </div>
       <div >
         <ul className={classes.productItemsList}>
           {products.map(product => (
             <ProductItem key={product.id} id={product.id} name={product.name} fee={product.price}
-            description={product.description} start={product.start} end={product.end} amount={product.amount}/>)
+              description={product.description} start={product.start} end={product.end} amount={product.amount} />)
           )}
         </ul>
       </div>

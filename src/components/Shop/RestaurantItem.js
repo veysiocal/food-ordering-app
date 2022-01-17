@@ -16,6 +16,8 @@ const RestaurantItem = (props) => {
       description,
       district,
       category,
+      start,
+      end,
     }));
 
     dispatch(uiActions.showNotification({

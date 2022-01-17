@@ -7,13 +7,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
 const FavRestaurants = () => {
-    let favRestaurants = useSelector(state => state.ui.favoriteRestaurants);
-    // if(!favRestaurants) {
-    //     return (
-    //         <h1>There is no any Fav Restaurant.</h1>
-    //     )
-    // }
-    const location = useLocation();
+  let favRestaurants = useSelector(state => state.ui.favoriteRestaurants);
+  // if(!favRestaurants) {
+  //     return (
+  //         <h1>There is no any Fav Restaurant.</h1>
+  //     )
+  // }
+  const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const filteredRestaurant = queryParams.get('filt');
 
@@ -94,7 +94,9 @@ const FavRestaurants = () => {
 
       <ul>
         {showRestaurants.map(restaurant => (
-          <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={true} category={restaurant.category} title={restaurant.title} description={restaurant.description} district={restaurant.district}/>)
+          <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={true} category={restaurant.category} title={restaurant.title}
+            description={restaurant.description} district={restaurant.district}
+            start={restaurant.start} end={restaurant.end} />)
         )}
       </ul>
     </section>

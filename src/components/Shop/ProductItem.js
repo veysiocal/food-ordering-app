@@ -28,7 +28,7 @@ const ProductItem = (props) => {
           </header>
           <div className={classes.infos}>
             <h3>{name}</h3>
-            <span>{amount} Adet</span>
+            <span className={classes.amount}>{amount} Adet</span>
             <div className={classes.priceCustom}><span>  ${fee}  </span> ${discount}</div>
           </div>
           <div className={classes.details}>

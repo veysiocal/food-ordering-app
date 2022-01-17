@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   padding-bottom: 2rem;
   border-bottom: 3px solid black;
@@ -33,20 +34,27 @@
   border-radius: 1rem;
 }
 
-
+.detailsInfo {
+  color: white;
+}
 .containerCustom {
-  width: 100rem;
+  width: 30%;
   height: 5rem;
-  margin: 1.5rem 1rem;
-  padding: 0.25rem;
-  padding-right: 25rem;
+  margin: 1.5rem 0;
   background: none;
   color: white;
   font-style: italic;
 }
 
+.detailsInfo {
+  font-size: 1.25rem;
+  color: black;
+  font-weight: bold;
+  padding-top: 2rem;
+}
+
 .containerCustom header h4, .containerCustom header h5 {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .productsCustom {
   margin: 0 auto;

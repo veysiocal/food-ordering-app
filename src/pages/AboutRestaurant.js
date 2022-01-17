@@ -194,12 +194,12 @@ const AboutRestaurant = () => {
                     />
                 </FormGroup>
 
-                <FormGroup>
+                {/* <FormGroup>
                     <Label >
                         Açıklama
                     </Label> <br />
                     <textarea rows='2' cols='79' onChange={enteredDescriptionHandler} value={enteredDescription}> dasdasdasdadsadsa </textarea>
-                </FormGroup>
+                </FormGroup> */}
 
                 <button className={classes.abtRstBtn}>
                     Sign in

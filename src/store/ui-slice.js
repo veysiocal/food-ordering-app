@@ -48,6 +48,8 @@ const uiSlice = createSlice({
                     description: action.payload.description,
                     district: action.payload.district,
                     category: action.payload.category,
+                    start: action.payload.start,
+                    end: action.payload.end,
                 });
             }
 

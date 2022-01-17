@@ -112,12 +112,12 @@ const AddProduct = () => {
                     </Label>
                     <Input onChange={nameInputHandler} value={nameInput} id='productName' name='productName' />
                 </FormGroup>
-                <FormGroup>
+                {/* <FormGroup>
                     <Label for='productType'>
                         Ürün Türü
                     </Label>
                     <Input onChange={typeInputHandler} value={typeInput} id='productType' name='productType' />
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                     <Label for="exampleDate">
                         Tarih

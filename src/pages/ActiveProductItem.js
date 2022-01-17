@@ -25,7 +25,7 @@ const ProductItem = (props) => {
         <p>{start} - {end}</p>
         <p>{amount} Adet</p>
         <div className={classes.actionsCustom}>
-          <button onClick={decrementHandler}>-</button>
+          <button onClick={decrementHandler}>Eksilt</button>
         </div>
       </Card>
     </li>
