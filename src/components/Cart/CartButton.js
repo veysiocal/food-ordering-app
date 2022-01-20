@@ -14,7 +14,7 @@ const CartButton = (props) => {
     <button 
     className={classes.buttonCustom}
      onClick={cartButtonHandler}>
-      <span>My Cart</span>
+      <span>Sepetim</span>
       <span 
       className={classes.badgeCustom}
       >{quantity}</span>

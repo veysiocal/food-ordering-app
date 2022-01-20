@@ -7,7 +7,7 @@ const MainHeader = (props) => {
   return (
     <header className={classes.headerCustom}>
       <NavLink to='/restaurants'>
-        <h1> Restaurant App</h1>
+        <h1> Artık Yemek Uygulaması</h1>
       </NavLink>
       <nav className={classes.navCustom}>
         <ul>
@@ -18,13 +18,13 @@ const MainHeader = (props) => {
             <NavLink to='/restaurants' activeClassName={classes.active} >Ana Sayfa</NavLink>
           </li>
           <li>
-            <NavLink to='/favorite-restaurants' activeClassName={classes.active}>Favorite Restaurants</NavLink>
+            <NavLink to='/favorite-restaurants' activeClassName={classes.active}>Favori Restoranlar</NavLink>
           </li>
           <li>
             <CartButton />
           </li>
             <li>
-              <NavLink to='/auth' activeClassName={classes.active}>Login</NavLink>
+              <NavLink to='/auth' activeClassName={classes.active}>Giriş Yap</NavLink>
             </li>
         </ul>
       </nav>

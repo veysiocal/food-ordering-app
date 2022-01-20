@@ -52,13 +52,13 @@ const RestaurantItem = (props) => {
         <div className={`${classes.otherPart} ${classes[category]}`}>
           <div className={classes.actionsCustom}>
             {props.favorited === false && <button onClick={favoriteHandler}>
-              Add to Favorite
+              Favorilere Ekle
             </button>}
             {props.favorited === true && <button onClick={cancelFavoriteHandler}>
-              Remove from favorites
+              Favorilerden Çıkar
             </button>}
             <button>
-              <Link to={`/products/${props.id}`} >Select Restaurant</Link>
+              <Link to={`/products/${props.id}`} >Restorana Git</Link>
             </button>
 
           </div>

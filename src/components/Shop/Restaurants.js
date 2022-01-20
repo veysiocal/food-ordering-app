@@ -82,7 +82,7 @@ const Restaurants = (props) => {
         <div>
           <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
           </button>
-          <button onClick={cleanHandler} className={classes.filterButton}>Clean</button>
+          <button onClick={cleanHandler} className={classes.filterButton}>Temizle</button>
         </div>
 
       </div>
