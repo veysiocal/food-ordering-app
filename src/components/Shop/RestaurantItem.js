@@ -1,34 +1,44 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '../UI/Card';
 import classes from './RestaurantItem.module.css';
 import { uiActions } from '../../store/ui-slice';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const RestaurantItem = (props) => {
   const { title, id, description, district, category, start, end} = props;
 
   const dispatch = useDispatch();
 
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  
+  const history = useHistory();
+
   const favoriteHandler = () => {
-    dispatch(uiActions.addToFavorite({
-      id,
-      title,
-      description,
-      district,
-      category,
-      start,
-      end,
-    }));
+    if(isLoggedIn) {
+      dispatch(uiActions.addToFavorite({
+        id,
+        title,
+        description,
+        district,
+        category,
+        start,
+        end,
+      }));
 
-    dispatch(uiActions.showNotification({
-      status: 'success',
-      title: 'Success!',
-      message: 'Successfully Added!',
-    }));
+      dispatch(uiActions.showNotification({
+        status: 'success',
+        title: 'Success!',
+        message: 'Successfully Added!',
+      }));
+  
+      dispatch(uiActions.toggleNotification({
+        show: true,
+      }));
+    } else {
+      history.replace('/auth')
+    }
 
-    dispatch(uiActions.toggleNotification({
-      show: true,
-    }));
+
   };
 
   const cancelFavoriteHandler = () => {

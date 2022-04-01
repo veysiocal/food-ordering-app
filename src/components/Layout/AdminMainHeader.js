@@ -1,8 +1,11 @@
+import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import classes from './MainHeader.module.css';
 
 
 const AdminMainHeader = (props) => {
+  const isLoggedIn =  useSelector(state => state.auth.isLoggedIn);
+  
   return (
     <header className={classes.headerCustom}>
       <NavLink to='/admin'>

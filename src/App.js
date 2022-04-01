@@ -208,16 +208,12 @@ function App() {
     // dispatch(sendDataToFirebase(cart)) // for now will return function not object.
   }, [cart, dispatch]); // dispatch does not change, but we add it also.
 
-  return (
-    <Fragment>
-      {notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} />}
-      <Switch>
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  let routes;
 
-        <Route path='/auth'>
-          <AuthLayout>
-            <Login />
-          </AuthLayout>
-        </Route>
+  if (isLoggedIn) {
+    routes = (
+      <Switch>
         <Route path='/admin'>
           < AdminLayout >
             <Switch>
@@ -258,8 +254,41 @@ function App() {
             </Switch>
           </Layout>
         </Route>
-
       </Switch>
+    )
+  } else {
+    routes = (
+      <Switch>
+        <Route path='/auth'>
+          <AuthLayout>
+            <Login />
+          </AuthLayout>
+        </Route>
+        <Route path='/products/:restaurantId'>
+          <ProductLayout>
+            <Products />
+          </ProductLayout>
+        </Route>
+        <Route path='/' >
+          <Layout>
+            <Switch>
+              <Route path='/' exact>
+                <Redirect to='/restaurants' />
+              </Route>
+              <Route path='/restaurants'>
+                <Restaurants />
+              </Route>
+            </Switch>
+          </Layout>
+        <Redirect to='/restaurants' />
+        </Route>
+      </Switch>
+    )
+  }
+  return (
+    <Fragment>
+      {notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} />}
+      <Switch>{routes}</Switch>
     </Fragment>
   );
 }

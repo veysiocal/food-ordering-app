@@ -1,9 +1,20 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+import { authActions } from '../../store/auth-slice';
 import CartButton from '../Cart/CartButton';
 import classes from './MainHeader.module.css';
 
 
 const MainHeader = (props) => {
+  const isLoggedIn =  useSelector(state => state.auth.isLoggedIn);
+
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(authActions.logout())
+  };
+
+
   return (
     <header className={classes.headerCustom}>
       <NavLink to='/restaurants'>
@@ -11,21 +22,24 @@ const MainHeader = (props) => {
       </NavLink>
       <nav className={classes.navCustom}>
         <ul>
-          <li>
+          {isLoggedIn && (<li>
             <NavLink to='/admin' activeClassName={classes.active} >Admin</NavLink>
-          </li>
+          </li>)}
           <li>
             <NavLink to='/restaurants' activeClassName={classes.active} >Ana Sayfa</NavLink>
           </li>
-          <li>
+          {isLoggedIn && (<li>
             <NavLink to='/favorite-restaurants' activeClassName={classes.active}>Favori Restoranlar</NavLink>
-          </li>
-          <li>
+          </li>)}
+          {isLoggedIn && (<li>
             <CartButton />
-          </li>
-            <li>
+          </li>)}
+            {!isLoggedIn && (<li>
               <NavLink to='/auth' activeClassName={classes.active}>Giriş Yap</NavLink>
-            </li>
+            </li>)}
+            {isLoggedIn && (<li>
+              <button onClick={logoutHandler} >Logout</button>
+            </li>)}
         </ul>
       </nav>
     </header>

@@ -1,7 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '../UI/Card';
 import classes from './ProductItem.module.css';
 import { cartActions } from '../../store/cart-slice';
+import { useHistory } from 'react-router-dom';
 
 const ProductItem = (props) => {
   const { name, fee, description, id, start, end, amount } = props;
@@ -10,12 +11,17 @@ const ProductItem = (props) => {
 
   const discount = fee - fee * 0.2;
 
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const history = useHistory();
+
   const addToCartHandler = () => {
-    dispatch(cartActions.addItemToCart({
+    if(isLoggedIn) {dispatch(cartActions.addItemToCart({
       id,
       name,
       discount,
-    }));
+    }));} else {
+      history.replace('/auth')
+    }
   };
 
   return (
