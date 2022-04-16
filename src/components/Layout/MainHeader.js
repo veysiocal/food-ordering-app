@@ -7,6 +7,7 @@ import classes from './MainHeader.module.css';
 
 const MainHeader = (props) => {
   const isLoggedIn =  useSelector(state => state.auth.isLoggedIn);
+  const loggedName = useSelector(state => state.auth.name);
 
   const dispatch = useDispatch();
 
@@ -37,8 +38,11 @@ const MainHeader = (props) => {
             {!isLoggedIn && (<li>
               <NavLink to='/auth' activeClassName={classes.active}>Giriş Yap</NavLink>
             </li>)}
+            {!isLoggedIn && (<li>
+              <NavLink to='/auth' activeClassName={classes.active} style={{opacity: '0.8'}}>Üye Ol</NavLink>
+            </li>)}
             {isLoggedIn && (<li>
-              <button onClick={logoutHandler} >Logout</button>
+              <button onClick={logoutHandler} > {loggedName} --  Logout</button>
             </li>)}
         </ul>
       </nav>

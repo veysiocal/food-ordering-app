@@ -20,6 +20,10 @@ const AuthForm = (props) => {
       password: {
         value: '',
         isValid: false,
+      },
+      name: {
+        value: '',
+        isValid: false,
       }
     },
     false
@@ -47,27 +51,49 @@ const AuthForm = (props) => {
     // optional: Add validation.
 
     // setIsLoading(true);
-    
+
     const userName = formState.inputs.email.value;
     const password = formState.inputs.password.value;
-    const response = await fetch('http://localhost:8080/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userName,
-        password,
-      }),
-    });
+    const name = formState.inputs.name.value;
+    let data;
+    if (isLogin) {
+      console.log("login")
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userName,
+          password,
+        }),
+      });
+       data = await response.json();
 
-    const data = await response.json();
-    console.log("DATA: ", data);
+    } else {
+      console.log("register")
+
+      const response = await fetch('http://localhost:8080/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userName,
+          password,
+          name,
+        }),
+      });
+       data = await response.json();
+    }
+
+
+
     if (!data) {
       alert('Giriş bilgileriniz kontrol ediniz!');
     }
     if (data.success === true) {
-      dispatch(authActions.login());
+      dispatch(authActions.login(data.name));
       history.replace('/restaurants');
     } else {
       alert("Başarısız deneme")
@@ -119,16 +145,16 @@ const AuthForm = (props) => {
   };
   return (
     <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+      <h1>{isLogin ? 'Giriş Yap' : 'Üye Ol'}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           {/* <label htmlFor='username'>Your Email</label>
           <input type='username' id='username' required onChange={(e) => setUserName(e.target.value)} /> */}
           <Input
             inputOrText='input'
-            type='username'
-            id='username'
-            label='Your Email'
+            type='email'
+            id='email'
+            label='E-mail'
             errorText='Please enter a valid email.'
             validators={[VALIDATOR_EMAIL()]}
             onInput={inputHandler}
@@ -137,26 +163,39 @@ const AuthForm = (props) => {
         <div className={classes.control}>
           {/* <label htmlFor='password'>Your Password</label> */}
           {/* <input type='password' id='password' required onChange={(e) => setPassword(e.target.value)} /> */}
-          <Input 
-          inputOrText='input'
-          type='password'
-          id='password'
-          label='Your Password'
-          errorText='Please enter a valid password.(at least 6 character)'
-          validators={[VALIDATOR_MINLENGTH(6)]}
-          onInput={inputHandler}
+          <Input
+            inputOrText='input'
+            type='password'
+            id='password'
+            label='Şifre'
+            errorText='Please enter a valid password.(at least 6 character)'
+            validators={[VALIDATOR_MINLENGTH(6)]}
+            onInput={inputHandler}
           />
         </div>
+        {!isLogin && <div className={classes.control}>
+          {/* <label htmlFor='password'>Your Password</label> */}
+          {/* <input type='password' id='password' required onChange={(e) => setPassword(e.target.value)} /> */}
+          <Input
+            inputOrText='input'
+            type='name'
+            id='name'
+            label='İsim'
+            errorText='Please enter a valid password.(at least 6 character)'
+            validators={[VALIDATOR_MINLENGTH(6)]}
+            onInput={inputHandler}
+          />
+        </div>}
         <div className={classes.actions}>
           {/* {!isLoading && <button>{isLogin ? 'Login' : 'Create Account'}</button>} */}
-          {<button>{isLogin ? 'Login' : 'Create Account'}</button>}
+          {<button>{isLogin ? 'Giriş Yap' : 'Üye Ol'}</button>}
           {/* {isLoading && <p>Sending request...</p>} */}
           <button
             type='button'
             className={classes.toggle}
             onClick={switchAuthModeHandler}
           >
-            {isLogin ? 'Create new account' : 'Login with existing account'}
+            {isLogin ? 'Hesabınız yok mu?'  : 'Var olan hesapla giriş yap...'}
           </button>
         </div>
       </form>
