@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/auth-slice';
 import Input from '../../components/FormElements/Input';
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../components/Helpers/validators';
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../components/Helpers/validators';
 import { useForm } from '../../hooks/use-form';
 
 const AuthForm = (props) => {
@@ -21,10 +21,6 @@ const AuthForm = (props) => {
         value: '',
         isValid: false,
       },
-      name: {
-        value: '',
-        isValid: false,
-      }
     },
     false
   );
@@ -33,7 +29,7 @@ const AuthForm = (props) => {
 
   const history = useHistory();
 
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const [userName, setUserName] = useState('');
@@ -42,7 +38,21 @@ const AuthForm = (props) => {
   //   const authCtx = useContext(AuthContext);
 
   const switchAuthModeHandler = () => {
-    setIsLogin((prevState) => !prevState);
+    if (!isLoginMode) {
+      setFormData({
+        ...formState.inputs,
+        name: undefined
+      }, formState.inputs.email.isValid && formState.inputs.password.isValid)
+    } else {
+      setFormData({
+        ...formState.inputs,
+        name: {
+          value: '',
+          isValid: false,
+        }
+      }, false)
+    }
+    setIsLoginMode((prevState) => !prevState);
   };
 
   const submitHandler = async event => {
@@ -51,13 +61,11 @@ const AuthForm = (props) => {
     // optional: Add validation.
 
     // setIsLoading(true);
-
     const userName = formState.inputs.email.value;
     const password = formState.inputs.password.value;
-    const name = formState.inputs.name.value;
+    const name = formState.inputs.name ? formState.inputs.name.value : '';
     let data;
-    if (isLogin) {
-      console.log("login")
+    if (isLoginMode) {
       const response = await fetch('http://localhost:8080/api/auth/login', {
         method: 'POST',
         headers: {
@@ -68,23 +76,26 @@ const AuthForm = (props) => {
           password,
         }),
       });
-       data = await response.json();
+      data = await response.json();
 
     } else {
-      console.log("register")
+      try {
+        const response = await fetch('http://localhost:8080/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userName,
+            password,
+            name,
+          }),
+        });
+        data = await response.json();
+      } catch(err) {
+        console.log("err: ",err);
+      }
 
-      const response = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          userName,
-          password,
-          name,
-        }),
-      });
-       data = await response.json();
     }
 
 
@@ -145,7 +156,7 @@ const AuthForm = (props) => {
   };
   return (
     <section className={classes.auth}>
-      <h1>{isLogin ? 'Giriş Yap' : 'Üye Ol'}</h1>
+      <h1>{isLoginMode ? 'Giriş Yap' : 'Üye Ol'}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           {/* <label htmlFor='username'>Your Email</label>
@@ -155,7 +166,7 @@ const AuthForm = (props) => {
             type='email'
             id='email'
             label='E-mail'
-            errorText='Please enter a valid email.'
+            errorText='Lütfen geçerli bir mail adresini giriniz.'
             validators={[VALIDATOR_EMAIL()]}
             onInput={inputHandler}
           />
@@ -168,12 +179,12 @@ const AuthForm = (props) => {
             type='password'
             id='password'
             label='Şifre'
-            errorText='Please enter a valid password.(at least 6 character)'
+            errorText='Parolanız en az 6 karakterden oluşmalı!'
             validators={[VALIDATOR_MINLENGTH(6)]}
             onInput={inputHandler}
           />
         </div>
-        {!isLogin && <div className={classes.control}>
+        {!isLoginMode && <div className={classes.control}>
           {/* <label htmlFor='password'>Your Password</label> */}
           {/* <input type='password' id='password' required onChange={(e) => setPassword(e.target.value)} /> */}
           <Input
@@ -181,21 +192,21 @@ const AuthForm = (props) => {
             type='name'
             id='name'
             label='İsim'
-            errorText='Please enter a valid password.(at least 6 character)'
-            validators={[VALIDATOR_MINLENGTH(6)]}
+            errorText='Lütfen isminizi giriniz.'
+            validators={[VALIDATOR_REQUIRE()]}
             onInput={inputHandler}
           />
         </div>}
         <div className={classes.actions}>
           {/* {!isLoading && <button>{isLogin ? 'Login' : 'Create Account'}</button>} */}
-          {<button>{isLogin ? 'Giriş Yap' : 'Üye Ol'}</button>}
+          {<button disabled={!formState.isValid}>{isLoginMode ? 'Giriş Yap' : 'Üye Ol'}</button>}
           {/* {isLoading && <p>Sending request...</p>} */}
           <button
             type='button'
             className={classes.toggle}
             onClick={switchAuthModeHandler}
           >
-            {isLogin ? 'Hesabınız yok mu?'  : 'Var olan hesapla giriş yap...'}
+            {isLoginMode ? 'Hesabınız yok mu?' : 'Var olan hesapla giriş yap...'}
           </button>
         </div>
       </form>

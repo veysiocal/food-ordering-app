@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Button } from 'reactstrap';
 import { uiActions } from '../../store/ui-slice';
@@ -14,6 +14,19 @@ let categories = [
 ];
 
 const Sidebar = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    // let categories;
+    // useEffect(async() => {
+    //     setIsLoading(true);
+    //     setIsLoading(false);
+    // }, []);
+
+    // if(!isLoading) {
+    //     setIsLoading(true);
+    //     categories = await fetch('http://localhost:8080/api/categories');
+
+    //     setIsLoading()
+    // }
     const checkSelectedCategories = useSelector(state => state.ui.selectedCategories);
     console.log(checkSelectedCategories)
     const dispatch = useDispatch();
@@ -51,7 +64,7 @@ const Sidebar = () => {
                     {selectedCategories.map(category => <li key={category.id}>
                         <div className={classes.closeButtonDiv}>
                             <span for='closeButton'> {category.categoryName} </span>
-                            <Button close id='closeButton ' onClick={removeCategoryHandler} id={category.id} className={classes.closeButton} />
+                            <Button close id='closeButton ' onClick={removeCategoryHandler} className={classes.closeButton} />
                         </div>
                     </li>
 

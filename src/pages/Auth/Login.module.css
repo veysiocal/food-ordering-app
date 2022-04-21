@@ -58,6 +58,10 @@
     background-color: #873abb;
     border-color: #873abb;
   }
+  .actions button:disabled {
+    background-color: #cccccc;
+    border-color: #cccccc;
+  }
   
   .actions .toggle {
     margin-top: 1rem;
