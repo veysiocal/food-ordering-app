@@ -5,12 +5,19 @@ import classes from './Login.module.css';
 // import AuthContext from '../../store/auth-context';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { authActions } from '../../store/auth-slice';
 import Input from '../../components/FormElements/Input';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../components/Helpers/validators';
 import { useForm } from '../../hooks/use-form';
+import LoadingSpinner from '../../components/UI/LoadingSpinner';
+import ErrorModal from '../../components/UI/ErrorModal';
 
 const AuthForm = (props) => {
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [haveError, setHaveError] = useState();
+
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -28,14 +35,6 @@ const AuthForm = (props) => {
   const dispatch = useDispatch();
 
   const history = useHistory();
-
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-
-  //   const authCtx = useContext(AuthContext);
 
   const switchAuthModeHandler = () => {
     if (!isLoginMode) {
@@ -58,6 +57,7 @@ const AuthForm = (props) => {
   const submitHandler = async event => {
     event.preventDefault();
 
+    console.log("formState: ", formState);
     // optional: Add validation.
 
     // setIsLoading(true);
@@ -66,20 +66,35 @@ const AuthForm = (props) => {
     const name = formState.inputs.name ? formState.inputs.name.value : '';
     let data;
     if (isLoginMode) {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          userName,
-          password,
-        }),
-      });
-      data = await response.json();
-
+      try {
+        const response = await fetch('http://localhost:8080/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userName,
+            password,
+          }),
+        });
+        data = await response.json();
+        if(!response.ok) {
+          throw new Error(data.message)
+        } 
+        if (data.success === true) {
+          dispatch(authActions.login(data.name));
+          history.replace('/restaurants');
+        }
+        //  else {
+        //   alert("Başarısız deneme")
+        // }
+      } catch (err){
+        console.log("err: ",err);
+      }
     } else {
       try {
+        console.log("???")
+        setIsLoading(true);
         const response = await fetch('http://localhost:8080/api/auth/register', {
           method: 'POST',
           headers: {
@@ -92,23 +107,33 @@ const AuthForm = (props) => {
           }),
         });
         data = await response.json();
-      } catch(err) {
-        console.log("err: ",err);
+        if(!response.ok) {
+          throw new Error(data.message)
+        } 
+        if (data.success === true) {
+          dispatch(authActions.login(data.name));
+          history.replace('/restaurants');
+        }
+        //  else {
+          // alert("Başarısız deneme")
+        // }
+      } catch (err) {
+        console.log("err: ", err.message);
+        setHaveError(err.message || 'Something went wrong')
       }
 
     }
+    setIsLoading(false);
 
-
-
+    if (haveError) {
+      return (
+        <h2>Error: {haveError}</h2>
+      )
+    }
     if (!data) {
       alert('Giriş bilgileriniz kontrol ediniz!');
     }
-    if (data.success === true) {
-      dispatch(authActions.login(data.name));
-      history.replace('/restaurants');
-    } else {
-      alert("Başarısız deneme")
-    }
+
 
 
     // let url;
@@ -156,7 +181,9 @@ const AuthForm = (props) => {
   };
   return (
     <section className={classes.auth}>
+      {isLoading && <LoadingSpinner asOverlay />}
       <h1>{isLoginMode ? 'Giriş Yap' : 'Üye Ol'}</h1>
+      <hr />
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           {/* <label htmlFor='username'>Your Email</label>
