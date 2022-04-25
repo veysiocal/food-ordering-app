@@ -58,13 +58,12 @@ const uiSlice = createSlice({
             state.favoriteRestaurants = state.favoriteRestaurants.filter(item => item.id !== action.payload.id);
         },
         addToSelectedCategories(state, action) {
-            const isExist = state.selectedCategories.find(category => category.id === action.payload.id);
-
+            const isExist = state.selectedCategories.find(category => category.id === action.payload.categoryId);
             if (isExist) {
                 return;
             } else {
                 state.selectedCategories.push({
-                    id: action.payload.id,
+                    id: action.payload.categoryId,
                     categoryName: action.payload.categoryName,
                 });
             }
@@ -73,7 +72,7 @@ const uiSlice = createSlice({
             state.selectedCategories = [];
         },
         removeSelectedCategory(state, action) {
-            state.selectedCategories = state.selectedCategories.filter(category => category.id !== action.payload)
+            state.selectedCategories = state.selectedCategories.filter(category => category.id !== +action.payload)
         },
         takeSelectedDistrict(state, action) {
             state.selectedDistrict = action.payload;

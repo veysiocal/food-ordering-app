@@ -6,7 +6,6 @@ const Admin = () => {
     return (
         <React.Fragment>
             <AboutRestaurant />
-
         </React.Fragment>
 
     );

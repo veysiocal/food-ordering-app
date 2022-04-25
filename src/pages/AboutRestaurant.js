@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label, Input, Row, Col, Button } from 'reactstrap';
+
 import Card from '../components/UI/Card';
 import { adminActions } from '../store/admin-slice';
+import { useHttp } from '../hooks/use-http';
 
 import classes from './AboutRestaurant.module.css';
 
 const AboutRestaurant = () => {
 
+    const [isLoading, haveError, sendRequest, clearError] = useHttp();
     const dispatch = useDispatch();
 
     const [enteredId, setEnteredId] = useState('');
@@ -61,10 +64,11 @@ const AboutRestaurant = () => {
         setEnteredDistrict(event.target.value);
     };
 
-    const formSubmitHandler = (event) => {
+    let userEmail = useSelector(state => state.auth.email);
+    let isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
+    const formSubmitHandler = async (event) => {
         event.preventDefault();
-        console.log("Açıkama: ", enteredDescription)
-        // console.log("event: ", event.target['exampleFile'].value);
 
         dispatch(adminActions.addRestaurant({
             enteredId,
@@ -78,6 +82,15 @@ const AboutRestaurant = () => {
             startTime,
             endTime,
         }));
+        await sendRequest('http://localhost:8080/api/admin/businessInfos', 'POST',
+            {
+                'Content-Type': 'application/json'
+            },
+            JSON.stringify({
+                owner: userEmail,
+                businessTypeId: enteredId
+            })
+        )
 
         setEnteredId('');
         setEnteredName('');
@@ -105,7 +118,7 @@ const AboutRestaurant = () => {
                 </FormGroup> */}
                 <FormGroup>
                     <Label >
-                        Restoran Id
+                        BusinessType Id
                     </Label>
                     <Input onChange={enteredIdHandler} value={enteredId} />
                 </FormGroup>
@@ -152,7 +165,7 @@ const AboutRestaurant = () => {
                     />
                 </FormGroup>
                 <FormGroup>
-                <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={enteredDistrictHandler} value={enteredDistrict}>
+                    <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={enteredDistrictHandler} value={enteredDistrict}>
                         <option value=''>Bölge Seçiniz</option>
                         <option value='Kadıköy'>Kadıköy</option>
                         <option value='Kartal' >Kartal</option>
