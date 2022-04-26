@@ -19,12 +19,10 @@ import AuthLayout from './components/Layout/AuthLayout';
 import AdminLayout from './components/Layout/AdminLayout';
 import ProductLayout from './components/Layout/ProductLayout';
 import { adminActions } from './store/admin-slice';
-import { authActions } from './store/auth-slice';
-import { useHttp } from './hooks/use-http';
 import LoadingSpinner from './components/UI/LoadingSpinner';
+import { useAuth } from './hooks/use-auth';
 
 let isInitial = true;
-
 
 const DUMMY_RESTAURANTS = [
   {
@@ -158,22 +156,6 @@ const DUMMY_PRODUCTS = [
 
 function App() {
   const dispatch = useDispatch();
-  const [isLoading, , sendRequest,] = useHttp();
-  useEffect(() => {
-    let storedToken = JSON.parse(localStorage.getItem('tokenData'));
-    const fetchUser = (async () => {
-      let data = null;
-      if (storedToken && storedToken.token && new Date(storedToken.expiration) > new Date()) {
-        data = await sendRequest('http://localhost:8080/api/auth/access-token-panel', 'GET', {
-          'Authorization': 'Bearer: ' + storedToken.token
-        }, null);
-      }
-      if (storedToken) {
-        dispatch(authActions.loadUser(data))
-      }
-    });
-    fetchUser();
-  }, [sendRequest])
 
   useEffect(() => {
     DUMMY_RESTAURANTS.forEach(restaurant => dispatch(adminActions.addRestaurant({
@@ -199,6 +181,8 @@ function App() {
       amountInput: product.amount,
     })))
   }, [])
+
+  const [isLoading] = useAuth();
 
   const cartIsVisible = useSelector(state => state.ui.cartIsVisible);
   const cart = useSelector(state => state.cart);
@@ -228,6 +212,7 @@ function App() {
 
   const token = useSelector(state => state.auth.token);
   let routes;
+
 
   if (token) {
     routes = (

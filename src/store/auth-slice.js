@@ -17,12 +17,8 @@ const authSlice = createSlice({
             state.token = action.payload.access_token;
             state.authentication = action.payload.isAuthenticated;
             state.email = action.payload.userName;
-            state.tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 3);
-            localStorage.setItem("tokenData", JSON.stringify({
-                token: action.payload.access_token,
-                expiration: state.tokenExpirationDate.toISOString(),
-            })
-            );
+            state.tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 30);
+            localStorage.setItem("tokenData", action.payload.access_token);
 
         },
         logout(state) {
@@ -39,6 +35,7 @@ const authSlice = createSlice({
             state.token = action.payload.access_token;
             state.authentication = action.payload.isAuthenticated;
             state.email = action.payload.userName;
+            state.tokenExpirationDate =  new Date(new Date().getTime() + 1000 * 60 * 30);
         }
     },
 });

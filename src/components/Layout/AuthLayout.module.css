@@ -12,13 +12,16 @@
     text-align: center;
     background-color: #008080;
     position: fixed;
+    position: relative;
     top: 0px;
     z-index: 100;
     margin: 0 auto;
+
 }
+
 .authHeader h1 {
-        font-weight: bold;
-        font-style: italic;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .authHeader h3 {
@@ -27,10 +30,23 @@
     opacity: 0.6;
 }
 
+.authHeader .homeLink {
+    width: 30rem;
+    display: flex;
+    position: absolute;
+    left: 1rem;
+    font-size: 2rem;
+}
+
+.authHeader .homeLink a {
+    text-decoration: none;
+}
+
 .containerLayout main {
     width: 75%;
     margin: 0 auto;
 }
+
 /* @media(max-width:500px) {
     .container {
         flex-direction: column;
