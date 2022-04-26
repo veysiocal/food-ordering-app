@@ -19,6 +19,9 @@ import AuthLayout from './components/Layout/AuthLayout';
 import AdminLayout from './components/Layout/AdminLayout';
 import ProductLayout from './components/Layout/ProductLayout';
 import { adminActions } from './store/admin-slice';
+import { authActions } from './store/auth-slice';
+import { useHttp } from './hooks/use-http';
+import LoadingSpinner from './components/UI/LoadingSpinner';
 
 let isInitial = true;
 
@@ -154,8 +157,23 @@ const DUMMY_PRODUCTS = [
 ];
 
 function App() {
-
   const dispatch = useDispatch();
+  const [isLoading, , sendRequest,] = useHttp();
+  useEffect(() => {
+    let storedToken = JSON.parse(localStorage.getItem('tokenData'));
+    const fetchUser = (async () => {
+      let data = null;
+      if (storedToken && storedToken.token && new Date(storedToken.expiration) > new Date()) {
+        data = await sendRequest('http://localhost:8080/api/auth/access-token-panel', 'GET', {
+          'Authorization': 'Bearer: ' + storedToken.token
+        }, null);
+      }
+      if (storedToken) {
+        dispatch(authActions.loadUser(data))
+      }
+    });
+    fetchUser();
+  }, [sendRequest])
 
   useEffect(() => {
     DUMMY_RESTAURANTS.forEach(restaurant => dispatch(adminActions.addRestaurant({
@@ -208,10 +226,10 @@ function App() {
     // dispatch(sendDataToFirebase(cart)) // for now will return function not object.
   }, [cart, dispatch]); // dispatch does not change, but we add it also.
 
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const token = useSelector(state => state.auth.token);
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route path='/admin'>
@@ -280,15 +298,16 @@ function App() {
               </Route>
             </Switch>
           </Layout>
-        <Redirect to='/restaurants' />
+          <Redirect to='/restaurants' />
         </Route>
       </Switch>
     )
   }
   return (
     <Fragment>
-      {notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} />}
-      <Switch>{routes}</Switch>
+      {isLoading && <LoadingSpinner asOverlay />}
+      {!isLoading && (notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} />)}
+      {!isLoading && <Switch>{routes}</Switch>}
     </Fragment>
   );
 }

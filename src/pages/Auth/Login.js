@@ -75,7 +75,6 @@ const AuthForm = (props) => {
           password,
         }),
       );
-      console.log("SENDREQUESTDATA: ", data);
       if (data && data.success === true) {
         dispatch(authActions.login(data));
         history.replace('/restaurants');

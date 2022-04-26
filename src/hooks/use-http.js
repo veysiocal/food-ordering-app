@@ -19,6 +19,8 @@ export const useHttp = () => {
                 body,
                 signal: httpAbortCtrl.signal
             });
+            setIsLoading(false);
+
             const data = await response.json();
 
             activeHttpRequests.current = activeHttpRequests.current.filter(ctrl => ctrl !== httpAbortCtrl);
@@ -28,7 +30,6 @@ export const useHttp = () => {
             if (!response.ok) { // if response's status is 200's
                 throw new Error(data.message);
             }
-            setIsLoading(false);
 
             return data;
         }
@@ -36,7 +37,6 @@ export const useHttp = () => {
             setIsLoading(false);
             setHaveError(err.message);
         }
-        console.log("geldila")
     }, []);
 
     const clearError = useCallback(() => {
