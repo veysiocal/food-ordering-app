@@ -73,7 +73,7 @@ const DUMMY_RESTAURANTS = [
 
 const DUMMY_PRODUCTS = [
   {
-    restaurantId: 'restaurant1',
+    businessId: 1,
     id: 'product1',
     price: 10,
     title: 'Lahmacun',
@@ -83,7 +83,7 @@ const DUMMY_PRODUCTS = [
     amount: 10,
   },
   {
-    restaurantId: 'restaurant1',
+    businessId: 1,
     id: 'product2',
     price: 16,
     title: 'Kebap',
@@ -93,7 +93,7 @@ const DUMMY_PRODUCTS = [
     amount: 9,
   },
   {
-    restaurantId: 'restaurant2',
+    businessId: 2,
     id: 'product1',
     price: 10,
     title: 'Kahve',
@@ -103,7 +103,7 @@ const DUMMY_PRODUCTS = [
     amount: 8,
   },
   {
-    restaurantId: 'restaurant2',
+    businessId: 2,
     id: 'product2',
     price: 16,
     title: 'Milkshake',
@@ -113,7 +113,7 @@ const DUMMY_PRODUCTS = [
     amount: 7,
   },
   {
-    restaurantId: 'restaurant3',
+    businessId: 3,
     id: 'product1',
     price: 10,
     title: 'Ekmek',
@@ -123,7 +123,7 @@ const DUMMY_PRODUCTS = [
     amount: 6,
   },
   {
-    restaurantId: 'restaurant3',
+    businessId: 3,
     id: 'product2',
     price: 16,
     title: 'Simit',
@@ -133,7 +133,7 @@ const DUMMY_PRODUCTS = [
     amount: 5,
   },
   {
-    restaurantId: 'restaurant4',
+    businessId: 4,
     id: 'product1',
     price: 10,
     title: 'Kurabiye',
@@ -143,7 +143,7 @@ const DUMMY_PRODUCTS = [
     amount: 5,
   },
   {
-    restaurantId: 'restaurant4',
+    businessId: 4,
     id: 'product2',
     price: 16,
     title: 'YaşPasta',
@@ -235,7 +235,7 @@ function App() {
             </Switch>
           </AdminLayout>
         </Route>
-        <Route path='/products/:restaurantId'>
+        <Route path='/products/:businessId'>
           <ProductLayout>
             {cartIsVisible && <Cart />}
             <Products />
@@ -267,7 +267,7 @@ function App() {
             <Login />
           </AuthLayout>
         </Route>
-        <Route path='/products/:restaurantId'>
+        <Route path='/products/:businessId'>
           <ProductLayout>
             <Products />
           </ProductLayout>

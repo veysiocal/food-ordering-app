@@ -5,16 +5,34 @@ import { uiActions } from '../../store/ui-slice';
 import { Link, useHistory } from 'react-router-dom';
 
 const RestaurantItem = (props) => {
-  const { title, id, description, district, category, start, end} = props;
-
+  const { title, id, description, district, businessTypeId, start, end } = props;
+  let category = "";
+  switch (businessTypeId) {
+    case 1:
+      category = "Restoran";
+      break;
+    case 2:
+      category = "Pastane";
+      break;
+    case 3:
+      category = "Fırın";
+      break;
+    case 4:
+      category = "Kafe";
+      break;
+    case 5:
+      category = "Manav";
+      break;
+    default: category = "Restoran";
+  }
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  
+
   const history = useHistory();
 
   const favoriteHandler = () => {
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       dispatch(uiActions.addToFavorite({
         id,
         title,
@@ -30,7 +48,7 @@ const RestaurantItem = (props) => {
         title: 'Success!',
         message: 'Successfully Added!',
       }));
-  
+
       dispatch(uiActions.toggleNotification({
         show: true,
       }));

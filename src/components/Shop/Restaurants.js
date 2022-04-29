@@ -2,17 +2,32 @@ import RestaurantItem from './RestaurantItem';
 import classes from './Restaurants.module.css';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
+import { useHttp } from '../../hooks/use-http';
+import LoadingSpinner from '../UI/LoadingSpinner';
 
 
 const Restaurants = (props) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const filteredRestaurant = queryParams.get('filt');
+  const [isLoading, haveError, sendRequest] = useHttp();
+  const [restaurants, setRestaurants] = useState([]);
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const data = await sendRequest('http://localhost:8080/api/admin/businessInfos');
+        if (data && data.success === true) {
+          setRestaurants(data.data)
+        }
+      } catch {
 
-  let restaurants = useSelector(state => state.admin.restaurants);
+      }
+    }
+    fetchRestaurants();
+  }, [sendRequest])
 
   let showRestaurants = [];
   if (filteredRestaurant) {
@@ -63,6 +78,13 @@ const Restaurants = (props) => {
       showRestaurants = showRestaurants.filter(restaurant => restaurant.district === selectedDistrict)
     }
   }
+console.log("isloading: ",isLoading);
+  if (isLoading) {
+    return (
+      <LoadingSpinner asOverlay />
+    )
+  }
+console.log("isloading2: ",isLoading);
 
   return (
     <section className={classes.itemCustom}>
@@ -89,9 +111,11 @@ const Restaurants = (props) => {
       {
         showRestaurants.length !== 0 && <ul>
           {showRestaurants.map(restaurant => (
-            <RestaurantItem key={restaurant.id} id={restaurant.id} favorited={false} category={restaurant.category}
-             title={restaurant.title} description={restaurant.description} district={restaurant.district}
-             start={restaurant.start} end={restaurant.end} />)
+            <RestaurantItem key={restaurant.businessId} id={restaurant.businessId} favorited={false} businessTypeId={restaurant.businessTypeId}
+              title={restaurant.companyName}
+              // description={restaurant.description} 
+              district={restaurant.district}
+              start={restaurant.start} end={restaurant.end} />)
           )}
         </ul>
       }

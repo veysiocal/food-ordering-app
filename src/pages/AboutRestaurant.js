@@ -69,29 +69,55 @@ const AboutRestaurant = () => {
     let userEmail = useSelector(state => state.auth.email);
     let token = useSelector(state => state.auth.token);
 
+    let categoryId;
+
     const formSubmitHandler = async (event) => {
         event.preventDefault();
 
-        dispatch(adminActions.addRestaurant({
-            enteredId,
-            enteredName,
-            enteredPhone,
-            enteredEmail,
-            enteredAddress,
-            enteredDescription,
-            enteredCategory,
-            enteredDistrict,
-            startTime,
-            endTime,
-        }));
+        switch (enteredCategory) {
+            case 'Restoran':
+                categoryId = 1;
+                break;
+            case 'Pastane':
+                categoryId = 2;
+                break;
+            case 'Fırın':
+                categoryId = 3;
+                break;
+            case 'Kafe':
+                categoryId = 4;
+                break;
+            case 'Manav':
+                categoryId = 5;
+                break;
+            default: categoryId = 1;
+        }
+        // dispatch(adminActions.addRestaurant({
+        //     enteredId,
+        //     enteredName,
+        //     enteredPhone,
+        //     enteredEmail,
+        //     enteredAddress,
+        //     enteredDescription,
+        //     enteredCategory,
+        //     enteredDistrict,
+        //     startTime,
+        //     endTime,
+        // }));
         await sendRequest('http://localhost:8080/api/admin/businessInfos', 'POST',
             {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer: ' + token
             },
             JSON.stringify({
-                owner: userEmail,
-                businessTypeId: enteredId,
+                // owner: userEmail,
+                businessTypeId: categoryId,
+                companyName: enteredName,
+                companyPhone: enteredPhone,
+                district: enteredDistrict,
+                address1: enteredAddress,
+                start: startTime,
+                end: endTime,
             })
         );
         // if(data && data.success) {
@@ -131,12 +157,12 @@ const AboutRestaurant = () => {
                         type="file"
                     />
                 </FormGroup> */}
-                    <FormGroup>
+                    {/* <FormGroup>
                         <Label >
                             BusinessType Id
                         </Label>
                         <Input onChange={enteredIdHandler} value={enteredId} />
-                    </FormGroup>
+                    </FormGroup> */}
                     <FormGroup>
                         <Label >
                             Restoran Adı
@@ -208,7 +234,7 @@ const AboutRestaurant = () => {
                         </Label>
                         <Input onChange={enteredPhoneHandler} value={enteredPhone} />
                     </FormGroup>
-                    <FormGroup>
+                    {/* <FormGroup>
                         <Label for="exampleEmail">
                             Email
                         </Label>
@@ -220,7 +246,7 @@ const AboutRestaurant = () => {
                             onChange={enteredEmailHandler}
                             value={enteredEmail}
                         />
-                    </FormGroup>
+                    </FormGroup> */}
 
                     {/* <FormGroup>
                     <Label >
