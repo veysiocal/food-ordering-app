@@ -171,7 +171,7 @@ function App() {
     })));
 
     DUMMY_PRODUCTS.forEach(product => dispatch(adminActions.addProduct({
-      restaurantIdInput: product.restaurantId,
+      restaurantIdInput: product.businessId,
       idInput: product.id,
       nameInput: product.title,
       fee: product.price,
