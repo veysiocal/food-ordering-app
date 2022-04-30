@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useHttp } from '../../hooks/use-http';
 import Card from '../UI/Card';
 import LoadingSpinner from '../UI/LoadingSpinner';
@@ -8,34 +7,29 @@ import ProductItem from './ProductItem';
 import classes from './Products.module.css';
 
 const Products = () => {
+  const [businessProducts, setBusinessProducts] = useState([{}]);
   const [isLoading, haveError, sendRequest, clearError] = useHttp();
-  const [restaurant, setRestaurant] = useState({});
 
-  const params = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const businessId = queryParams.get('businessId');
 
   let businessTypeId;
-
   useEffect(() => {
     const fetchRestaurantById = async () => {
       try {
-        const data = await sendRequest(`http://localhost:8080/api/admin/businessInfos/${params.businessId}`)
+        const data = await sendRequest(`http://localhost:8080/api/views/products-page?businessId=${businessId}`)
+        console.log("DATA: ", data);
         if (data && data.success) {
-          setRestaurant(data.data);
+          setBusinessProducts(data.data);
         }
         businessTypeId = data.data.businessTypeId;
-
-      } catch {
-
+      } catch (error) {
+        console.log("Error: ", error)
       }
     }
     fetchRestaurantById();
   }, [sendRequest]);
-
-  const activeProducts = useSelector(state => state.admin.activeProducts);
-  console.log("activePRODUCTS: ",activeProducts)
-  
-  const products = activeProducts.filter(restaurant => restaurant.restaurantId === +params.businessId);
-  console.log("PRODUCTS: ",products)
 
   let category = "";
   switch (businessTypeId) {
@@ -57,38 +51,38 @@ const Products = () => {
     default: category = "Restoran";
   }
 
+  console.log("busşness: ", businessProducts);
+
   if (isLoading) {
     return (
       <LoadingSpinner asOverlay />
     )
   }
-
-  console.log("restaurant22: ", restaurant)
   return (
     <section className={classes.productsCustom}>
       <div className={classes.container} >
         <div className={classes[category]} />
         <Card className={classes.containerCustom}>
           <header>
-            <h4>{restaurant.companyName}</h4>
-            <h5>{restaurant.district}</h5>
+            <h4>{businessProducts[0].companyName}</h4>
+            <h5>{businessProducts[0].district}</h5>
           </header>
           <p>
-            {/* {restaurant[0].description} */}
-            {restaurant.start} - {restaurant.end}
+            {/* {businessProducts[0].description} */}
+            {businessProducts[0].start} - {businessProducts[0].end}
           </p>
         </Card>
         <div className={classes.detailsInfo}>
-          <p>{restaurant.address}</p>
-          <span>({restaurant.companyPhone}) </span>
-          <p>{restaurant.owner}</p>
+          <p>{businessProducts[0].address}</p>
+          <span>({businessProducts[0].companyPhone}) </span>
+          <p>{businessProducts[0].owner}</p>
         </div>
       </div>
       <div >
         <ul className={classes.productItemsList}>
-          {products.map(product => (
-            <ProductItem key={product.id} id={product.id} name={product.name} fee={product.price}
-              description={product.description} start={product.start} end={product.end} amount={product.amount} />)
+          {businessProducts.map(product => (
+            <ProductItem key={product.productId} id={product.productId} name={product.title} fee={product.price}
+              description={product.description} start={product.startTime} end={product.endTime} amount={product.amount} />)
           )}
         </ul>
       </div>

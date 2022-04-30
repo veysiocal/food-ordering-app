@@ -86,7 +86,7 @@ const RestaurantItem = (props) => {
               Favorilerden Çıkar
             </button>}
             <button>
-              <Link to={`/products/${props.id}`} >Restorana Git</Link>
+              <Link to={`/products?businessId=${props.id}`} >Restorana Git</Link>
             </button>
 
           </div>
