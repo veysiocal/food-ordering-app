@@ -20,6 +20,7 @@ import AdminLayout from './components/Layout/AdminLayout';
 import ProductLayout from './components/Layout/ProductLayout';
 import LoadingSpinner from './components/UI/LoadingSpinner';
 import { useAuth } from './hooks/use-auth';
+import MyOrders from './pages/Member/MyOrders';
 
 let isInitial = true;
 
@@ -101,6 +102,9 @@ function App() {
                 </Route>
                 <Route path='/favorite-restaurants'>
                   <FavRestaurants />
+                </Route>
+                <Route path='/my-orders'>
+                  <MyOrders />
                 </Route>
               </Switch>
             </Layout>

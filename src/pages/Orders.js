@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Card from '../components/UI/Card';
+import LoadingSpinner from '../components/UI/LoadingSpinner';
+import { useHttp } from '../hooks/use-http';
+import OrderItems from './OrderItems';
 import classes from './Orders.module.css';
 
 const Orders = () => {
     const items = useSelector(state => state.cart.orders);
     const orderPageIsVisible = useSelector(state => state.ui.orderPageIsVisible)
+    const token = useSelector(state => state.auth.token);
+    const [isLoading, haveError, sendRequest] = useHttp();
+    const [activeOrders, setActiveOrders] = useState([]);
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const data = await sendRequest('http://localhost:8080/api/admin/orders/getOrders',
+                    'GET',
+                    {
+                        'Authorization': 'Bearer: ' + token
+                    });
+                if (data && data.success === true) {
+                    setActiveOrders(data.data)
+                }
+            } catch { }
+        };
+        fetchOrders()
+    }, [sendRequest])
+
 
     if (!orderPageIsVisible) {
         return (
@@ -13,36 +36,31 @@ const Orders = () => {
         )
     }
 
+    if (isLoading) {
+        <LoadingSpinner asOverlay />
+    }
+
+    if (haveError) {
+        <h2>Error: {haveError}</h2>
+    }
     return (
         <Card>
-            <ul>
-                {items.map(
-                    item => (
-                        <li className={classes.itemCustom} >
-                            <header>
-                                <h3>{item.name}</h3>
-                                <div className={classes.priceCustom} >
-                                    {/* ${totalPrice.toFixed(2)}{' '} */}
-                                    ${item.totalPrice}{' '}
-
-                                    {/* <span className={classes.itempriceCustom}>(${price.toFixed(2)}/item)</span> */}
-                                    <span className={classes.itempriceCustom}>(${item.price}/item)</span>
-
-                                </div>
-                            </header>
-                            <div
-                                className={classes.detailsCustom}
-                            >
-                                <div className={classes.quantityCustom} >
-                                    x <span>{item.quantity}</span>
-                                </div>
-                            </div>
-                        </li>
+            {activeOrders.length !== 0 && <ul>
+                {
+                    activeOrders.map(
+                        item => (
+                            <OrderItems
+                                key={item.id}
+                                id={item.orderId}
+                                price={item.price}
+                                status={item.status}
+                            />
+                        )
                     )
-                )}
-
-            </ul>
-        </Card>
+                }
+            </ul>}
+            {activeOrders.length === 0 && <h2>There is no any order.</h2>}
+        </Card >
 
     );
 };

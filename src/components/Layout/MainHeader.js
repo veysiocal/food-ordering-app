@@ -33,6 +33,9 @@ const MainHeader = (props) => {
             <NavLink to='/favorite-restaurants' activeClassName={classes.active}>Favori Restoranlar</NavLink>
           </li>)}
           {isLoggedIn && (<li>
+            <NavLink to='/my-orders' activeClassName={classes.active}>Siparişlerim</NavLink>
+          </li>)}
+          {isLoggedIn && (<li>
             <CartButton />
           </li>)}
             {!isLoggedIn && (<li>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { useHttp } from '../../hooks/use-http';
 import { adminActions } from '../../store/admin-slice';
 import { cartActions } from '../../store/cart-slice';
@@ -15,34 +16,81 @@ const Cart = (props) => {
   let items = useSelector(state => state.cart.items);
 
   const dispatch = useDispatch();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
 
-  const compeletedHandler = () => {
-    dispatch(uiActions.showNotification({
-      status: 'success',
-      title: 'Success!',
-      message: 'Successfully Added! Please go to the restaurant!',
-    }));
+  const token = useSelector(state => state.auth.token);
 
-    dispatch(uiActions.toggleNotification({
-      show: true,
-    }));
+  const compeletedHandler = async () => {
 
-    dispatch(uiActions.activateOrderPage({
-      show: true,
+    console.log("items: ", items)
+
+    // items.forEach(item => (dispatch(adminActions.removeProductsForOrder(item))));
+    const orderLines = items.map(item => ({
+      'productId': item.id,
+      'quantity': item.quantity,
+      'price': item.price,
+      'productName': item.name,
     }))
 
-    items.forEach(item => (dispatch(adminActions.removeProductsForOrder(item))));
+    let totalPrice = 0;
+    items.map(item => {
+      totalPrice = totalPrice + item.totalPrice;
+    });
 
-    // sendRequest('http://localhost:8080/api/')
-    dispatch(cartActions.takeOrder());
+    const businessOwnerId = queryParams.get('businessId');
+
+    console.log("orderlines: ",orderLines);
+
+    const reqbody = {
+      orderLines,
+      totalPrice,
+      businessOwnerId,
+      status: 'aktif'
+    };
+
+    console.log("rew.body: ",reqbody);
+    
+    try {
+      const data = await sendRequest('http://localhost:8080/api/orders', 'POST',
+        {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer: ' + token
+        },
+        JSON.stringify(reqbody));
+
+      if (data.success === true) {
+        dispatch(uiActions.showNotification({
+          status: 'success',
+          title: 'Success!',
+          message: 'Successfully Added! Please go to the restaurant!',
+        }));
+
+        dispatch(uiActions.toggleNotification({
+          show: true,
+        }));
+
+        dispatch(uiActions.activateOrderPage({
+          show: true,
+        }))
+      }
+    } catch {
+
+    }
+
+    // dispatch(cartActions.takeOrder());
     dispatch(cartActions.cleanCart());
   }
 
   const closeHandler = () => {
     dispatch(uiActions.toggle());
   }
+
+  if(haveError) {
+    console.log("errorÇ: ",haveError)
+  }
   return (
-    <Card className={classes.cartCustom}>
+    <>
 
       {items.length !== 0 && <ul>
         {items.map(
@@ -56,7 +104,7 @@ const Cart = (props) => {
       </ul>}
       {items.length === 0 && <div><p>Sepetinde ürün bulunmamaktadır...</p></div>}
       <button onClick={closeHandler} className={classes.closeButton}>Kapat</button>
-    </Card>
+    </>
   );
 };
 
