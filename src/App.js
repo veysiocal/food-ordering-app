@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cart from './components/Cart/Cart';
 import Products from './components/Shop/Products';
@@ -54,53 +54,60 @@ function App() {
   }, [cart, dispatch]); // dispatch does not change, but we add it also.
 
   const token = useSelector(state => state.auth.token);
+  const userType = useSelector(state => state.auth.userType);
   let routes;
 
   if (token) {
-    routes = (
-      <Switch>
-        <Route path='/admin'>
-          < AdminLayout >
-            <Switch>
-              <Route path='/admin/active-products'>
-                <ActiveProducts />
-              </Route>
-              <Route path='/admin/add-product'>
-                <AddProduct />
-              </Route>
-              <Route path='/admin/orders'>
-                <Orders />
-              </Route>
-              <Route path='/admin' >
-                < Admin />
-              </Route>
-            </Switch>
-          </AdminLayout>
-        </Route>
-        <Route path='/products'>
-          <ProductLayout>
-            {cartIsVisible && <Cart />}
-            <Products />
-          </ProductLayout>
-        </Route>
-        <Route path='/' >
-          <Layout>
-            {cartIsVisible && <Cart />}
-            <Switch>
-              <Route path='/' exact>
-                <Redirect to='/restaurants' />
-              </Route>
-              <Route path='/restaurants'>
-                <Restaurants />
-              </Route>
-              <Route path='/favorite-restaurants'>
-                <FavRestaurants />
-              </Route>
-            </Switch>
-          </Layout>
-        </Route>
-      </Switch>
-    )
+    if (userType === 'owner') {
+      routes = (
+        < AdminLayout >
+          <Redirect to="/admin" />
+          <Switch>
+            <Route path='/admin/active-products'>
+              <ActiveProducts />
+            </Route>
+            <Route path='/admin/add-product'>
+              <AddProduct />
+            </Route>
+            <Route path='/admin/orders'>
+              <Orders />
+            </Route>
+            <Route path='/admin' >
+              < Admin />
+            </Route>
+            <Redirect from='*' to='/admin' />
+          </Switch>
+        </AdminLayout>
+      )
+    } else {
+      routes = (
+        <Switch>
+          <Route path='/products'>
+            <ProductLayout>
+              {cartIsVisible && <Cart />}
+              <Products />
+            </ProductLayout>
+          </Route>
+          <Route path='/' >
+            <Redirect to="/restaurants" />
+            <Layout>
+              {cartIsVisible && <Cart />}
+              <Switch>
+                <Route path='/' exact>
+                  <Redirect to='/restaurants' />
+                </Route>
+                <Route path='/restaurants'>
+                  <Restaurants />
+                </Route>
+                <Route path='/favorite-restaurants'>
+                  <FavRestaurants />
+                </Route>
+              </Switch>
+            </Layout>
+          </Route>
+        </Switch>
+      )
+    }
   } else {
     routes = (
       <Switch>

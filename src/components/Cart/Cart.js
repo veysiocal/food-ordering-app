@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHttp } from '../../hooks/use-http';
 import { adminActions } from '../../store/admin-slice';
 import { cartActions } from '../../store/cart-slice';
 import { uiActions } from '../../store/ui-slice';
@@ -9,9 +10,10 @@ import CartItem from './CartItem';
 
 const Cart = (props) => {
   const [orderIsSuccess, setOrderIsSuccess] = useState(false);
+  const [isLoading, haveError, sendRequest] = useHttp();
 
   let items = useSelector(state => state.cart.items);
-  console.log(items.length)
+
   const dispatch = useDispatch();
 
   const compeletedHandler = () => {
@@ -30,6 +32,8 @@ const Cart = (props) => {
     }))
 
     items.forEach(item => (dispatch(adminActions.removeProductsForOrder(item))));
+
+    // sendRequest('http://localhost:8080/api/')
     dispatch(cartActions.takeOrder());
     dispatch(cartActions.cleanCart());
   }

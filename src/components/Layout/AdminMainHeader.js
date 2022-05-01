@@ -1,11 +1,19 @@
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
+import { authActions } from '../../store/auth-slice';
 import classes from './MainHeader.module.css';
 
 
 const AdminMainHeader = (props) => {
-  const isLoggedIn =  useSelector(state => state.auth.isLoggedIn);
-  
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const logoutHandler = () => {
+    dispatch(authActions.logout())
+    history.replace('/auth')
+  };
+
   return (
     <header className={classes.headerCustom}>
       <NavLink to='/admin'>
@@ -13,9 +21,9 @@ const AdminMainHeader = (props) => {
       </NavLink>
       <nav className={classes.navCustom}>
         <ul>
-        <li>
+          {/* <li>
             <NavLink to='/restaurants' activeClassName={classes.active}>Satış</NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink to='/admin/active-products' activeClassName={classes.active}>Aktif Ürünler</NavLink>
           </li>
@@ -24,6 +32,9 @@ const AdminMainHeader = (props) => {
           </li>
           <li>
             <NavLink to='/admin/orders' activeClassName={classes.active}>Siparişleri Gör</NavLink>
+          </li>
+          <li>
+            <button onClick={logoutHandler} > Çıkış Yap </button>
           </li>
 
         </ul>

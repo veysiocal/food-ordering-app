@@ -9,28 +9,6 @@ const adminSlice = createSlice({
         activeProductsRestaurantId: null,
     },
     reducers: {
-        addRestaurant(state, action) {
-            const checkRestaurant = state.restaurants.find(restaurant => restaurant.id === action.payload.enteredId);
-            if (checkRestaurant) {
-                state.restaurantExist = true;
-            } else {
-                state.restaurantExist = false;
-
-                state.restaurants.push({
-                    id: action.payload.enteredId,
-                    title: action.payload.enteredName,
-                    phone: action.payload.enteredPhone,
-                    email: action.payload.enteredEmail,
-                    address: action.payload.enteredAddress,
-                    description: action.payload.enteredDescription,
-                    category: action.payload.enteredCategory,
-                    district: action.payload.enteredDistrict,
-                    start: action.payload.startTime,
-                    end: action.payload.endTime,
-                })
-            }
-
-        },
         addProduct(state, action) {
             state.activeProducts.push({
                 restaurantId: action.payload.restaurantIdInput,

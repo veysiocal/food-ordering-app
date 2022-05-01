@@ -92,18 +92,7 @@ const AboutRestaurant = () => {
                 break;
             default: categoryId = 1;
         }
-        // dispatch(adminActions.addRestaurant({
-        //     enteredId,
-        //     enteredName,
-        //     enteredPhone,
-        //     enteredEmail,
-        //     enteredAddress,
-        //     enteredDescription,
-        //     enteredCategory,
-        //     enteredDistrict,
-        //     startTime,
-        //     endTime,
-        // }));
+
         await sendRequest('http://localhost:8080/api/admin/businessInfos', 'POST',
             {
                 'Content-Type': 'application/json',

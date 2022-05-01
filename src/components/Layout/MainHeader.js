@@ -23,9 +23,9 @@ const MainHeader = (props) => {
       </NavLink>
       <nav className={classes.navCustom}>
         <ul>
-          {isLoggedIn && (<li>
+          {/* {isLoggedIn && (<li>
             <NavLink to='/admin' activeClassName={classes.active} >Admin</NavLink>
-          </li>)}
+          </li>)} */}
           <li>
             <NavLink to='/restaurants' activeClassName={classes.active} >Ana Sayfa</NavLink>
           </li>

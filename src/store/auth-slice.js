@@ -17,6 +17,7 @@ const authSlice = createSlice({
             state.token = action.payload.access_token;
             state.authentication = action.payload.isAuthenticated;
             state.email = action.payload.userName;
+            state.userType = action.payload.userType;
             state.tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 30);
             localStorage.setItem("tokenData", action.payload.access_token);
 
@@ -24,9 +25,11 @@ const authSlice = createSlice({
         logout(state) {
             state.isLoggedIn = false;
             state.name = null;
+            state.token = null;
             state.userId = null;
             state.authentication = false;
             state.email = null;
+            state.userType = null;
             localStorage.removeItem("tokenData");
         },
         loadUser(state, action) {
@@ -35,7 +38,8 @@ const authSlice = createSlice({
             state.token = action.payload.access_token;
             state.authentication = action.payload.isAuthenticated;
             state.email = action.payload.userName;
-            state.tokenExpirationDate =  new Date(new Date().getTime() + 1000 * 60 * 30);
+            state.userType = action.payload.userType;
+            state.tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 30);
         }
     },
 });

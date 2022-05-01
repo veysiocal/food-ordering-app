@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import classes from './Login.module.css';
 
@@ -15,6 +15,8 @@ import Card from '../../components/UI/Card';
 import { useHttp } from '../../hooks/use-http';
 
 const AuthForm = (props) => {
+  const dispatch = useDispatch();
+
   const [isLoginMode, setIsLoginMode] = useState(true);
 
   const [isLoading, haveError, sendRequest, clearError] = useHttp();
@@ -33,7 +35,6 @@ const AuthForm = (props) => {
     false
   );
 
-  const dispatch = useDispatch();
 
   const history = useHistory();
 
@@ -75,9 +76,10 @@ const AuthForm = (props) => {
           password,
         }),
       );
+      console.log("LOGINDATA: ",data)
       if (data && data.success === true) {
         dispatch(authActions.login(data));
-        history.replace('/restaurants');
+        // history.replace('/restaurants');
       }
     } else {
       console.log("Register!!!")
