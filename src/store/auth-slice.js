@@ -8,6 +8,8 @@ const authSlice = createSlice({
         token: null,
         authentication: false,
         email: null,
+        userType: null,
+        businessId: null,
         tokenExpirationDate: null,
     },
     reducers: {
@@ -18,6 +20,7 @@ const authSlice = createSlice({
             state.authentication = action.payload.isAuthenticated;
             state.email = action.payload.userName;
             state.userType = action.payload.userType;
+            state.businessId = action.payload.businessId;
             state.tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 30);
             localStorage.setItem("tokenData", action.payload.access_token);
 
@@ -30,6 +33,7 @@ const authSlice = createSlice({
             state.authentication = false;
             state.email = null;
             state.userType = null;
+            state.businessId = null;
             localStorage.removeItem("tokenData");
         },
         loadUser(state, action) {
@@ -39,6 +43,7 @@ const authSlice = createSlice({
             state.authentication = action.payload.isAuthenticated;
             state.email = action.payload.userName;
             state.userType = action.payload.userType;
+            state.businessId = action.payload.businessId;
             state.tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 30);
         }
     },

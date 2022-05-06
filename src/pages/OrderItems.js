@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Card from "../components/UI/Card";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import { useHttp } from "../hooks/use-http";
+import { uiActions } from "../store/ui-slice";
 
 
 import classes from './OrderItems.module.css';
@@ -12,9 +14,12 @@ const OrderItems = props => {
     const [adminPageOrders, setAdminPageOrders] = useState([]);
 
     const token = useSelector(state => state.auth.token);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     useEffect(() => {
         const getAdminPageOrders = async () => {
-            const data = await sendRequest('http://localhost/api/admin/orders/getOrderLines/' + props.orderId,
+            const data = await sendRequest('http://localhost:8080/api/orders/owner/get-order-lines/' + props.id,
                 'GET',
                 {
                     'Authorization': 'Bearer: ' + token
@@ -26,6 +31,39 @@ const OrderItems = props => {
         getAdminPageOrders()
     }, [sendRequest]);
 
+    const orderDeliveringHandler = async () => {
+        const data = await sendRequest('http://localhost:8080/api/orders/owner/order-delivering/' + props.id, 'PUT',
+            {
+                'Authorization': 'Bearer: ' + token,
+            }
+        );
+        if (data && data.success === true) {
+            dispatch(uiActions.showNotification({
+                status: 'success',
+                title: 'Success!',
+                message: 'Successfully Delivered!',
+            }));
+        }
+        history.go(0);
+
+    };
+
+    const orderRejectingHandler = async () => {
+        const data = await sendRequest('http://localhost:8080/api/orders/owner/order-rejecting/' + props.id, 'PUT',
+            {
+                'Authorization': 'Bearer: ' + token,
+            }
+        );
+        if (data && data.success === true) {
+            dispatch(uiActions.showNotification({
+                status: 'success',
+                title: 'Success!',
+                message: 'Successfully Rejected! ',
+            }));
+        }
+        history.go(0);
+    }
+
     if (isLoading) {
         <LoadingSpinner asOverlay />
     }
@@ -35,7 +73,7 @@ const OrderItems = props => {
     }
     return (
         <li key={props.key} className={classes.itemCustom}>
-            <header>Sipariş Id: {props.orderId}</header>
+            <header>Sipariş Id: {props.id}</header>
             <span>Durum: {props.status}</span>
             <Card className={classes.cartCustom}>
                 <ul>
@@ -65,7 +103,9 @@ const OrderItems = props => {
                         </li>
                     ))}
                 </ul>
-                <hr></hr>
+                <hr />
+                <button onClick={orderDeliveringHandler}>Teslim Et</button>
+                <button onClick={orderRejectingHandler}>İptal Et</button>
             </Card>
         </li>
     )

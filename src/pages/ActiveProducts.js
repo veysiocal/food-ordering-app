@@ -5,24 +5,24 @@ import classes from './ActiveProducts.module.css';
 import { adminActions } from '../store/admin-slice';
 import { useHttp } from '../hooks/use-http';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
+import { useParams } from 'react-router-dom';
 
 const ActiveProducts = () => {
     const [restaurantId, setRestaurantId] = useState('');
     const [isLoading, haveError, sendRequest] = useHttp();
     const [products, setProducts] = useState([]);
 
-    const activeProducts = useSelector(state => state.admin.activeProducts);
+    const businessId = useSelector(state => state.auth.businessId);
     useEffect(() => {
         const fetchActiveProducts = async () => {
-            const data = await sendRequest('http://localhost:8080/api/admin/businessProducts')
-            setProducts(data.data);
+            const data = await sendRequest('http://localhost:8080/api/admin/businessProducts?businessId=' + businessId)
+            if (data && data.success === true) {
+                setProducts(data.data);
+            }
         }
         fetchActiveProducts();
     }, [sendRequest])
 
-    const idInputHandler = (event) => {
-        setRestaurantId(event.target.value);
-    };
 
     const dispatch = useDispatch();
 
@@ -48,6 +48,9 @@ const ActiveProducts = () => {
         )
     }
 
+    if(haveError) {
+        console.log("errorActiveProduct: ",haveError)
+      }
     return (
         <section className={classes.activeProducts}>
             <ul>

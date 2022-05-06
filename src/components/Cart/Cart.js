@@ -52,7 +52,7 @@ const Cart = (props) => {
     console.log("rew.body: ",reqbody);
     
     try {
-      const data = await sendRequest('http://localhost:8080/api/orders', 'POST',
+      const data = await sendRequest('http://localhost:8080/api/orders/member/create-order', 'POST',
         {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer: ' + token

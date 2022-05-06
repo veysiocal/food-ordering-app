@@ -16,7 +16,7 @@ const Orders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const data = await sendRequest('http://localhost:8080/api/admin/orders/getOrders',
+                const data = await sendRequest('http://localhost:8080/api/orders/owner/get-orders-by-owner',
                     'GET',
                     {
                         'Authorization': 'Bearer: ' + token
@@ -30,11 +30,11 @@ const Orders = () => {
     }, [sendRequest])
 
 
-    if (!orderPageIsVisible) {
-        return (
-            <p className={classes.notfoundline}>Not found any order...</p>
-        )
-    }
+    // if (!orderPageIsVisible) {
+    //     return (
+    //         <p className={classes.notfoundline}>Not found any order...</p>
+    //     )
+    // }
 
     if (isLoading) {
         <LoadingSpinner asOverlay />

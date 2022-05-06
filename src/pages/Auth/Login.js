@@ -18,7 +18,7 @@ const AuthForm = (props) => {
   const dispatch = useDispatch();
 
   const [isLoginMode, setIsLoginMode] = useState(true);
-
+  const [userType, setUserType] = useState();
   const [isLoading, haveError, sendRequest, clearError] = useHttp();
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -42,12 +42,17 @@ const AuthForm = (props) => {
     if (!isLoginMode) {
       setFormData({
         ...formState.inputs,
-        name: undefined
+        name: undefined,
+        userType: undefined,
       }, formState.inputs.email.isValid && formState.inputs.password.isValid)
     } else {
       setFormData({
         ...formState.inputs,
         name: {
+          value: '',
+          isValid: false,
+        },
+        userType: {
           value: '',
           isValid: false,
         }
@@ -56,6 +61,10 @@ const AuthForm = (props) => {
     setIsLoginMode((prevState) => !prevState);
   };
 
+  const radioHandler = event => {
+    console.log("userType: ",event.target.value)
+    setUserType(event.target.value);
+  }
   const submitHandler = async event => {
     event.preventDefault();
 
@@ -76,7 +85,7 @@ const AuthForm = (props) => {
           password,
         }),
       );
-      console.log("LOGINDATA: ",data)
+      console.log("LOGINDATA: ", data)
       if (data && data.success === true) {
         dispatch(authActions.login(data));
         // history.replace('/restaurants');
@@ -92,6 +101,7 @@ const AuthForm = (props) => {
           userName: email,
           password,
           name,
+          userType
         }),
       );
       if (data && data.success === true) {
@@ -161,9 +171,27 @@ const AuthForm = (props) => {
               onInput={inputHandler}
             />
           </div>}
+          {!isLoginMode && <div className={classes.control}>
+            <input
+              type='radio'
+              id='userType'
+              name='userType'
+              value='member'
+              onInput={radioHandler}
+            />
+            <label>Yeni Üye</label>
+            <input
+              type='radio'
+              id='userType'
+              name='userType'
+              value='owner'
+              onInput={radioHandler}
+            />
+            <label>İşyeri Sahibi</label>
+          </div>}
           <div className={classes.actions}>
             {/* {!isLoading && <button>{isLogin ? 'Login' : 'Create Account'}</button>} */}
-            {<button disabled={!formState.isValid}>{isLoginMode ? 'Giriş Yap' : 'Üye Ol'}</button>}
+            {<button >{isLoginMode ? 'Giriş Yap' : 'Üye Ol'}</button>}
             {/* {isLoading && <p>Sending request...</p>} */}
             <button
               type='button'

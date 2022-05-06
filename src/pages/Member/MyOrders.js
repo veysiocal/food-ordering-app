@@ -18,7 +18,7 @@ const MyOrders = props => {
     useEffect(() => {
         const fetchMyOrders = async () => {
             try {
-                const data = await sendRequest('http://localhost:8080/api/orders/getByMemberName', 'GET',
+                const data = await sendRequest('http://localhost:8080/api/orders/member/get-orders-by-member', 'GET',
                     {
                         'Authorization': 'Bearer: ' + token
                     });
