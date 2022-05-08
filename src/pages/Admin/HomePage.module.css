@@ -1,0 +1,84 @@
+.containerLayout {
+    margin-top: 6rem;
+    padding: 0 1%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.containerLayout main {
+    width: 90%;
+    margin: 0 auto;
+}
+/* @media(max-width:500px) {
+    .container {
+        flex-direction: column;
+    }
+} */
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 2rem;
+    border-bottom: 3px solid black;
+  }
+  
+  .Restoran {
+    width: 26%;
+    background: url(../../images/Restoran.jpg);
+    background-size: cover;
+    border-radius: 1rem;
+  }
+  
+  .Kafe {
+    width: 25%;
+    background: url(../../images/Kafe.jpg);
+    background-size: cover;
+    border-radius: 1rem;
+  }
+  
+  .Fırın {
+    width: 25%;
+    background: url(../../images/Fırın.jpg);
+    background-size: cover;
+    border-radius: 1rem;
+  }
+  
+  .Pastane {
+    width: 25%;
+    background: url(../../images/Pastane.jpg);
+    background-size: cover;
+    border-radius: 1rem;
+  }
+  
+  
+  .containerCustom {
+    width: 30%;
+    height: 5rem;
+    margin: 1.5rem 0;
+    background: none;
+    color: white;
+    font-style: italic;
+  }
+  
+  .detailsInfo {
+    font-size: 1.25rem;
+    color: white;
+    font-weight: bold;
+    padding-top: 2rem;
+  }
+  
+  .containerCustom header h4, .containerCustom header h5 {
+    font-size: 1.5rem;
+  }
+  .productsCustom {
+    margin: 0 auto;
+    text-align: center;
+  }
+    
+    .productItemsList {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+  
+  

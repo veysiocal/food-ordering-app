@@ -29,6 +29,11 @@ const Orders = () => {
         fetchOrders()
     }, [sendRequest])
 
+    const deleteFromActiveOrders = (orderId) => {
+        setActiveOrders(activeOrders.filter(item => item.orderId !== orderId))
+    };
+
+
 
     // if (!orderPageIsVisible) {
     //     return (
@@ -54,6 +59,7 @@ const Orders = () => {
                                 id={item.orderId}
                                 price={item.price}
                                 status={item.status}
+                                deleteFromActiveOrders={deleteFromActiveOrders}
                             />
                         )
                     )

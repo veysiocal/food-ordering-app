@@ -43,7 +43,7 @@ const ProductItem = (props) => {
 
           <div className={classes.actionsCustom}>
             <p> <i class="fas fa-clock"></i> {start} - {end} </p>
-            <button onClick={addToCartHandler} >Sepete Ekle</button>
+            {props.display !== 'none' && <button onClick={addToCartHandler} >Sepete Ekle</button>}
           </div>
         </Card>
       </li>

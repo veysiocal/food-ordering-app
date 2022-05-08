@@ -1,39 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ActiveProductItem from './ActiveProductItem';
+import MyProductItem from './MyProductItem';
 import classes from './ActiveProducts.module.css';
 import { adminActions } from '../store/admin-slice';
 import { useHttp } from '../hooks/use-http';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
-import { useParams } from 'react-router-dom';
 
 const ActiveProducts = () => {
-    const [restaurantId, setRestaurantId] = useState('');
     const [isLoading, haveError, sendRequest] = useHttp();
-    const [products, setProducts] = useState([]);
+    const [myProducts, setMyProducts] = useState([]);
 
     const token = useSelector(state => state.auth.token);
 
     useEffect(() => {
-        const fetchActiveProducts = async () => {
-            const data = await sendRequest('http://localhost:8080/api/admin/my-active-products', 'GET',
+        const fetchMyProducts = async () => {
+            const data = await sendRequest('http://localhost:8080/api/admin/businessProducts','GET',
             {
                 'Authorization': 'Bearer: ' + token,
             },);
             if (data && data.success === true) {
-                setProducts(data.data);
+                setMyProducts(data.data);
             }
         }
-        fetchActiveProducts();
+        fetchMyProducts();
     }, [])
 
 
     const dispatch = useDispatch();
 
-    const submitHandler = () => {
-        console.log(restaurantId)
-        dispatch(adminActions.activeProductsSelection(restaurantId));
-    };
+    // const submitHandler = () => {
+    //     console.log(restaurantId)
+    //     dispatch(adminActions.activeProductsSelection(restaurantId));
+    // };
 
     // const activeProductsRestaurantId = useSelector(state => state.admin.activeProductsRestaurantId);
 
@@ -56,10 +54,10 @@ const ActiveProducts = () => {
         console.log("errorActiveProduct: ",haveError)
       }
     return (
-        <section className={classes.activeProducts}>
+        <section >
             <ul>
-                {products.map(product => (
-                    <ActiveProductItem id={product.id} name={product.title} start={product.startTime} end={product.endTime}
+                {myProducts.map(product => (
+                    <MyProductItem id={product.id} name={product.title} start={product.startTime} end={product.endTime}
                         fee={product.price} amount={product.amount} description={product.description}
                     />
                 ))}

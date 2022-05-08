@@ -25,6 +25,7 @@ const OrderItems = props => {
                     'Authorization': 'Bearer: ' + token
                 });
             if (data && data.success === true) {
+                console.log("data1: ", data)
                 setAdminPageOrders(data.data);
             }
         }
@@ -38,13 +39,14 @@ const OrderItems = props => {
             }
         );
         if (data && data.success === true) {
+            props.deleteFromActiveOrders(props.id);
             dispatch(uiActions.showNotification({
                 status: 'success',
                 title: 'Success!',
                 message: 'Successfully Delivered!',
             }));
         }
-        history.go(0);
+        // history.go(0);
 
     };
 
@@ -55,13 +57,14 @@ const OrderItems = props => {
             }
         );
         if (data && data.success === true) {
+            props.deleteFromActiveOrders(props.id);
             dispatch(uiActions.showNotification({
                 status: 'success',
                 title: 'Success!',
                 message: 'Successfully Rejected! ',
             }));
         }
-        history.go(0);
+        // history.go(0);
     }
 
     if (isLoading) {

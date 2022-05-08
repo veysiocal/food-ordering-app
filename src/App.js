@@ -8,9 +8,12 @@ import { sendDataToFirebase, fetchCartData } from './store/cart-actions';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
 import FavRestaurants from './components/Shop/FavRestaurants';
-import Admin from './pages/Admin';
+// import Admin from './pages/Admin';
+import HomePage from './pages/Admin/HomePage';
 import AddProduct from './pages/AddProduct';
 import ActiveProducts from './pages/ActiveProducts';
+import MyProducts from './pages/MyProducts';
+
 import Orders from './pages/Orders';
 import Login from './pages/Auth/Login';
 
@@ -67,6 +70,9 @@ function App() {
             <Route path='/admin/active-products'>
               <ActiveProducts />
             </Route>
+            <Route path='/admin/my-products'>
+              <MyProducts />
+            </Route>
             <Route path='/admin/add-product'>
               <AddProduct />
             </Route>
@@ -74,7 +80,8 @@ function App() {
               <Orders />
             </Route>
             <Route path='/admin' >
-              < Admin />
+              {/* < Admin /> */}
+              <HomePage  />
             </Route>
             <Redirect from='*' to='/admin' />
           </Switch>

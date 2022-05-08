@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Form, FormGroup, Label, Input, FormText, Button } from 'reactstrap';
 import Card from '../components/UI/Card';
+import LoadingSpinner from '../components/UI/LoadingSpinner';
+import { useHttp } from '../hooks/use-http';
 import { adminActions } from '../store/admin-slice';
 import { uiActions } from '../store/ui-slice';
 const AddProduct = () => {
 
     const dispatch = useDispatch();
+    const [isLoading, haveError, sendRequest] = useHttp();
+
+    const token = useSelector(state => state.auth.token);
 
     const [nameInput, setNameInput] = useState('');
     const [typeInput, setTypeInput] = useState('');
@@ -65,8 +70,6 @@ const AddProduct = () => {
 
         const fee = Number(feeInput);
 
-        console.log("event: ",event.target['restaurantId'].value);
-
         dispatch(adminActions.addProduct({
             restaurantIdInput,
             idInput,
@@ -79,6 +82,34 @@ const AddProduct = () => {
             amountInput,
             descriptionInput,
         }));
+        const data = sendRequest('http://localhost:8080/api/admin/add-new-product', 'POST',
+            {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer: ' + token,
+            },
+            JSON.stringify({
+                price: fee,
+                title: nameInput,
+                description: descriptionInput,
+                startTime: timeInput,
+                endTime: endTime,
+                amount: amountInput,
+            }),
+        );
+
+        if (data.success === true) {
+            dispatch(uiActions.showNotification({
+                status: 'success',
+                title: 'Success!',
+                message: data.message,
+            }));
+
+            dispatch(uiActions.toggleNotification({
+                show: true,
+            }));
+
+        }
+
         setRestaurantIdInput('');
         setIdInput('');
         setNameInput('');
@@ -91,21 +122,21 @@ const AddProduct = () => {
         setDescriptionInput('');
     };
 
+    if (isLoading) {
+        return (
+            <LoadingSpinner asOverlay />
+        )
+    }
+
+    if (haveError) {
+        return (
+            <h2>Error: {haveError}</h2>
+        )
+    }
+
     return (
         <Form onSubmit={submitFormHandler}>
             <Card>
-                <FormGroup>
-                    <Label for='restaurantId'>
-                        Restoran ID
-                    </Label>
-                    <Input onChange={restaurantIdInputHandler} value={restaurantIdInput} id='restaurantId' name='restaurantId'/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for='productId'>
-                        Product ID
-                    </Label>
-                    <Input onChange={idInputHandler} value={idInput} id='productId' name='productId'/>
-                </FormGroup>
                 <FormGroup>
                     <Label for='productName'>
                         Ürün Adı
@@ -118,7 +149,7 @@ const AddProduct = () => {
                     </Label>
                     <Input onChange={typeInputHandler} value={typeInput} id='productType' name='productType' />
                 </FormGroup> */}
-                <FormGroup>
+                {/* <FormGroup>
                     <Label for="exampleDate">
                         Tarih
                     </Label>
@@ -130,7 +161,7 @@ const AddProduct = () => {
                         onChange={dateInputHandler}
                         value={dateInput}
                     />
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                     <Label for="startTime">
                         Başlangıç Saati
@@ -156,12 +187,12 @@ const AddProduct = () => {
                         onChange={endTimeHandler}
                         value={endTime}
                     />
-                </FormGroup>                
+                </FormGroup>
                 <FormGroup>
                     <Label for='price'>
                         Fiyat
                     </Label>
-                    <Input onChange={feeInputHandler} value={feeInput} type='number' id='price'/>
+                    <Input onChange={feeInputHandler} value={feeInput} type='number' id='price' />
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleSelect">
@@ -199,11 +230,12 @@ const AddProduct = () => {
                         id="exampleText"
                         name="text"
                         type="textarea"
+                        placeholder='Ürünün miktar birimi hakkında açıklama giriniz. Örnek porsiyon, kg, adet...'
                         onChange={descriptionInputHandler}
                         value={descriptionInput}
                     />
                 </FormGroup>
-            {/* <Card>
+                {/* <Card>
                 <FormGroup>
                     <Label for="exampleFile">
                         File
@@ -247,7 +279,7 @@ const AddProduct = () => {
                     </Label>
                 </FormGroup>
             </Card> */}
-            <Button>Ekle</Button>
+                <Button>Ekle</Button>
             </Card>
 
         </Form>

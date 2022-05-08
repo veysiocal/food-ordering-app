@@ -57,7 +57,7 @@
 .navCustom a:active,
 .navCustom a.active {
   color: #e6fcfc;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .login {
