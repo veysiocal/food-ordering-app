@@ -15,71 +15,63 @@ const AddProduct = () => {
     const token = useSelector(state => state.auth.token);
 
     const [nameInput, setNameInput] = useState('');
-    const [typeInput, setTypeInput] = useState('');
-    const [dateInput, setDateInput] = useState();
-    const [timeInput, setTimeInput] = useState();
-    const [endTime, setEndTime] = useState();
+    // const [typeInput, setTypeInput] = useState('');
+    // const [dateInput, setDateInput] = useState();
+    // const [timeInput, setTimeInput] = useState();
+    // const [endTime, setEndTime] = useState();
     const [feeInput, setFeeInput] = useState('');
-    const [amountInput, setAmountInput] = useState('');
+    // const [amountInput, setAmountInput] = useState('');
     const [descriptionInput, setDescriptionInput] = useState('');
-    const [idInput, setIdInput] = useState('');
-    const [restaurantIdInput, setRestaurantIdInput] = useState('');
+    // const [idInput, setIdInput] = useState('');
+    // const [restaurantIdInput, setRestaurantIdInput] = useState('');
 
     const nameInputHandler = event => {
         setNameInput(event.target.value);
     };
 
-    const typeInputHandler = event => {
-        setTypeInput(event.target.value);
-    };
+    // const typeInputHandler = event => {
+    //     setTypeInput(event.target.value);
+    // };
 
-    const dateInputHandler = event => {
-        setDateInput(event.target.value);
-    };
+    // const dateInputHandler = event => {
+    //     setDateInput(event.target.value);
+    // };
 
-    const endTimeHandler = event => {
-        setEndTime(event.target.value);
-    };
+    // const endTimeHandler = event => {
+    //     setEndTime(event.target.value);
+    // };
 
-    const timeInputHandler = event => {
-        setTimeInput(event.target.value);
-    };
+    // const timeInputHandler = event => {
+    //     setTimeInput(event.target.value);
+    // };
 
-    const feeInputHandler = event => {
-        setFeeInput(event.target.value);
-    };
+    // const feeInputHandler = event => {
+    //     setFeeInput(event.target.value);
+    // };
 
-    const amountInputHandler = event => {
-        setAmountInput(event.target.value);
-    };
+    // const amountInputHandler = event => {
+    //     setAmountInput(event.target.value);
+    // };
 
     const descriptionInputHandler = event => {
         setDescriptionInput(event.target.value);
     };
 
-    const idInputHandler = event => {
-        setIdInput(event.target.value);
-    };
+    // const idInputHandler = event => {
+    //     setIdInput(event.target.value);
+    // };
 
-    const restaurantIdInputHandler = event => {
-        setRestaurantIdInput(event.target.value);
-    };
+    // const restaurantIdInputHandler = event => {
+    //     setRestaurantIdInput(event.target.value);
+    // };
 
     const submitFormHandler = (event) => {
         event.preventDefault();
 
-        const fee = Number(feeInput);
+        // const fee = Number(feeInput);
 
         dispatch(adminActions.addProduct({
-            restaurantIdInput,
-            idInput,
             nameInput,
-            typeInput,
-            dateInput,
-            timeInput,
-            endTime,
-            fee,
-            amountInput,
             descriptionInput,
         }));
         const data = sendRequest('http://localhost:8080/api/admin/add-new-product', 'POST',
@@ -88,12 +80,8 @@ const AddProduct = () => {
                 'Authorization': 'Bearer: ' + token,
             },
             JSON.stringify({
-                price: fee,
                 title: nameInput,
                 description: descriptionInput,
-                startTime: timeInput,
-                endTime: endTime,
-                amount: amountInput,
             }),
         );
 
@@ -110,15 +98,7 @@ const AddProduct = () => {
 
         }
 
-        setRestaurantIdInput('');
-        setIdInput('');
         setNameInput('');
-        setTypeInput('');
-        setDateInput('');
-        setTimeInput('');
-        setEndTime('');
-        setFeeInput('');
-        setAmountInput('');
         setDescriptionInput('');
     };
 
@@ -162,7 +142,7 @@ const AddProduct = () => {
                         value={dateInput}
                     />
                 </FormGroup> */}
-                <FormGroup>
+                {/* <FormGroup>
                     <Label for="startTime">
                         Başlangıç Saati
                     </Label>
@@ -221,7 +201,7 @@ const AddProduct = () => {
                             5
                         </option>
                     </Input>
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                     <Label for="exampleText">
                         Açıklama

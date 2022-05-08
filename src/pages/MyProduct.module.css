@@ -1,0 +1,31 @@
+.filtering {
+    border-radius: 2rem;
+    width: 70%;
+    height: 3rem;
+    display: flex;
+    margin: 1rem auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.filterButton {
+    background-color: white;
+    margin-left: 1em;
+    width: 7rem;
+    border-radius: 1em;
+    height: 2rem;
+    padding: 1%;
+    color: black;
+    letter-spacing: 2px;
+    font-weight: bold;
+  }
+
+.filtering input {
+    height: 2rem;
+    width: 50%;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 1.5%;
+    font-style: italic;
+}

@@ -34,3 +34,11 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  .details input {
+    margin-left: 10%;
+  }
+
+  .details {
+    font-size: 0.85rem;
+  }
