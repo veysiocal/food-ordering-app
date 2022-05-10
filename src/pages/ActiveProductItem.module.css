@@ -1,6 +1,6 @@
 .itemCustom h3 {
     margin: 0.5rem 0;
-    font-size: 1.25rem;
+    font-size: 1rem;
   }
   
   .itemCustom header {
@@ -41,4 +41,9 @@
 
   .details {
     font-size: 0.85rem;
+  }
+
+  .actionsCustom button{
+    padding: 4px;
+    font-size: 0.75rem;
   }

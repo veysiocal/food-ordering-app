@@ -12,6 +12,7 @@ const uiSlice = createSlice({
         orderPageIsVisible: false,
         selectedCategories: [],
         selectedDistrict: null,
+        selectedAdminProductsStatus: [],
     },
     reducers: {
         toggle(state) {
@@ -76,7 +77,25 @@ const uiSlice = createSlice({
         },
         takeSelectedDistrict(state, action) {
             state.selectedDistrict = action.payload;
-        }
+        },
+        addToSelectedAdminProductsStatus(state, action) {
+            const isExist = state.selectedAdminProductsStatus.find(status => status.id === action.payload.id);
+            if (isExist) {
+                return;
+            } else {
+                state.selectedAdminProductsStatus.push({
+                    id: action.payload.id,
+                    status: action.payload.status,
+                    name: action.payload.name
+                });
+            }
+        },
+        cleanSelectedAdminProductsStatus(state) {
+            state.selectedAdminProductsStatus = [];
+        },
+        removeSelectedStatus(state, action) {
+            state.selectedAdminProductsStatus = state.selectedAdminProductsStatus.filter(status => status.id !== +action.payload)
+        },
     },
 });
 

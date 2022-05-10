@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Input from '../components/FormElements/Input';
 import Card from '../components/UI/Card';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
@@ -16,7 +17,7 @@ const ProductItem = (props) => {
         endTime: '',
         price: '',
     });
-
+    const history = useHistory();
     const token = useSelector(state => state.auth.token);
 
     const [isLoading, haveError, sendRequest] = useHttp();
@@ -33,8 +34,8 @@ const ProductItem = (props) => {
         })
     };
 
-    const activateProduct = () => {
-        const data = sendRequest('http://localhost:8080/api/admin/add-product-to-sale', 'POST',
+    const activateProduct = async() => {
+        const data = await sendRequest('http://localhost:8080/api/admin/add-product-to-sale', 'POST',
             {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer: ' + token,
@@ -49,10 +50,6 @@ const ProductItem = (props) => {
                 amount: inputState.amount,
             }),
         );
-
-        if (data.success === true) {
-            setStatusHandler('satista')
-        }
     }
 
     const activateProductHandler = () => {
@@ -60,19 +57,21 @@ const ProductItem = (props) => {
             setShowActivationProductDetails(true);
         } else {
             activateProduct();
+            setShowActivationProductDetails(false)
         }
     };
 
-    const removeFromSale = () => {
-        const data = sendRequest('http://localhost:8080/api/admin/remove-product-from-sale/' + productId, 'PUT',
-        {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer: ' + token,
-        }
+    const removeFromSale = async () => {
+        const data = await sendRequest('http://localhost:8080/api/admin/remove-product-from-sale/' + productId, 'PUT',
+            {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer: ' + token,
+            }
         );
-        if(data.success === true) {
+        if (data.success === true) {
             console.log("RemoveFromSale is SUCCESS");
         }
+
     };
 
     const cancelActivation = () => {

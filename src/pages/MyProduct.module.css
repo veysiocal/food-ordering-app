@@ -1,3 +1,13 @@
+.selector {
+    border-radius: 2rem;
+    width: 70%;
+    height: 2.5rem;
+    display: flex;
+    margin: 1rem auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
 .filtering {
     border-radius: 2rem;
     width: 70%;

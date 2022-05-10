@@ -17,9 +17,9 @@ const ActiveProducts = () => {
     useEffect(() => {
         const fetchActiveProducts = async () => {
             const data = await sendRequest('http://localhost:8080/api/admin/my-active-products', 'GET',
-            {
-                'Authorization': 'Bearer: ' + token,
-            },);
+                {
+                    'Authorization': 'Bearer: ' + token,
+                });
             if (data && data.success === true) {
                 setProducts(data.data);
             }
@@ -31,7 +31,6 @@ const ActiveProducts = () => {
     const dispatch = useDispatch();
 
     const submitHandler = () => {
-        console.log(restaurantId)
         dispatch(adminActions.activeProductsSelection(restaurantId));
     };
 
@@ -52,15 +51,16 @@ const ActiveProducts = () => {
         )
     }
 
-    if(haveError) {
-        console.log("errorActiveProduct: ",haveError)
-      }
+    if (haveError) {
+        console.log("errorActiveProduct: ", haveError)
+    }
     return (
-        <section className={classes.activeProducts}>
+        <section
+        // className={classes.activeProducts}
+        >
             <ul>
                 {products.map(product => (
-                    <ActiveProductItem id={product.id} name={product.title} start={product.startTime} end={product.endTime}
-                        fee={product.price} amount={product.amount} description={product.description}
+                    <ActiveProductItem id={product.productId} product={product}
                     />
                 ))}
             </ul>

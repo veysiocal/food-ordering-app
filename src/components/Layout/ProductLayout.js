@@ -3,7 +3,7 @@ import MainHeader from './MainHeader';
 
 import classes from './ProductLayout.module.css';
 
-const Layout = (props) => {
+const ProductLayout = (props) => {
   return (
     <Fragment >
       <MainHeader />
@@ -14,4 +14,4 @@ const Layout = (props) => {
   );
 };
 
-export default Layout;
+export default ProductLayout;

@@ -65,7 +65,7 @@ const AddProduct = () => {
     //     setRestaurantIdInput(event.target.value);
     // };
 
-    const submitFormHandler = (event) => {
+    const submitFormHandler = async(event) => {
         event.preventDefault();
 
         // const fee = Number(feeInput);
@@ -74,7 +74,7 @@ const AddProduct = () => {
             nameInput,
             descriptionInput,
         }));
-        const data = sendRequest('http://localhost:8080/api/admin/add-new-product', 'POST',
+        const data = await sendRequest('http://localhost:8080/api/admin/add-new-product', 'POST',
             {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer: ' + token,
