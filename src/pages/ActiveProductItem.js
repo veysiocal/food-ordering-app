@@ -70,7 +70,7 @@ const ProductItem = (props) => {
   return (
     <li className={classes.itemCustom}>
       <Card>
-        <header>
+        <header className={classes.header}>
           {/* <h1>Restoran:{restaurantId}</h1> */}
           <h3>{productItem.title}</h3>
           <div className={classes.priceCustom}><span> <small> ${productItem.price}</small>  </span> <strong>${discount}</strong></div>

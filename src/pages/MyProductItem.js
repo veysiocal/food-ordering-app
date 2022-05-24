@@ -92,8 +92,8 @@ const ProductItem = (props) => {
         <li className={classes.itemCustom}>
             <Card>
                 <header>
-                    <h3>{title}</h3>
-                    <div><span>Satış durumu: {statusHandler} </span></div>
+                    <h3>{title}</h3> 
+                    <p>Satış durumu: {statusHandler} </p>
                 </header>
                 <p>{description}</p>
                 {showActivationProductDetails && <div className={classes.details}>

@@ -1,0 +1,12 @@
+.map {
+    width: 100%;
+    height: 100%;
+}
+
+.section {
+    color: black;
+    border: 5px solid black;
+    height: 200px;
+    width: 200px;
+    background-color: white !important;
+}

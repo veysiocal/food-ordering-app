@@ -39,3 +39,7 @@
     padding: 1.5%;
     font-style: italic;
 }
+
+.activeProductUl {
+    display: flex;
+  }

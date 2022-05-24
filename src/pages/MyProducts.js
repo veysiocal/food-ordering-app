@@ -83,20 +83,20 @@ const ActiveProducts = () => {
         <section >
             <div>
                 <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={selectDistrictHandler}>
-                    <option value='Tümü' >Bölge Seçiniz</option>
+                    <option value='Tümü' >Ürün Seçiniz</option>
                     <option value='satista'>Satıştaki Ürünler</option>
                     <option value='satis disi'>Satış Dışı Ürünler</option>
                 </select>
             </div>
             <div className={classes.filtering} >
-                <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Restoran ara...'></input>
+                <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Ürün ara...'></input>
                 <div>
                     <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
                     </button>
                     <button onClick={cleanHandler} className={classes.filterButton}>Temizle</button>
                 </div>
             </div>
-            <ul>
+            <ul className={classes.activeProductUl}>
                 {showProducts.map(product => (
                     <MyProductItem productId={product.productId} title={product.title} description={product.description} status={product.status}
                     />

@@ -58,7 +58,7 @@ const ActiveProducts = () => {
         <section
         // className={classes.activeProducts}
         >
-            <ul>
+            <ul className={classes.activeProductUl}>
                 {products.map(product => (
                     <ActiveProductItem id={product.productId} product={product}
                     />
