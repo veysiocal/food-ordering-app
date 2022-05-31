@@ -35,7 +35,7 @@ const ProductItem = (props) => {
           <div className={classes.infos}>
             <h3>{name}</h3>
             <span className={classes.amount}>{amount} Adet</span>
-            <div className={classes.priceCustom}><span>  ${fee}  </span> ${discount}</div>
+            <div className={classes.priceCustom}><span>  ₺{fee}  </span> ₺{discount}</div>
           </div>
           <div className={classes.details}>
             <p>{description}</p>

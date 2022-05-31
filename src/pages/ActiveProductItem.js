@@ -1,9 +1,12 @@
+import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../components/UI/Card';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import { useHttp } from '../hooks/use-http';
 import { adminActions } from '../store/admin-slice';
+import ErrorModal from '../components/UI/ErrorModal';
+
 import classes from './ActiveProductItem.module.css';
 
 const ProductItem = (props) => {
@@ -14,7 +17,7 @@ const ProductItem = (props) => {
   })
 
 
-  const [isLoading, haveError, sendRequest] = useHttp();
+  const [isLoading, haveError, sendRequest, clearError] = useHttp();
   const [showUpdateFields, setShowUpdateFields] = useState(false);
 
   const token = useSelector(state => state.auth.token);
@@ -57,17 +60,10 @@ const ProductItem = (props) => {
     setShowUpdateFields(false);
   }
 
-  if (isLoading) {
-    <LoadingSpinner asOverlay />
-  }
-
-  if (haveError) {
-    return (
-      <h2>Error: {haveError} </h2>
-    );
-  }
-
   return (
+    <React.Fragment>
+    {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+    {isLoading && <LoadingSpinner asOverlay />}
     <li className={classes.itemCustom}>
       <Card>
         <header className={classes.header}>
@@ -95,6 +91,7 @@ const ProductItem = (props) => {
         </div>
       </Card>
     </li>
+    </React.Fragment>
   );
 };
 

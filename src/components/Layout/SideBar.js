@@ -8,10 +8,12 @@ import ErrorModal from '../UI/ErrorModal';
 
 import classes from './SideBar.module.css';
 import { useHttp } from '../../hooks/use-http';
+import { useHistory } from 'react-router-dom';
 
 const Sidebar = () => {
     const [isLoading, haveError, sendRequest, clearError] = useHttp();
     const [categories, setCategories] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -40,7 +42,6 @@ const Sidebar = () => {
 
     const removeCategoryHandler = (e) => {
         const id = e.target.id
-        console.log("ID: ", id)
         dispatch(uiActions.removeSelectedCategory(id))
     };
 
@@ -48,15 +49,8 @@ const Sidebar = () => {
         dispatch(uiActions.cleanSelectedCategories())
     };
 
-    if (haveError) {
-        return (
-            <div className={classes.categories}>
-                <h2>Error: {haveError}</h2>
-            </div>
-        )
-    }
 
-    if (categories.length === 0) {
+    if (!haveError && categories.length === 0) {
         return (
             <div className={classes.categories}>
                 <h2>Categoriler bulunamadı...</h2>
@@ -64,9 +58,14 @@ const Sidebar = () => {
         )
     }
 
+    const clearAndTryAgain = () => {
+        clearError();
+        history.go(0)
+    }
+    
     return (
         <div className={classes.categories}>
-            {/* <ErrorModal error={haveError} onClear={clearError} /> */}
+            {haveError && <ErrorModal error={haveError} onClear={clearAndTryAgain} />}
             {isLoading && <LoadingSpinner asOverlay />}
             <h3 >Kategoriler</h3>
             <ul className={classes.categoriesList}>

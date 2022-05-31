@@ -4,12 +4,12 @@ import Card from '../../components/UI/Card';
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
 import { useHttp } from '../../hooks/use-http';
 import OrderItems from './OrderItems';
-
+import ErrorModal from '../../components/UI/ErrorModal';
 import classes from './MyOrders.module.css';
 
 const MyOrders = props => {
 
-    const [isLoading, haveError, sendRequest] = useHttp();
+    const [isLoading, haveError, sendRequest, clearError] = useHttp();
 
     const [orders, setOrders] = useState([]);
 
@@ -30,31 +30,23 @@ const MyOrders = props => {
         }
         fetchMyOrders();
     }, [sendRequest])
-    if (isLoading) {
-        return (
-            <LoadingSpinner asOverlay />
-        )
-    }
-    if (haveError) {
-        return (
-            <h2>Error1: {haveError}</h2>
-        )
-    }
 
-    console.log("orderS: ", orders)
-    orders.map(item => console.log("ii: ", item))
     return (
-        <Card className={classes.cartCustom}>
-            {orders.length !== 0 && <ul>
-                {orders.map(item => (<OrderItems
-                    key={item.id}
-                    id={item.orderId}
-                    price={item.price}
-                    status={item.status}
-                />))}
-            </ul>}
-            {orders.length === 0 && <div >Sipari bulunamadı...</div>}
-        </Card>
+        <React.Fragment>
+            {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+            {isLoading && <LoadingSpinner asOverlay />}
+            <Card className={classes.cartCustom}>
+                {orders.length !== 0 && <ul>
+                    {orders.map(item => (<OrderItems
+                        key={item.id}
+                        id={item.orderId}
+                        price={item.price}
+                        status={item.status}
+                    />))}
+                </ul>}
+                {orders.length === 0 && <div >Sipari bulunamadı...</div>}
+            </Card>
+        </React.Fragment>
     )
 };
 

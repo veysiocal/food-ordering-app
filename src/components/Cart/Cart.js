@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useHttp } from '../../hooks/use-http';
@@ -6,12 +6,15 @@ import { adminActions } from '../../store/admin-slice';
 import { cartActions } from '../../store/cart-slice';
 import { uiActions } from '../../store/ui-slice';
 import Card from '../UI/Card';
+import ErrorModal from '../UI/ErrorModal';
+import LoadingSpinner from '../UI/LoadingSpinner';
+import Modal from '../UI/Modal';
 import classes from './Cart.module.css';
 import CartItem from './CartItem';
 
 const Cart = (props) => {
   const [orderIsSuccess, setOrderIsSuccess] = useState(false);
-  const [isLoading, haveError, sendRequest] = useHttp();
+  const [isLoading, haveError, sendRequest, clearError] = useHttp();
 
   let items = useSelector(state => state.cart.items);
 
@@ -40,7 +43,7 @@ const Cart = (props) => {
 
     const businessOwnerId = queryParams.get('businessId');
 
-    console.log("orderlines: ",orderLines);
+    console.log("orderlines: ", orderLines);
 
     const reqbody = {
       orderLines,
@@ -49,8 +52,8 @@ const Cart = (props) => {
       status: 'aktif'
     };
 
-    console.log("rew.body: ",reqbody);
-    
+    console.log("rew.body: ", reqbody);
+
     try {
       const data = await sendRequest('http://localhost:8080/api/orders/member/create-order', 'POST',
         {
@@ -63,7 +66,7 @@ const Cart = (props) => {
         dispatch(uiActions.showNotification({
           status: 'success',
           title: 'Success!',
-          message: 'Successfully Added! Please go to the restaurant!',
+          message: 'Siparişiniz alındı. Lütfen restorana gidiniz!',
         }));
 
         dispatch(uiActions.toggleNotification({
@@ -80,31 +83,35 @@ const Cart = (props) => {
 
     // dispatch(cartActions.takeOrder());
     dispatch(cartActions.cleanCart());
+    dispatch(uiActions.toggle());
   }
 
   const closeHandler = () => {
     dispatch(uiActions.toggle());
   }
 
-  if(haveError) {
-    console.log("errorÇ: ",haveError)
-  }
+
   return (
-    <>
-
-      {items.length !== 0 && <ul>
-        {items.map(
-          item => (<CartItem
-            key={item.id}
-            item={{ id: item.id, title: item.name, quantity: item.quantity, total: item.totalPrice, price: item.price }}
-          />
-          ))}
-        <button onClick={compeletedHandler}>Öde ve Ürünleri Ayırt</button>
-
-      </ul>}
-      {items.length === 0 && <div><p>Sepetinde ürün bulunmamaktadır...</p></div>}
-      <button onClick={closeHandler} className={classes.closeButton}>Kapat</button>
-    </>
+    <React.Fragment>
+      {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+      {isLoading && <LoadingSpinner asOverlay />}
+      {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+      <Modal header='Sepetim' show onCancel={closeHandler}>
+        {items.length !== 0 && <ul>
+          {items.map(
+            item => (<CartItem
+              key={item.id}
+              item={{ id: item.id, title: item.name, quantity: item.quantity, total: item.totalPrice, price: item.price }}
+            />
+            ))}
+        </ul>}
+        {items.length === 0 && <div><p>Sepetinde ürün bulunmamaktadır...</p></div>}
+        <footer className={classes.cart__footer}>
+          {items.length !== 0 && <button onClick={compeletedHandler}>Öde ve Ürünleri Ayırt</button>}
+          <button onClick={closeHandler} className={classes.closeButton}>Kapat</button>
+        </footer>
+      </Modal>
+    </React.Fragment>
   );
 };
 

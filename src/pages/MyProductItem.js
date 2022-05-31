@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -6,6 +7,8 @@ import Card from '../components/UI/Card';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import { useHttp } from '../hooks/use-http';
 import { adminActions } from '../store/admin-slice';
+import ErrorModal from '../components/UI/ErrorModal';
+
 import classes from './ActiveProductItem.module.css';
 
 const ProductItem = (props) => {
@@ -20,7 +23,7 @@ const ProductItem = (props) => {
     const history = useHistory();
     const token = useSelector(state => state.auth.token);
 
-    const [isLoading, haveError, sendRequest] = useHttp();
+    const [isLoading, haveError, sendRequest, clearError] = useHttp();
     const [statusHandler, setStatusHandler] = useState(status);
     const dispatch = useDispatch();
     // const decrementHandler = () => {
@@ -34,7 +37,7 @@ const ProductItem = (props) => {
         })
     };
 
-    const activateProduct = async() => {
+    const activateProduct = async () => {
         const data = await sendRequest('http://localhost:8080/api/admin/add-product-to-sale', 'POST',
             {
                 'Content-Type': 'application/json',
@@ -78,42 +81,36 @@ const ProductItem = (props) => {
         setShowActivationProductDetails(false);
     };
 
-    if (isLoading) {
-        <LoadingSpinner asOverlay />
-    }
-
-    if (haveError) {
-        return (
-            <h2>Error: {haveError} </h2>
-        );
-    }
-
     return (
-        <li className={classes.itemCustom}>
-            <Card>
-                <header>
-                    <h3>{title}</h3> 
-                    <p>Satış durumu: {statusHandler} </p>
-                </header>
-                <p>{description}</p>
-                {showActivationProductDetails && <div className={classes.details}>
-                    <label>Miktar: </label>
-                    <input onChange={inputHandler} value={inputState.amount} name='amount'></input> <br />
-                    <label>Start Time: </label>
-                    <input onChange={inputHandler} value={inputState.startTime} name='startTime'></input> <br />
-                    <label>End Time: </label>
-                    <input onChange={inputHandler} value={inputState.endTime} name='endTime'></input> <br />
-                    <label>Fiyat: </label>
-                    <input onChange={inputHandler} value={inputState.price} name='price'></input> <br />
-                    <button onClick={activateProductHandler}>Onayla</button>
-                    <button onClick={cancelActivation}>İptal</button>
-                </div>}
-                <div className={classes.actionsCustom}>
-                    {status === 'satis disi' && <button style={{ backgroundColor: 'green', color: 'white' }} onClick={activateProductHandler}>Satışa Sun</button>}
-                    {status !== 'satis disi' && <button style={{ backgroundColor: 'red', color: 'white' }} onClick={removeFromSale} >Satıştan Çek</button>}
-                </div>
-            </Card>
-        </li>
+        <React.Fragment>
+            {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+            {isLoading && <LoadingSpinner asOverlay />}
+            <li className={classes.itemCustom}>
+                <Card>
+                    <header>
+                        <h3>{title}</h3>
+                        <p>Satış durumu: {statusHandler} </p>
+                    </header>
+                    <p>{description}</p>
+                    {showActivationProductDetails && <div className={classes.details}>
+                        <label>Miktar: </label>
+                        <input onChange={inputHandler} value={inputState.amount} name='amount'></input> <br />
+                        <label>Start Time: </label>
+                        <input onChange={inputHandler} value={inputState.startTime} name='startTime'></input> <br />
+                        <label>End Time: </label>
+                        <input onChange={inputHandler} value={inputState.endTime} name='endTime'></input> <br />
+                        <label>Fiyat: </label>
+                        <input onChange={inputHandler} value={inputState.price} name='price'></input> <br />
+                        <button onClick={activateProductHandler}>Onayla</button>
+                        <button onClick={cancelActivation}>İptal</button>
+                    </div>}
+                    <div className={classes.actionsCustom}>
+                        {status === 'satis disi' && <button style={{ backgroundColor: 'green', color: 'white' }} onClick={activateProductHandler}>Satışa Sun</button>}
+                        {status !== 'satis disi' && <button style={{ backgroundColor: 'red', color: 'white' }} onClick={removeFromSale} >Satıştan Çek</button>}
+                    </div>
+                </Card>
+            </li>
+        </React.Fragment>
     );
 };
 

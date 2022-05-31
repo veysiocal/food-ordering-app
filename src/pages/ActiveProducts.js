@@ -6,10 +6,11 @@ import { adminActions } from '../store/admin-slice';
 import { useHttp } from '../hooks/use-http';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import { useParams } from 'react-router-dom';
+import ErrorModal from '../components/UI/ErrorModal';
 
 const ActiveProducts = () => {
     const [restaurantId, setRestaurantId] = useState('');
-    const [isLoading, haveError, sendRequest] = useHttp();
+    const [isLoading, haveError, sendRequest, clearError] = useHttp();
     const [products, setProducts] = useState([]);
 
     const token = useSelector(state => state.auth.token);
@@ -45,16 +46,10 @@ const ActiveProducts = () => {
     //     products = activeProducts.filter(product => product.restaurantId === activeProductsRestaurantId);
     // }
 
-    if (isLoading) {
-        return (
-            <LoadingSpinner asOverlay />
-        )
-    }
-
-    if (haveError) {
-        console.log("errorActiveProduct: ", haveError)
-    }
     return (
+        <React.Fragment>
+        {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+        {isLoading && <LoadingSpinner asOverlay />}
         <section
         // className={classes.activeProducts}
         >
@@ -65,6 +60,7 @@ const ActiveProducts = () => {
                 ))}
             </ul>
         </section>
+        </React.Fragment>
     )
 };
 

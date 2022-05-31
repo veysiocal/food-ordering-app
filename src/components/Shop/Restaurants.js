@@ -1,3 +1,4 @@
+import React from 'react';
 import RestaurantItem from './RestaurantItem';
 import classes from './Restaurants.module.css';
 import { useHistory } from 'react-router-dom';
@@ -8,10 +9,11 @@ import { uiActions } from '../../store/ui-slice';
 import { useHttp } from '../../hooks/use-http';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import Option from '../FormElements/Option';
+import ErrorModal from '../UI/ErrorModal';
 
 
 const Restaurants = (props) => {
-  const [isLoading, haveError, sendRequest] = useHttp();
+  const [isLoading, haveError, sendRequest, clearError] = useHttp();
   const [restaurants, setRestaurants] = useState([]);
   const [optionValues, setOptionValues] = useState([]);
   const [enteredRestaurant, setEnteredRestaurant] = useState('');
@@ -68,7 +70,8 @@ const Restaurants = (props) => {
 
   let result = [];
   categorized.map(category => category.map(category => result.push(category)));
-
+console.log("result: ",result);
+console.log("categoriezed: ",categorized)
   if (selectedCategories.length !== 0) {
     showRestaurants = result
   };
@@ -86,13 +89,11 @@ const Restaurants = (props) => {
       showRestaurants = showRestaurants.filter(restaurant => restaurant.district === selectedDistrict)
     }
   }
-  if (isLoading) {
-    return (
-      <LoadingSpinner asOverlay />
-    )
-  }
 
   return (
+    <React.Fragment>
+    {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+    {isLoading && <LoadingSpinner asOverlay />}
     <section className={classes.itemCustom}>
       <div className={classes.selectorDiv}>
         <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={selectDistrictHandler}>
@@ -126,6 +127,7 @@ const Restaurants = (props) => {
       {showRestaurants.length === 0 && <div className={classes.cautionDiv}>Uygun restoran bulunamadı...</div>}
 
     </section >
+    </React.Fragment>
   );
 };
 

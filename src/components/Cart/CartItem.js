@@ -4,14 +4,12 @@ import { cartActions } from '../../store/cart-slice';
 
 const CartItem = (props) => {
   const { title, quantity, total, price, id } = props.item;
-
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
     dispatch(cartActions.addItemToCart({
       id,
-      title,
-      price
+      discount: price
     }))
   }
 
@@ -24,10 +22,10 @@ const CartItem = (props) => {
         <h3>{title}</h3>
         <div className={classes.priceCustom} >
           {/* ${total.toFixed(2)}{' '} */}
-          ${total}{' '}
+          ₺{total}{' '}
 
           {/* <span className={classes.itempriceCustom}>(${price.toFixed(2)}/item)</span> */}
-          <span className={classes.itempriceCustom}>(${price}/item)</span>
+          <span className={classes.itempriceCustom}>(₺{price}/item)</span>
 
         </div>
       </header>

@@ -1,8 +1,9 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useHttp } from '../../hooks/use-http';
 import { useSelector } from 'react-redux';
-
+import ErrorModal from '../../components/UI/ErrorModal';
 import Card from '../../components/UI/Card';
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
 import ProductItem from '../../components/Shop/ProductItem';
@@ -51,14 +52,10 @@ const Products = () => {
         default: category = "Restoran";
     }
 
-    console.log("busşness: ", businessProducts);
-
-    if (isLoading) {
-        return (
-            <LoadingSpinner asOverlay />
-        )
-    }
     return (
+        <React.Fragment>
+            {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+            {isLoading && <LoadingSpinner asOverlay />}
             <section className={classes.itemCustom}>
                 <div className={classes.container} >
                     <div className={classes[category]} />
@@ -87,6 +84,7 @@ const Products = () => {
                     </ul>
                 </div>
             </section>
+        </React.Fragment>
     );
 };
 

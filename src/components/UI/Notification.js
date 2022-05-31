@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
+import Modal from './Modal';
 import classes from './Notification.module.css';
 
 const Notification = (props) => {
@@ -22,13 +23,18 @@ const Notification = (props) => {
     }));
   }
   return (
-    <section 
-    className={cssClasses}
-    >
-      <h2>{props.title}</h2>
-      <p>{props.message}</p>
-      <button onClick={cancelHandler}>Cancel</button>
-    </section>
+    <Modal show header={props.title}>
+      <section
+        className={cssClasses}
+      >
+        <p>{props.message}</p>
+        <button onClick={cancelHandler}>Cancel</button>
+      </section>
+      <div /*className='map-container'*/>
+        {/* <Map center={props.coordinates} zoom={16} /> */}
+        <p>MAP</p>
+      </div>
+    </Modal>
   );
 };
 

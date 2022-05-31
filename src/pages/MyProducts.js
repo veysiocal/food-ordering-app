@@ -8,9 +8,10 @@ import LoadingSpinner from '../components/UI/LoadingSpinner';
 import classes from './MyProduct.module.css';
 import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import ErrorModal from '../components/UI/ErrorModal';
 
 const ActiveProducts = () => {
-    const [isLoading, haveError, sendRequest] = useHttp();
+    const [isLoading, haveError, sendRequest, clearError] = useHttp();
     const [myProducts, setMyProducts] = useState([]);
     const [enteredRestaurant, setEnteredRestaurant] = useState('');
     const [selectedStatus, setSelectedStatus] = useState(null);
@@ -21,7 +22,7 @@ const ActiveProducts = () => {
     const queryParams = new URLSearchParams(location.search);
     const filteredProduct = queryParams.get('filter');
     const history = useHistory();
-    
+
     useEffect(() => {
         const fetchMyProducts = async () => {
             const data = await sendRequest('http://localhost:8080/api/admin/get-products', 'GET',
@@ -70,39 +71,34 @@ const ActiveProducts = () => {
         }
     }
 
-    if (isLoading) {
-        return (
-            <LoadingSpinner asOverlay />
-        )
-    }
-
-    if (haveError) {
-        console.log("errorActiveProduct: ", haveError)
-    }
     return (
-        <section >
-            <div>
-                <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={selectDistrictHandler}>
-                    <option value='Tümü' >Ürün Seçiniz</option>
-                    <option value='satista'>Satıştaki Ürünler</option>
-                    <option value='satis disi'>Satış Dışı Ürünler</option>
-                </select>
-            </div>
-            <div className={classes.filtering} >
-                <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Ürün ara...'></input>
+        <React.Fragment>
+            {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+            {isLoading && <LoadingSpinner asOverlay />}
+            <section >
                 <div>
-                    <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
-                    </button>
-                    <button onClick={cleanHandler} className={classes.filterButton}>Temizle</button>
+                    <select id='districtselect' className={classes.selector} placeholder='Seçim Yapınız' onChange={selectDistrictHandler}>
+                        <option value='Tümü' >Ürün Seçiniz</option>
+                        <option value='satista'>Satıştaki Ürünler</option>
+                        <option value='satis disi'>Satış Dışı Ürünler</option>
+                    </select>
                 </div>
-            </div>
-            <ul className={classes.activeProductUl}>
-                {showProducts.map(product => (
-                    <MyProductItem productId={product.productId} title={product.title} description={product.description} status={product.status}
-                    />
-                ))}
-            </ul>
-        </section>
+                <div className={classes.filtering} >
+                    <input onChange={enteredRestaurantHandler} value={enteredRestaurant} placeholder='Ürün ara...'></input>
+                    <div>
+                        <button onClick={filteringRestaurant} className={classes.filterButton}><i class="fas fa-search"></i>
+                        </button>
+                        <button onClick={cleanHandler} className={classes.filterButton}>Temizle</button>
+                    </div>
+                </div>
+                <ul className={classes.activeProductUl}>
+                    {showProducts.map(product => (
+                        <MyProductItem productId={product.productId} title={product.title} description={product.description} status={product.status}
+                        />
+                    ))}
+                </ul>
+            </section>
+        </React.Fragment>
     )
 };
 

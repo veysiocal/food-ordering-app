@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useHttp } from '../../hooks/use-http';
 import Card from '../UI/Card';
+import ErrorModal from '../UI/ErrorModal';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import ProductItem from './ProductItem';
 import classes from './Products.module.css';
@@ -59,34 +60,38 @@ const Products = () => {
     )
   }
   return (
-    <section className={classes.productsCustom}>
-      <div className={classes.container} >
-        <div className={classes[category]} />
-        <Card className={classes.containerCustom}>
-          <header>
-            <h4>{businessProducts[0].companyName}</h4>
-            <h5>{businessProducts[0].district}</h5>
-          </header>
-          <p>
-            {/* {businessProducts[0].description} */}
-            {businessProducts[0].start} - {businessProducts[0].end}
-          </p>
-        </Card>
-        <div className={classes.detailsInfo}>
-          <p>{businessProducts[0].address}</p>
-          <span>({businessProducts[0].companyPhone}) </span>
-          <p>{businessProducts[0].owner}</p>
+    <React.Fragment>
+      {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+      {isLoading && <LoadingSpinner asOverlay />}
+      <section className={classes.productsCustom}>
+        <div className={classes.container} >
+          <div className={classes[category]} />
+          <Card className={classes.containerCustom}>
+            <header>
+              <h4>{businessProducts[0].companyName}</h4>
+              <h5>{businessProducts[0].district}</h5>
+            </header>
+            <p>
+              {/* {businessProducts[0].description} */}
+              {businessProducts[0].start} - {businessProducts[0].end}
+            </p>
+          </Card>
+          <div className={classes.detailsInfo}>
+            <p>{businessProducts[0].address}</p>
+            <span>({businessProducts[0].companyPhone}) </span>
+            <p>{businessProducts[0].owner}</p>
+          </div>
         </div>
-      </div>
-      <div >
-        <ul className={classes.productItemsList}>
-          {businessProducts.map(product => (
-            <ProductItem key={product.productId} id={product.productId} name={product.title} fee={product.price}
-              description={product.description} start={product.startTime} end={product.endTime} amount={product.amount} />)
-          )}
-        </ul>
-      </div>
-    </section>
+        <div >
+          <ul className={classes.productItemsList}>
+            {businessProducts.map(product => (
+              <ProductItem key={product.productId} id={product.productId} name={product.title} fee={product.price}
+                description={product.description} start={product.startTime} end={product.endTime} amount={product.amount} />)
+            )}
+          </ul>
+        </div>
+      </section>
+    </React.Fragment>
   );
 };
 

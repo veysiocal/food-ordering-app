@@ -7,10 +7,12 @@ import LoadingSpinner from '../components/UI/LoadingSpinner';
 import { useHttp } from '../hooks/use-http';
 import { adminActions } from '../store/admin-slice';
 import { uiActions } from '../store/ui-slice';
+import ErrorModal from '../components/UI/ErrorModal';
+
 const AddProduct = () => {
 
     const dispatch = useDispatch();
-    const [isLoading, haveError, sendRequest] = useHttp();
+    const [isLoading, haveError, sendRequest,clearError] = useHttp();
 
     const token = useSelector(state => state.auth.token);
 
@@ -102,19 +104,11 @@ const AddProduct = () => {
         setDescriptionInput('');
     };
 
-    if (isLoading) {
-        return (
-            <LoadingSpinner asOverlay />
-        )
-    }
-
-    if (haveError) {
-        return (
-            <h2>Error: {haveError}</h2>
-        )
-    }
 
     return (
+        <React.Fragment>
+        {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+        {isLoading && <LoadingSpinner asOverlay />}
         <Form onSubmit={submitFormHandler}>
             <Card>
                 <FormGroup>
@@ -263,6 +257,7 @@ const AddProduct = () => {
             </Card>
 
         </Form>
+        </React.Fragment>
     )
 };
 

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { authActions } from '../../store/auth-slice';
 import CartButton from '../Cart/CartButton';
 import classes from './MainHeader.module.css';
@@ -23,9 +23,6 @@ const MainHeader = (props) => {
       </NavLink>
       <nav className={classes.navCustom}>
         <ul>
-          {/* {isLoggedIn && (<li>
-            <NavLink to='/admin' activeClassName={classes.active} >Admin</NavLink>
-          </li>)} */}
           <li>
             <NavLink to='/restaurants' activeClassName={classes.active} >Ana Sayfa</NavLink>
           </li>

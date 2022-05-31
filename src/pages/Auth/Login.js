@@ -111,22 +111,10 @@ const AuthForm = (props) => {
     }
   };
 
-  const tryAgainHandler = () => {
-    history.go(0);
-  }
-
-  if (haveError) {
-    return (
-      <React.Fragment>
-        <h2 style={{ 'margin-top': '100px' }}>Error: {haveError}</h2>
-        <button onClick={tryAgainHandler}>Tekrar Dene</button>
-      </React.Fragment>
-    )
-  }
 
   return (
     <React.Fragment>
-      {/* <ErrorModal error={haveError} onClear={clearError} /> */}
+      {haveError && <ErrorModal error={haveError} onClear={clearError} />}
       <Card className={classes.auth}>
         {isLoading && <LoadingSpinner asOverlay />}
         <h1>{isLoginMode ? 'Giriş Yap' : 'Üye Ol'}</h1>

@@ -125,14 +125,9 @@ const AboutRestaurant = () => {
         setEndTime('');
     }
 
-    if (haveError) {
-        return (
-            <h2>Error: {haveError}</h2>
-        )
-    }
     return (
         <React.Fragment>
-            {/* {<ErrorModal error={haveError} onClear={clearError} />} */}
+            { haveError && <ErrorModal error={haveError} onClear={clearError} />}
             <Form onSubmit={formSubmitHandler}>
                 {isLoading && <LoadingSpinner asOverlay />}
                 <Card >
