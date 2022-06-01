@@ -1,9 +1,9 @@
 .container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding-bottom: 2rem;
   border-bottom: 3px solid black;
+  justify-content: space-between;
 }
 
 .Restoran {
@@ -49,6 +49,25 @@
   color: white;
   font-weight: bold;
   padding-top: 2rem;
+}
+
+.mapContainer {
+  height: 15rem;
+  width: 100%;
+}
+
+.mapButton {
+  padding: 0.5rem 0.5rem;
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  font-size: 10px;
+  background: black;
+}
+
+.mapButton:hover {
+  background: white;
+  color: black;
 }
 
 .containerCustom header h4, .containerCustom header h5 {

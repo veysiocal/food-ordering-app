@@ -9,11 +9,17 @@ import LoadingSpinner from '../components/UI/LoadingSpinner';
 import ErrorModal from '../components/UI/ErrorModal';
 
 import classes from './AboutRestaurant.module.css';
+import { uiActions } from '../store/ui-slice';
+import { authActions } from '../store/auth-slice';
+import Map from '../components/UI/Map';
+
 
 const AboutRestaurant = () => {
 
     const [isLoading, haveError, sendRequest, clearError] = useHttp();
     const dispatch = useDispatch();
+    const [Clatitude, seTClatitude] = useState('');
+    const [Clongitude, setClongitude] = useState('');
 
     const [enteredId, setEnteredId] = useState('');
     const [enteredName, setEnteredName] = useState('');
@@ -93,7 +99,7 @@ const AboutRestaurant = () => {
             default: categoryId = 1;
         }
 
-        await sendRequest('http://localhost:8080/api/admin/businessInfos', 'POST',
+        const data = await sendRequest('http://localhost:8080/api/admin/businessInfos', 'POST',
             {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer: ' + token
@@ -107,11 +113,23 @@ const AboutRestaurant = () => {
                 address1: enteredAddress,
                 start: startTime,
                 end: endTime,
+                longitude: Clongitude,
+                latitude: Clatitude,
             })
         );
-        // if(data && data.success) {
-        //     alert('Başarılı!')
-        // }
+        if (data && data.success) {
+            dispatch(uiActions.showNotification({
+                status: 'success',
+                title: 'Success!',
+                message: 'Kaydınız oluşturuldu! Lütfen tekrar giriş yapınız.',
+            }));
+
+            dispatch(uiActions.toggleNotification({
+                show: true,
+            }));
+            dispatch(authActions.logout())
+            //   history.replace('/auth')
+        }
 
         setEnteredId('');
         setEnteredName('');
@@ -125,9 +143,29 @@ const AboutRestaurant = () => {
         setEndTime('');
     }
 
+    const logoutHandler = () => {
+        dispatch(authActions.logout())
+    };
+
+
+    const showPosition = (position) => {
+        seTClatitude(position.coords.latitude);
+        setClongitude(position.coords.longitude);
+    }
+    const getLocation = () => navigator.geolocation.getCurrentPosition(showPosition);
+
     return (
         <React.Fragment>
-            { haveError && <ErrorModal error={haveError} onClear={clearError} />}
+            {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+            <div className={classes.btndiv}>
+                <button onClick={getLocation} className={classes.btn_getLocation}>Lütfen buraya tıklarak haritadan konum bilgileriniz elde edin!</button>
+            </div>
+            <div className={classes.mapContainer}>
+                <Map center={{
+                    lat: Clatitude,   //google mapsden alunacak latitude @ işaretinden sonra gelen sayı
+                    lng: Clongitude,   //longitude lat'dan sonra gelen sayı.
+                }} zoom={16} />
+            </div>
             <Form onSubmit={formSubmitHandler}>
                 {isLoading && <LoadingSpinner asOverlay />}
                 <Card >
@@ -240,10 +278,12 @@ const AboutRestaurant = () => {
                 </FormGroup> */}
 
                     <button className={classes.abtRstBtn}>
-                        Sign in
+                        Kaydet
                     </button>
+
                 </Card>
             </Form>
+            <button className={classes.closeButton} onClick={logoutHandler}>Çıkış Yap</button>
         </React.Fragment>
     )
 };

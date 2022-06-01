@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
-import classes from './Map.css';
+import './Map.css';
 
 const Map = props => {
     const mapRef = useRef();
@@ -12,29 +12,21 @@ const Map = props => {
             center: center,
             zoom: zoom,
         });
-
+    
         new window.google.maps.Marker({
             position: center,
             map: map,
         });
-    }, [center, zoom])
+    }, [center, zoom]) // useEffect kullanmamızın nedeni; mapRef aşağıda return ediliyor. Ancak biz burda map objesini
+                // oluştururken useRef'i kullanmamız lazım. 
+                // useEffect jsx return edildilkten sonra çalışır.
+                // bu yüzden useEffect içerisinde yazmazsak hata veriyor.
 
-    console.log("mparef: ", mapRef);
+
+   
     return (
-        <>
-            <header>
-                <h1>MAP</h1>
-            </header>
-            <section className={classes.section}>
-                <h3>DSDSAD</h3>
-                <div ref={mapRef}style={props.style}>
-
-                </div>
-
-            </section>
-        </>
-
+        <div ref={mapRef} className={`map ${props.className}`} style={props.style} ></div>
     )
-}
+};
 
 export default Map;

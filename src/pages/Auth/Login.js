@@ -62,7 +62,7 @@ const AuthForm = (props) => {
   };
 
   const radioHandler = event => {
-    console.log("userType: ",event.target.value)
+    console.log("userType: ", event.target.value)
     setUserType(event.target.value);
   }
   const submitHandler = async event => {
@@ -159,23 +159,31 @@ const AuthForm = (props) => {
               onInput={inputHandler}
             />
           </div>}
-          {!isLoginMode && <div className={classes.control}>
-            <input
-              type='radio'
-              id='userType'
-              name='userType'
-              value='member'
-              onInput={radioHandler}
-            />
-            <label>Yeni Üye</label>
-            <input
-              type='radio'
-              id='userType'
-              name='userType'
-              value='owner'
-              onInput={radioHandler}
-            />
-            <label>İşyeri Sahibi</label>
+          {!isLoginMode && <div className={classes.controlCheckBox}>
+            <div>
+              <input
+                type='radio'
+                id='userType'
+                name='userType'
+                value='member'
+                onInput={radioHandler}
+                className={classes.control__input}
+              />
+              <label className={classes.newMemberLabel}>Yeni Üye</label>
+            </div>
+            <div>
+
+              <input
+                type='radio'
+                id='userType'
+                name='userType'
+                value='owner'
+                onInput={radioHandler}
+                className={classes.control__input}
+              />
+              <label>İşyeri Sahibi</label>
+            </div>
+
           </div>}
           <div className={classes.actions}>
             {/* {!isLoading && <button>{isLogin ? 'Login' : 'Create Account'}</button>} */}

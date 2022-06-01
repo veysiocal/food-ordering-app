@@ -17,7 +17,7 @@ const Cart = (props) => {
   const [isLoading, haveError, sendRequest, clearError] = useHttp();
 
   let items = useSelector(state => state.cart.items);
-
+console.log("items: ",items)
   const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -96,7 +96,7 @@ const Cart = (props) => {
       {haveError && <ErrorModal error={haveError} onClear={clearError} />}
       {isLoading && <LoadingSpinner asOverlay />}
       {haveError && <ErrorModal error={haveError} onClear={clearError} />}
-      <Modal header='Sepetim' show onCancel={closeHandler}>
+      <Modal header={`Sepetim - ${items.length !== 0 ? items[0].businessName : ''}`} show onCancel={closeHandler}>
         {items.length !== 0 && <ul>
           {items.map(
             item => (<CartItem

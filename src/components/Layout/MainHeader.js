@@ -38,9 +38,9 @@ const MainHeader = (props) => {
             {!isLoggedIn && (<li>
               <NavLink to='/auth' activeClassName={classes.active}>Giriş Yap</NavLink>
             </li>)}
-            {!isLoggedIn && (<li>
+            {/* {!isLoggedIn && (<li>
               <NavLink to='/auth' activeClassName={classes.active} style={{opacity: '0.8'}}>Üye Ol</NavLink>
-            </li>)}
+            </li>)} */}
             {isLoggedIn && (<li>
               <button onClick={logoutHandler} > {loggedName} --  Logout</button>
             </li>)}

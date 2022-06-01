@@ -4,12 +4,16 @@ import { useHttp } from '../../hooks/use-http';
 import Card from '../UI/Card';
 import ErrorModal from '../UI/ErrorModal';
 import LoadingSpinner from '../UI/LoadingSpinner';
+import Modal from '../UI/Modal';
 import ProductItem from './ProductItem';
+import Map from '../UI/Map';
+
 import classes from './Products.module.css';
 
 const Products = () => {
   const [businessProducts, setBusinessProducts] = useState([{}]);
   const [isLoading, haveError, sendRequest, clearError] = useHttp();
+  const [showMap, setShowMap] = useState(false);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -54,15 +58,24 @@ const Products = () => {
 
   console.log("busşness: ", businessProducts);
 
-  if (isLoading) {
-    return (
-      <LoadingSpinner asOverlay />
-    )
+  const showMapHandler = () => {
+    setShowMap(true);
   }
+ const closeMap = () => {
+   setShowMap(false);
+ }
   return (
     <React.Fragment>
       {haveError && <ErrorModal error={haveError} onClear={clearError} />}
       {isLoading && <LoadingSpinner asOverlay />}
+      {showMap && <Modal header={<button onClick={closeMap}>KAPAT</button>}>
+        <div className={classes.mapContainer}>
+          <Map center={{
+            lat: businessProducts[0].latitude,   //google mapsden alunacak latitude @ işaretinden sonra gelen sayı
+            lng: businessProducts[0].longitude,   //longitude lat'dan sonra gelen sayı.
+          }} zoom={16} />
+        </div>
+      </Modal>}
       <section className={classes.productsCustom}>
         <div className={classes.container} >
           <div className={classes[category]} />
@@ -77,16 +90,17 @@ const Products = () => {
             </p>
           </Card>
           <div className={classes.detailsInfo}>
-            <p>{businessProducts[0].address}</p>
+            <p>{businessProducts[0].address1}</p>
             <span>({businessProducts[0].companyPhone}) </span>
             <p>{businessProducts[0].owner}</p>
+            <button className={classes.mapButton} onClick={showMapHandler}>Haritada Gör</button>
           </div>
         </div>
         <div >
           <ul className={classes.productItemsList}>
             {businessProducts.map(product => (
               <ProductItem key={product.productId} id={product.productId} name={product.title} fee={product.price}
-                description={product.description} start={product.startTime} end={product.endTime} amount={product.amount} />)
+                description={product.description} start={product.startTime} end={product.endTime} amount={product.amount} businessId={businessProducts[0].businessId} businessName={businessProducts[0].companyName} />)
             )}
           </ul>
         </div>

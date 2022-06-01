@@ -23,6 +23,7 @@ const uiSlice = createSlice({
                 status: action.payload.status,
                 title: action.payload.title,
                 message: action.payload.message,
+                button: action.payload.button,
             };
         },
         toggleNotification(state, action) {

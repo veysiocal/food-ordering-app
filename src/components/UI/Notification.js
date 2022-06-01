@@ -23,17 +23,21 @@ const Notification = (props) => {
     }));
   }
   return (
-    <Modal show header={props.title}>
+    <Modal show header={props.title} footer={props.footer} style={{ height: '50%' }}>
       <section
         className={cssClasses}
       >
         <p>{props.message}</p>
-        <button onClick={cancelHandler}>Cancel</button>
       </section>
       <div /*className='map-container'*/>
         {/* <Map center={props.coordinates} zoom={16} /> */}
-        <p>MAP</p>
+        {props.map && <p>MAP</p>}
       </div>
+      <div className={classes.buttons}>
+        <button onClick={cancelHandler} className={classes.closeNotification}>Kapat</button>
+        {props.button}
+      </div>
+
     </Modal>
   );
 };

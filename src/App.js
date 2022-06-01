@@ -8,7 +8,7 @@ import { sendDataToFirebase, fetchCartData } from './store/cart-actions';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
 import FavRestaurants from './components/Shop/FavRestaurants';
-// import Admin from './pages/Admin';
+import Admin from './pages/Admin';
 import HomePage from './pages/Admin/HomePage';
 import AddProduct from './pages/AddProduct';
 import ActiveProducts from './pages/ActiveProducts';
@@ -59,34 +59,51 @@ function App() {
 
   const token = useSelector(state => state.auth.token);
   const userType = useSelector(state => state.auth.userType);
+  const businessId = useSelector(state => state.auth.businessId);
+  console.log("busi: ", businessId)
   let routes;
 
   if (token) {
     if (userType === 'owner') {
-      routes = (
-        < AdminLayout >
-          <Redirect to="/admin" />
-          <Switch>
-            <Route path='/admin/active-products'>
-              <ActiveProducts />
+      if (businessId === null ) {
+        routes = (
+          <>
+            <Redirect to='/newOwner' /> 
+            <Switch>
+            <Route path='/newOwner' >
+              {businessId === null && <Admin />}
             </Route>
-            <Route path='/admin/my-products'>
-              <MyProducts />
-            </Route>
-            <Route path='/admin/add-product'>
-              <AddProduct />
-            </Route>
-            <Route path='/admin/orders'>
-              <Orders />
-            </Route>
-            <Route path='/admin' >
-              {/* < Admin /> */}
-              <HomePage  />
-            </Route>
-            <Redirect from='*' to='/admin' />
-          </Switch>
-        </AdminLayout>
-      )
+            </Switch>
+
+          </>
+        )
+      } else {
+        routes = (
+          < AdminLayout >
+            <Redirect to="/admin/my-products" />
+            <Switch>
+              <Route path='/admin/active-products'>
+                <ActiveProducts />
+              </Route>
+              <Route path='/admin/my-products'>
+                <MyProducts />
+              </Route>
+              <Route path='/admin/add-product'>
+                <AddProduct />
+              </Route>
+              <Route path='/admin/orders'>
+                <Orders />
+              </Route>
+              <Route path='/admin' >
+                {/* {businessId === null || businessId === undefined && <Admin />} */}
+                {/* {businessId !== null && businessId !== undefined && <HomePage />} */}
+                <Admin />
+              </Route>
+              <Redirect from='*' to='/admin' />
+            </Switch>
+          </AdminLayout>
+        )
+      }
     } else {
       routes = (
         <Switch>
@@ -151,7 +168,7 @@ function App() {
   return (
     <Fragment>
       {isLoading && <LoadingSpinner asOverlay />}
-      {!isLoading && (notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} />)}
+      {!isLoading && (notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} button={notification.button} />)}
       {!isLoading && <Switch>{routes}</Switch>}
     </Fragment>
   );
