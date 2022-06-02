@@ -8,6 +8,7 @@ import { adminActions } from '../store/admin-slice';
 import ErrorModal from '../components/UI/ErrorModal';
 
 import classes from './ActiveProductItem.module.css';
+import Modal from '../components/UI/Modal';
 
 const ProductItem = (props) => {
   const { product } = props;
@@ -31,7 +32,7 @@ const ProductItem = (props) => {
     })
   };
 
-  const updateProductHandler = async() => {
+  const updateProductHandler = async () => {
     setShowUpdateFields(false);
     const data = await sendRequest('http://localhost:8080/api/admin/update-active-product/' + product.productId, 'PUT',
       {
@@ -42,7 +43,7 @@ const ProductItem = (props) => {
     );
     if (data.success === true) {
       console.log("başarılı")
-      console.log("da: ",data.data)
+      console.log("da: ", data.data)
       setProductItem(data.data);
     }
   };
@@ -62,35 +63,49 @@ const ProductItem = (props) => {
 
   return (
     <React.Fragment>
-    {haveError && <ErrorModal error={haveError} onClear={clearError} />}
-    {isLoading && <LoadingSpinner asOverlay />}
-    <li className={classes.itemCustom}>
-      <Card>
-        <header className={classes.header}>
-          {/* <h1>Restoran:{restaurantId}</h1> */}
-          <h3>{productItem.title}</h3>
-          <div className={classes.priceCustom}><span> <small> ${productItem.price}</small>  </span> <strong>${discount}</strong></div>
-        </header>
-        <p>{product.description}</p>
-        <p>{product.startTime} - {product.endTime}</p>
-        <p>{product.amount} Adet</p>
-        {showUpdateFields && <div className={classes.details}>
-          <label>Miktar: </label>
-          <input onChange={inputHandler} value={inputState.amount} name='amount'></input> <br />
-          <label>Start Time: </label>
-          <input onChange={inputHandler} value={inputState.startTime} name='startTime'></input> <br />
-          <label>End Time: </label>
-          <input onChange={inputHandler} value={inputState.endTime} name='endTime'></input> <br />
-          <label>Fiyat: </label>
-          <input onChange={inputHandler} value={inputState.price} name='price'></input> <br />
-          <button onClick={updateProductHandler}>Güncelle</button>
-          <button onClick={cancelActivation}>İptal</button>
-        </div>}
-        <div className={classes.actionsCustom}>
-          <button onClick={updateActiveProductHandler}>Güncelle</button>
-        </div>
-      </Card>
-    </li>
+      {haveError && <ErrorModal error={haveError} onClear={clearError} />}
+      {isLoading && <LoadingSpinner asOverlay />}
+      <li className={classes.itemCustom}>
+        <Card>
+          <header className={classes.header}>
+            {/* <h1>Restoran:{restaurantId}</h1> */}
+            <h3>{productItem.title}</h3>
+            <div className={classes.priceCustom}><span> <small> ${productItem.price}</small>  </span> <strong>${discount}</strong></div>
+          </header>
+          <p>{product.description}</p>
+          <p>{product.startTime} - {product.endTime}</p>
+          <p>{product.amount} Adet</p>
+          {showUpdateFields && 
+            <Modal header='Güncelle' show style={{width:'40%', height: '50%'}}>
+              <div className={classes.details_div}>
+                <label>Miktar: </label>
+                <input onChange={inputHandler} value={inputState.amount} name='amount'></input>
+              </div>
+              <div className={classes.details_div}>
+
+                <label>Start Time: </label>
+                <input onChange={inputHandler} value={inputState.startTime} name='startTime'></input>
+              </div>
+              <div className={classes.details_div}>
+
+                <label>End Time: </label>
+                <input onChange={inputHandler} value={inputState.endTime} name='endTime'></input>
+              </div>
+              <div className={classes.details_div}>
+
+                <label>Fiyat: </label>
+                <input onChange={inputHandler} value={inputState.price} name='price'></input>
+              </div>
+              <button onClick={updateProductHandler} className={classes.update_btn_two}>Güncelle</button>
+              <button onClick={cancelActivation} className={classes.cancel_button}>İptal</button>
+            </Modal>
+}
+          <div className={classes.actionsCustom}>
+            <button onClick={updateActiveProductHandler} className={classes.update_btn}>Güncelle</button>
+          </div>
+        </Card>
+
+      </li>
     </React.Fragment>
   );
 };

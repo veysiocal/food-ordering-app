@@ -37,7 +37,7 @@ const AdminMainHeader = (props) => {
             <NavLink to='/admin/orders' activeClassName={classes.active}>Siparişleri Gör</NavLink>
           </li>
           <li>
-            <button onClick={logoutHandler} > Çıkış Yap </button>
+            <button onClick={logoutHandler} className={classes.logout_btn}> Çıkış Yap </button>
           </li>
 
         </ul>

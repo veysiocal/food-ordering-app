@@ -42,7 +42,7 @@ const MainHeader = (props) => {
               <NavLink to='/auth' activeClassName={classes.active} style={{opacity: '0.8'}}>Üye Ol</NavLink>
             </li>)} */}
             {isLoggedIn && (<li>
-              <button onClick={logoutHandler} > {loggedName} --  Logout</button>
+              <button onClick={logoutHandler} className={classes.logout_btn} > {loggedName} --  Çıkış</button>
             </li>)}
         </ul>
       </nav>

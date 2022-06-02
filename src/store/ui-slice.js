@@ -24,6 +24,8 @@ const uiSlice = createSlice({
                 title: action.payload.title,
                 message: action.payload.message,
                 button: action.payload.button,
+                maps: action.payload.maps,
+                coordinates: action.payload.coordinates
             };
         },
         toggleNotification(state, action) {

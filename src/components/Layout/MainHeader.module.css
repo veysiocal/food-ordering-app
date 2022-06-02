@@ -68,6 +68,10 @@
   border: 1px red solid;
 }
 
+.logout_btn {
+  border-radius: 25px;
+}
+
 @media(max-width:500px) {
   .headerCustom {
     flex-direction: row;

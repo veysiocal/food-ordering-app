@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { uiActions } from '../../store/ui-slice';
 
 const ProductItem = (props) => {
-  const { name, fee, description, id, start, end, amount, businessId, businessName } = props;
+  const { name, fee, description, id, start, end, amount, businessId, businessName, longitude, latitude } = props;
 
   const dispatch = useDispatch();
 
@@ -29,6 +29,8 @@ const ProductItem = (props) => {
         discount,
         businessId,
         businessName,
+        longitude,
+        latitude,
       }));
     };
     const isBusinessExists = items.filter(item => item.businessId === businessId)
@@ -40,6 +42,8 @@ const ProductItem = (props) => {
           discount,
           businessId,
           businessName,
+          longitude,
+          latitude,
         }));
         dispatch(uiActions.showNotification({
           status: 'success',
@@ -58,6 +62,8 @@ const ProductItem = (props) => {
             discount,
             businessId,
             businessName,
+            longitude,
+            latitude,
           }));
           dispatch(uiActions.showNotification({
             status: 'success',

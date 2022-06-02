@@ -15,20 +15,22 @@ const Products = () => {
   const [isLoading, haveError, sendRequest, clearError] = useHttp();
   const [showMap, setShowMap] = useState(false);
 
+  const [businessTypeId, setBusinessTypeId] = useState('');
+  // let businessTypeId;
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const businessId = queryParams.get('businessId');
 
-  let businessTypeId;
   useEffect(() => {
     const fetchRestaurantById = async () => {
       try {
         const data = await sendRequest(`http://localhost:8080/api/views/products-page?businessId=${businessId}`)
         console.log("DATA: ", data);
+        setBusinessTypeId(data.data[0].businessTypeId);
+
         if (data && data.success) {
           setBusinessProducts(data.data);
         }
-        businessTypeId = data.data.businessTypeId;
       } catch (error) {
         console.log("Error: ", error)
       }
@@ -36,24 +38,24 @@ const Products = () => {
     fetchRestaurantById();
   }, [sendRequest]);
 
-  let category = "";
+  let categoryName = "";
   switch (businessTypeId) {
     case 1:
-      category = "Restoran";
+      categoryName = "Restoran";
       break;
     case 2:
-      category = "Pastane";
+      categoryName = "Pastane";
       break;
     case 3:
-      category = "Fırın";
+      categoryName = "Fırın";
       break;
     case 4:
-      category = "Kafe";
+      categoryName = "Kafe";
       break;
     case 5:
-      category = "Manav";
+      categoryName = "Manav";
       break;
-    default: category = "Restoran";
+    default: categoryName = "Restoran";
   }
 
   console.log("busşness: ", businessProducts);
@@ -68,7 +70,7 @@ const Products = () => {
     <React.Fragment>
       {haveError && <ErrorModal error={haveError} onClear={clearError} />}
       {isLoading && <LoadingSpinner asOverlay />}
-      {showMap && <Modal header={<button onClick={closeMap}>KAPAT</button>}>
+      {showMap && <Modal header={<button onClick={closeMap} className={classes.modal_cancel}>KAPAT</button>}>
         <div className={classes.mapContainer}>
           <Map center={{
             lat: businessProducts[0].latitude,   //google mapsden alunacak latitude @ işaretinden sonra gelen sayı
@@ -78,7 +80,7 @@ const Products = () => {
       </Modal>}
       <section className={classes.productsCustom}>
         <div className={classes.container} >
-          <div className={classes[category]} />
+          <div className={classes[categoryName]} />
           <Card className={classes.containerCustom}>
             <header>
               <h4>{businessProducts[0].companyName}</h4>
@@ -100,7 +102,9 @@ const Products = () => {
           <ul className={classes.productItemsList}>
             {businessProducts.map(product => (
               <ProductItem key={product.productId} id={product.productId} name={product.title} fee={product.price}
-                description={product.description} start={product.startTime} end={product.endTime} amount={product.amount} businessId={businessProducts[0].businessId} businessName={businessProducts[0].companyName} />)
+                description={product.description} start={product.startTime} end={product.endTime} amount={product.amount} businessId={businessProducts[0].businessId} businessName={businessProducts[0].companyName} 
+                latitude={businessProducts[0].latitude} longitude= {businessProducts[0].longitude}
+                />)
             )}
           </ul>
         </div>

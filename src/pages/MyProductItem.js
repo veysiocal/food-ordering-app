@@ -10,6 +10,7 @@ import { adminActions } from '../store/admin-slice';
 import ErrorModal from '../components/UI/ErrorModal';
 
 import classes from './ActiveProductItem.module.css';
+import Modal from '../components/UI/Modal';
 
 const ProductItem = (props) => {
     const { title, status, description, productId, } = props;
@@ -92,21 +93,33 @@ const ProductItem = (props) => {
                         <p>Satış durumu: {statusHandler} </p>
                     </header>
                     <p>{description}</p>
-                    {showActivationProductDetails && <div className={classes.details}>
-                        <label>Miktar: </label>
-                        <input onChange={inputHandler} value={inputState.amount} name='amount'></input> <br />
-                        <label>Start Time: </label>
-                        <input onChange={inputHandler} value={inputState.startTime} name='startTime'></input> <br />
-                        <label>End Time: </label>
-                        <input onChange={inputHandler} value={inputState.endTime} name='endTime'></input> <br />
-                        <label>Fiyat: </label>
-                        <input onChange={inputHandler} value={inputState.price} name='price'></input> <br />
-                        <button onClick={activateProductHandler}>Onayla</button>
-                        <button onClick={cancelActivation}>İptal</button>
-                    </div>}
+                    {showActivationProductDetails && <Modal header='Satış Durumu' show style={{ width: '40%', height: '50%' }}>
+                        <div className={classes.details_div}>
+
+                            <label>Miktar: </label>
+                            <input onChange={inputHandler} value={inputState.amount} name='amount'></input> 
+                        </div>
+                        <div className={classes.details_div}>
+
+                            <label>Start Time: </label>
+                            <input onChange={inputHandler} value={inputState.startTime} name='startTime'></input> 
+                        </div>
+                        <div className={classes.details_div}>
+
+                            <label>End Time: </label>
+                            <input onChange={inputHandler} value={inputState.endTime} name='endTime'></input> 
+                        </div>
+                        <div className={classes.details_div}>
+
+                            <label>Fiyat: </label>
+                            <input onChange={inputHandler} value={inputState.price} name='price'></input> 
+                        </div>
+                        <button onClick={activateProductHandler} className={classes.update_btn_two}>Onayla</button>
+                        <button onClick={cancelActivation} className={classes.cancel_button}>İptal</button>
+                    </Modal>}
                     <div className={classes.actionsCustom}>
-                        {status === 'satis disi' && <button style={{ backgroundColor: 'green', color: 'white' }} onClick={activateProductHandler}>Satışa Sun</button>}
-                        {status !== 'satis disi' && <button style={{ backgroundColor: 'red', color: 'white' }} onClick={removeFromSale} >Satıştan Çek</button>}
+                        {status === 'satis disi' && <button className={classes.update_btn} onClick={activateProductHandler}>Satışa Sun</button>}
+                        {status !== 'satis disi' && <button className={classes.cancel_button} onClick={removeFromSale} >Satıştan Çek</button>}
                     </div>
                 </Card>
             </li>

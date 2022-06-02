@@ -65,8 +65,13 @@ console.log("items: ",items)
       if (data.success === true) {
         dispatch(uiActions.showNotification({
           status: 'success',
-          title: 'Success!',
+          title: 'Başarılı!',
           message: 'Siparişiniz alındı. Lütfen restorana gidiniz!',
+          maps: true,
+          coordinates: {
+            longitude: items[0].longitude,
+            latitude: items[0].latitude,
+          },
         }));
 
         dispatch(uiActions.toggleNotification({

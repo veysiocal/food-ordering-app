@@ -83,4 +83,8 @@
     flex-wrap: wrap;
   }
 
+  .modal_cancel {
+    border-radius: 16px;
+    font-size: 16px;
+  }
 

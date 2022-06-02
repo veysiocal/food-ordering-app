@@ -29,6 +29,8 @@ const cartSlice = createSlice({
                     name: newItem.name,
                     businessId: newItem.businessId,
                     businessName: newItem.businessName,
+                    latitude: newItem.latitude,
+                    longitude: newItem.longitude,
                 }); // push method that is a must not do, but with react toolkit as emphasized before, we dont have 
                 // problem because their redux toolkit internally ensures that this will not manipulate
                 // the existhing state

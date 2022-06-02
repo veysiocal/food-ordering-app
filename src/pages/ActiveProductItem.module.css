@@ -31,20 +31,40 @@
   justify-content: flex-end;
 }
 
-.details {
-  position: relative;
-  font-size: 1rem;
+.update_btn {
+  background: green;
+  color: white;
+  border-radius: 5px;
+}
+.update_btn:hover {
+  background: white;
+  color: green;
+}
+.update_btn_two {
+  background-color: green;
+  color:white;
+  border-radius: 5px;
 }
 
-.details input {
-  position: absolute;
-  left: 15%;
+.update_btn_two:hover {
+  background: white;
+  color: green;
+}
+.cancel_button {
+  margin-left: 5px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
 }
 
-.details button {
-  font-size: 12px;
-  margin-right: 2%;
-  margin-top: 2%;
+.cancel_button:hover {
+  background: white;
+  color: red;
+}
+
+.details_div {
+  display: flex;
+  justify-content: space-between;
 }
 
 .actionsCustom button {

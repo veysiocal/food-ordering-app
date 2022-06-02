@@ -94,12 +94,12 @@ function App() {
               <Route path='/admin/orders'>
                 <Orders />
               </Route>
-              <Route path='/admin' >
+              {/* <Route path='/admin' > */}
                 {/* {businessId === null || businessId === undefined && <Admin />} */}
                 {/* {businessId !== null && businessId !== undefined && <HomePage />} */}
-                <Admin />
-              </Route>
-              <Redirect from='*' to='/admin' />
+                {/* <Admin /> */}
+              {/* </Route> */}
+              <Redirect from='*' to='/admin/active-products' />
             </Switch>
           </AdminLayout>
         )
@@ -168,7 +168,9 @@ function App() {
   return (
     <Fragment>
       {isLoading && <LoadingSpinner asOverlay />}
-      {!isLoading && (notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} button={notification.button} />)}
+      {!isLoading && (notification && notificationVisibility.show === true && <Notification status={notification.status} title={notification.title} message={notification.message} button={notification.button} maps={notification.maps} coordinates={notification.coordinates}
+      openMap={notification.openMap}
+      />)}
       {!isLoading && <Switch>{routes}</Switch>}
     </Fragment>
   );
