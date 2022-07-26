@@ -6,6 +6,22 @@ import { Link, useHistory } from 'react-router-dom';
 
 const RestaurantItem = (props) => {
   const { title, id, description, district, businessTypeId, start, end } = props;
+  
+
+  const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
+  const history = useHistory();
+
+  const [hours, minutes, seconds] = start.split(':');
+  const dd = new Date(0, 0, 0, +hours, +minutes, +seconds);
+  const startTime = dd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} );
+
+  const [hours2, minutes2, seconds2] = end.split(':');
+  const dd2 = new Date(0, 0, 0, +hours2, +minutes2, +seconds2);
+  const endTime = dd2.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} )
+
   let category = "";
   switch (businessTypeId) {
     case 1:
@@ -25,11 +41,7 @@ const RestaurantItem = (props) => {
       break;
     default: category = "Restoran";
   }
-  const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-
-  const history = useHistory();
 
   const favoriteHandler = () => {
     if (isLoggedIn) {
@@ -39,8 +51,8 @@ const RestaurantItem = (props) => {
         description,
         district,
         category,
-        start,
-        end,
+        startTime,
+        endTime,
       }));
 
       dispatch(uiActions.showNotification({
@@ -75,7 +87,7 @@ const RestaurantItem = (props) => {
           </header>
           <p>{category}</p>
           <p>{district}</p>
-          <p> <i class="fas fa-clock"></i> {start} - {end} </p>
+          <p> <i class="fas fa-clock"></i> {startTime} - {endTime} </p>
         </div>
         <div className={`${classes.otherPart} ${classes[category]}`}>
           <div className={classes.actionsCustom}>

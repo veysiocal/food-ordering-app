@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, memo } from 'react';
 
 import './Map.css';
 
@@ -7,6 +7,7 @@ const Map = props => {
 
     const { center, zoom } = props;
 
+    console.log("geldi mape")
     useEffect(() => {
         const map = new window.google.maps.Map(mapRef.current, {
             center: center,
@@ -29,4 +30,4 @@ const Map = props => {
     )
 };
 
-export default Map;
+export default memo(Map);

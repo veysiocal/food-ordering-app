@@ -6,8 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { uiActions } from '../../store/ui-slice';
 
 const ProductItem = (props) => {
-  const { name, fee, description, id, start, end, amount, businessId, businessName, longitude, latitude } = props;
-
+ 
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -15,7 +14,23 @@ const ProductItem = (props) => {
 
   const history = useHistory();
 
+
+  const { name, fee, description, id, start, end, amount, businessId, businessName, longitude, latitude } = props;
+
+  console.log("start: ",start)
+  const [hours, minutes, seconds] = start.split(':');
+  const dd = new Date(0, 0, 0, +hours, +minutes, +seconds);
+  const startTime = dd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} );
+
+  const [hours2, minutes2, seconds2] = end.split(':');
+  const dd2 = new Date(0, 0, 0, +hours2, +minutes2, +seconds2);
+  const endTime = dd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} )
+  
+  
   const discount = fee - fee * 0.2;
+
+  
+
 
   const addToCartHandler = () => {
     const cleanCart = () => {
@@ -111,7 +126,7 @@ const ProductItem = (props) => {
           </div>
 
           <div className={classes.actionsCustom}>
-            <p> <i class="fas fa-clock"></i> {start} - {end} </p>
+            <p> <i class="fas fa-clock"></i> {startTime} - {endTime} </p>
             {props.display !== 'none' && <button onClick={addToCartHandler} >Sepete Ekle</button>}
           </div>
         </Card>
