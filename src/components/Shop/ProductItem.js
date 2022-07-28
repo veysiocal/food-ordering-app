@@ -4,9 +4,10 @@ import classes from './ProductItem.module.css';
 import { cartActions } from '../../store/cart-slice';
 import { useHistory } from 'react-router-dom';
 import { uiActions } from '../../store/ui-slice';
+import { useEffect } from 'react';
 
 const ProductItem = (props) => {
- 
+
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -14,23 +15,18 @@ const ProductItem = (props) => {
 
   const history = useHistory();
 
+  // console.log("start: ",start)
+  // const [hours, minutes, seconds] = start.split(':');
+  // const dd = new Date(0, 0, 0, +hours, +minutes, +seconds);
+  // const startTime = dd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} );
 
+  // const [hours2, minutes2, seconds2] = end.split(':');
+  // const dd2 = new Date(0, 0, 0, +hours2, +minutes2, +seconds2);
+  // const endTime = dd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} )
+  
   const { name, fee, description, id, start, end, amount, businessId, businessName, longitude, latitude } = props;
 
-  console.log("start: ",start)
-  const [hours, minutes, seconds] = start.split(':');
-  const dd = new Date(0, 0, 0, +hours, +minutes, +seconds);
-  const startTime = dd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} );
-
-  const [hours2, minutes2, seconds2] = end.split(':');
-  const dd2 = new Date(0, 0, 0, +hours2, +minutes2, +seconds2);
-  const endTime = dd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} )
-  
-  
   const discount = fee - fee * 0.2;
-
-  
-
 
   const addToCartHandler = () => {
     const cleanCart = () => {
@@ -118,7 +114,7 @@ const ProductItem = (props) => {
           </header>
           <div className={classes.infos}>
             <h3>{name}</h3>
-            <span className={classes.amount}>{amount} Adet</span>
+            <span className={classes.amount}>{amount} Birim</span>
             <div className={classes.priceCustom}><span>  ₺{fee}  </span> ₺{discount}</div>
           </div>
           <div className={classes.details}>
@@ -126,7 +122,7 @@ const ProductItem = (props) => {
           </div>
 
           <div className={classes.actionsCustom}>
-            <p> <i class="fas fa-clock"></i> {startTime} - {endTime} </p>
+            <p> <i class="fas fa-clock"></i> {start} - {end} </p>
             {props.display !== 'none' && <button onClick={addToCartHandler} >Sepete Ekle</button>}
           </div>
         </Card>
